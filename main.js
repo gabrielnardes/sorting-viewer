@@ -73,21 +73,21 @@ async function selectionSortUnstable()
     for (let i = 0; i < length; i++)
     {
         await sleep(delay_ms);
-        let min_index = i;
+        let min_i = i;
 
         for (let j = i + 1; j < length; j++)
-            if (my_array[j] < my_array[min_index])
-                min_index = j;
+            if (my_array[j] < my_array[min_i])
+                min_i = j;
 
         // swap
-        let temp = my_array[min_index];
-        my_array[min_index] = my_array[i];
+        let temp = my_array[min_i];
+        my_array[min_i] = my_array[i];
         my_array[i] = temp;
 
         //bar.innerText = my_array;
 
-        let minindex = $(span_id + min_index);
-        let temp_bar = $(span_id + min_index);
+        let minindex = $(span_id + min_i);
+        let temp_bar = $(span_id + min_i);
         let arri = $(span_id + i);
         
         //let temphtml = temp_bar.innerHTML;
@@ -117,20 +117,20 @@ async function selectionSortStable()
 
     for (let i = 0; i < length; i++)
     {
-        let min_index = i;
+        let min_i = i;
 
         for (let j = i + 1; j < length; j++)
-            if (my_array[j] < my_array[min_index])
-                min_index = j;
+            if (my_array[j] < my_array[min_i])
+                min_i = j;
 
         //push elements
-        let min = my_array[min_index];
-        let arrmin = $(span_id + min_index);
+        let min = my_array[min_i];
+        let arrmin = $(span_id + min_i);
         //let armin_html = arrmin.innerHTML;
         let armin_heigth = arrmin.style.height;
 
         await sleep(delay_ms);
-        for (let m = min_index; m > i; m--)
+        for (let m = min_i; m > i; m--)
         {
 
             let arrm = $(span_id + m);
