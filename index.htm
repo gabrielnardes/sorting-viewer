@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Selection sorting</title>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="main.css">
+
+</head>
+<body>
+    <!-- <p id="init_array">?</p> -->
+    <p><button onclick='gen_array(300, 5, 200)'>Generate random array</button></p>
+
+    <div id="div_unstable"></div>
+    <button onclick="selection_sort_unstable()">Selection unstable sort</button>
+
+    <div id="div_stable"></div>
+    <button onclick="selection_sort_stable()">Selection stable sort</button>
+
+    <div id="div_bubble"></div>
+    <button onclick="bubble_sort()">Bubble sort</button>
+
+    <p>
+    <button onclick="selection_sort_unstable();
+                     selection_sort_stable();
+                     bubble_sort()">All</button>
+    </p>
+
+    <p id="bot"></p>
+
+</body>
+</html>
