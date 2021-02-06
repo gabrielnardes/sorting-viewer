@@ -63,11 +63,10 @@ async function selectionSortUnstable()
     //bar.innerText = array;
 
     // init array
-    let parent = $('selection_u');
     let span_id = "span_selection_u";
-    parent.textContent = '';
+    $('selection_u').textContent = '';
 
-    createSpan(span_id, array, parent);
+    createSpan(span_id, array, $('selection_u'));
 
     for (let i = 0; i < array.length; i++)
     {
@@ -108,10 +107,9 @@ async function selectionSortStable()
     //bar.innerText = array;
 
     // init array
-    let parent = $('selection_s');
     let span_id = "span_selection_s";
-    parent.textContent = '';
-    createSpan(span_id, array, parent);
+    $('selection_s').textContent = '';
+    createSpan(span_id, array, $('selection_s'));
 
     for (let i = 0; i < array.length; i++)
     {
@@ -165,10 +163,10 @@ async function bubbleSort()
     //bar.innerText = array;
 
     // init array
-    let parent = $('bubble');
+    // let parent = $('bubble');
     let span_id = "span_bubble";
-    parent.textContent = '';
-    createSpan(span_id, array, parent);
+    $('bubble').textContent = '';
+    createSpan(span_id, array, $('bubble'));
 
     let end = false;
     while (end == false)
