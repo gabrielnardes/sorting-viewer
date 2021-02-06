@@ -58,9 +58,6 @@ function createSpan(span_id, array, parent)
 async function selectionSortUnstable()
 {
     let array = [...g_array];
-    
-    let bar = $('bar_array_unstable');
-    //bar.innerText = array;
 
     // init array
     let span_id = "span_selection_u";
@@ -82,19 +79,14 @@ async function selectionSortUnstable()
         array[min_i] = array[i];
         array[i] = temp;
 
-        //bar.innerText = array;
-
         let minindex = $(span_id + min_i);
         let temp_bar = $(span_id + min_i);
         let arri = $(span_id + i);
         
-        //let temphtml = temp_bar.innerHTML;
         let tempheigth = temp_bar.style.height;
 
-        //minindex.innerHTML = arri.innerHTML;
         minindex.style.height = arri.style.height;
 
-        //arri.innerHTML = temphtml;
         arri.style.height = tempheigth;
     }
 }
@@ -104,7 +96,6 @@ async function selectionSortStable()
     let array = [...g_array];
     
     let bar = $('bar_array_stable');
-    //bar.innerText = array;
 
     // init array
     let span_id = "span_selection_s";
@@ -122,7 +113,6 @@ async function selectionSortStable()
         //push elements
         let min = array[min_i];
         let arrmin = $(span_id + min_i);
-        //let armin_html = arrmin.innerHTML;
         let armin_heigth = arrmin.style.height;
 
         await sleep(delay_ms);
@@ -130,27 +120,21 @@ async function selectionSortStable()
         {
 
             let arrm = $(span_id + m);
-            //let armm_hmtl = arrm.innerHTML;
             let armm_heigth = arrm.style.height;
 
             let arrm_1 = $(span_id + (m - 1));
-            //let armm_1_hmtl = arrm_1.innerHTML;
             let armm_1_heigth = arrm_1.style.height;
 
             array[m] = array[m-1];
-            //arrm.innerHTML = armm_1_hmtl;
             arrm.style.height = armm_1_heigth;
 
             array[m-1] = min;
-            //arrm_1.innerHTML = armin_html;
             arrm_1.style.height = armin_heigth;
-            //bar.innerText = array;
         }
 
         array[i] = min;
 
         let arri = $(span_id + i);
-        //arri.innerHTML = armin_html;
         arri.style.height = armin_heigth;
     }
 }
@@ -160,10 +144,8 @@ async function bubbleSort()
     let array = [...g_array];
     
     let bar = $('bar_array_bubble');
-    //bar.innerText = array;
 
     // init array
-    // let parent = $('bubble');
     let span_id = "span_bubble";
     $('bubble').textContent = '';
     createSpan(span_id, array, $('bubble'));
@@ -182,22 +164,17 @@ async function bubbleSort()
             if (el_plus < el)
             {
                 let arri = $(span_id + i);
-                //let armi_hmtl = arri.innerHTML;
                 let armi_heigth = arri.style.height;
 
                 let arri_1 = $(span_id + (i + 1));
-                //let armi_1_hmtl = arri_1.innerHTML;
                 let armi_1_heigth = arri_1.style.height;
 
                 let temp = el;
                 array[i] = el_plus;
                 array[i + 1] = el;
-                //bar.innerText = array;
 
-                //arri.innerHTML = armi_1_hmtl;
                 arri.style.height = armi_1_heigth;
 
-                //arri_1.innerHTML = armi_hmtl;
                 arri_1.style.height = armi_heigth;
 
                 end = false;
