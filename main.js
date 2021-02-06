@@ -2,7 +2,7 @@ var array = [];
 var delay_ms = 10;
 
 
-function setNumberOfBars()
+function setBarQty()
 {
     let slider = $("n_bar_slider");
     let output = $("n_bar_value");
