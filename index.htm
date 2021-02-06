@@ -9,6 +9,12 @@
     <!-- <p id="init_array">?</p> -->
     <p><button onclick='genRandomArray()'>Generate random array</button></p>
 
+    <p>
+    <button onclick="selectionSortUnstable();
+                     selectionSortStable();
+                     bubbleSort()">All</button>
+    </p>
+
     <p>Number of elements: <span id="bar_qty_value">148</span></p>
     <input type="range" min="5" max="300" id="bar_qty_slider" oninput="setBarQty()">
 
@@ -27,11 +33,7 @@
     <div id="bubble"></div>
     <button onclick="bubbleSort()">Bubble sort</button>
 
-    <p>
-    <button onclick="selectionSortUnstable();
-                     selectionSortStable();
-                     bubbleSort()">All</button>
-    </p>
+    
 
     <p id="bot"></p>
 
