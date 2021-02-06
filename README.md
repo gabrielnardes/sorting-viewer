@@ -5,7 +5,7 @@ Sorting algorithms visualizer, written in HTML, CSS and Javascript.
 I wanted to learn front-end development, so it seemed like a good project to start it out.
 
 ### Goal features
-:white_large_square: Bar width slider control
+:white_check_mark: Bar width slider control
 
 :white_large_square: Bar height slider control
 
