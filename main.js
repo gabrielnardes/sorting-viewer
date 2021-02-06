@@ -42,6 +42,19 @@ function genRandomArray()
     array = [...gen_array];
 }
 
+function createSpan(span_id, length, my_array, superdiv)
+{
+    for (let i = 0; i < length; i++)
+    {
+        let span = document.createElement("span");
+        span.id = span_id + i;
+        //span.innerHTML = my_array[i];
+        span.classList.add("bar");
+        span.style.height = my_array[i] + "px";
+        superdiv.appendChild(span);
+    }
+}
+
 async function selectionSortUnstable()
 {
     let my_array = [...array];
@@ -54,15 +67,8 @@ async function selectionSortUnstable()
     let superdiv = $('div_unstable');
     let span_id = "span_unstable";
     superdiv.textContent = '';
-    for (let i = 0; i < length; i++)
-    {
-        let divTag = document.createElement("span");
-        divTag.id = span_id + i;
-        //divTag.innerHTML = my_array[i];
-        divTag.classList.add("bar");
-        divTag.style.height = my_array[i] + "px";
-        superdiv.appendChild(divTag);
-    }
+
+    createSpan(span_id, length, my_array, superdiv);
 
     for (let i = 0; i < length; i++)
     {
@@ -107,15 +113,7 @@ async function selectionSortStable()
     let superdiv = $('div_stable');
     let span_id = "span_stable";
     superdiv.textContent = '';
-    for (let i = 0; i < length; i++)
-    {
-        let divTag = document.createElement("span");
-        divTag.id = span_id + i;
-        //divTag.innerHTML = my_array[i];
-        divTag.classList.add("bar");
-        divTag.style.height = my_array[i] + "px";
-        superdiv.appendChild(divTag);
-    }
+    createSpan(span_id, length, my_array, superdiv);
 
     for (let i = 0; i < length; i++)
     {
@@ -173,15 +171,7 @@ async function bubbleSort()
     let superdiv = $('div_bubble');
     let span_id = "span_bubble";
     superdiv.textContent = '';
-    for (let i = 0; i < length; i++)
-    {
-        let divTag = document.createElement("span");
-        divTag.id = span_id + i;
-        //divTag.innerHTML = my_array[i];
-        divTag.classList.add("bar");
-        divTag.style.height = my_array[i] + "px";
-        superdiv.appendChild(divTag);
-    }
+    createSpan(span_id, length, my_array, superdiv);
 
     let end = false;
     while (end == false)
