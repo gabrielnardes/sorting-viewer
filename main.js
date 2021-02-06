@@ -33,7 +33,7 @@ function genRandomArray()
     for (let i = 0; i < size; i++)
     {
         // gen random number
-        gen_array[i] = random(bar_height_min, bar_height_max);
+        gen_array[i] = genRandomNumber(bar_height_min, bar_height_max);
 
         // print bars
         let divTag = document.createElement("span");
@@ -50,7 +50,7 @@ function genRandomArray()
     array = [...gen_array];
 }
 
-async function selection_sort_unstable()
+async function selectionSortUnstable()
 {
     let my_array = [...array];
     let length = array.length;
@@ -103,7 +103,7 @@ async function selection_sort_unstable()
     }
 }
 
-async function selection_sort_stable()
+async function selectionSortStable()
 {
     let my_array = [...array];
     let length = array.length;
@@ -169,7 +169,7 @@ async function selection_sort_stable()
     }
 }
 
-async function bubble_sort()
+async function bubbleSort()
 {
     let my_array = [...array];
     let length = array.length;
@@ -234,7 +234,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function random(min, max) {
+function genRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 

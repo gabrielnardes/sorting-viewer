@@ -16,18 +16,18 @@
     <input type="range" min="10" max="300" id="bar_height_slider" oninput="setBarHeight()">
 
     <div id="div_unstable"></div>
-    <button onclick="selection_sort_unstable()">Selection unstable sort</button>
+    <button onclick="selectionSortUnstable()">Selection unstable sort</button>
 
     <div id="div_stable"></div>
-    <button onclick="selection_sort_stable()">Selection stable sort</button>
+    <button onclick="selectionSortStable()">Selection stable sort</button>
 
     <div id="div_bubble"></div>
-    <button onclick="bubble_sort()">Bubble sort</button>
+    <button onclick="bubbleSort()">Bubble sort</button>
 
     <p>
-    <button onclick="selection_sort_unstable();
-                     selection_sort_stable();
-                     bubble_sort()">All</button>
+    <button onclick="selectionSortUnstable();
+                     selectionSortStable();
+                     bubbleSort()">All</button>
     </p>
 
     <p id="bot"></p>
