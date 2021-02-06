@@ -42,7 +42,7 @@ function genRandomArray()
     array = [...gen_array];
 }
 
-function createSpan(span_id, length, my_array, superdiv)
+function createSpan(span_id, length, my_array, parent)
 {
     for (let i = 0; i < length; i++)
     {
@@ -51,7 +51,7 @@ function createSpan(span_id, length, my_array, superdiv)
         //span.innerHTML = my_array[i];
         span.classList.add("bar");
         span.style.height = my_array[i] + "px";
-        superdiv.appendChild(span);
+        parent.appendChild(span);
     }
 }
 
@@ -64,11 +64,11 @@ async function selectionSortUnstable()
     //bar.innerText = my_array;
 
     // init array
-    let superdiv = $('div_unstable');
+    let parent = $('div_unstable');
     let span_id = "span_unstable";
-    superdiv.textContent = '';
+    parent.textContent = '';
 
-    createSpan(span_id, length, my_array, superdiv);
+    createSpan(span_id, length, my_array, parent);
 
     for (let i = 0; i < length; i++)
     {
@@ -110,10 +110,10 @@ async function selectionSortStable()
     //bar.innerText = my_array;
 
     // init array
-    let superdiv = $('div_stable');
+    let parent = $('div_stable');
     let span_id = "span_stable";
-    superdiv.textContent = '';
-    createSpan(span_id, length, my_array, superdiv);
+    parent.textContent = '';
+    createSpan(span_id, length, my_array, parent);
 
     for (let i = 0; i < length; i++)
     {
@@ -168,10 +168,10 @@ async function bubbleSort()
     //bar.innerText = my_array;
 
     // init array
-    let superdiv = $('div_bubble');
+    let parent = $('div_bubble');
     let span_id = "span_bubble";
-    superdiv.textContent = '';
-    createSpan(span_id, length, my_array, superdiv);
+    parent.textContent = '';
+    createSpan(span_id, length, my_array, parent);
 
     let end = false;
     while (end == false)
