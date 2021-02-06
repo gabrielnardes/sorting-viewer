@@ -4,8 +4,8 @@ var delay_ms = 10;
 
 function setBarQty()
 {
-    let slider = $("n_bar_slider");
-    let output = $("n_bar_value");
+    let slider = $("bar_qty_slider");
+    let output = $("bar_qty_value");
     output.innerHTML = slider.value;
     genRandomArray();
 }
@@ -20,7 +20,7 @@ function setBarHeight()
 
 function genRandomArray()
 {
-    let slider_bar_number = $("n_bar_slider");
+    let slider_bar_number = $("bar_qty_slider");
     let slider_bar_height = $("bar_height_slider");
 
     let bar_height_min = 5;
