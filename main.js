@@ -20,31 +20,23 @@ function setBarHeight()
 
 function genRandomArray()
 {
-    let slider_bar_number = $("bar_qty_slider");
-    let slider_bar_height = $("bar_height_slider");
+    $('bot').textContent = '';  // clean array
 
-    let bar_height_min = 5;
-    let bar_height_max = slider_bar_height.value;
     let gen_array = [];
-    let size = slider_bar_number.value;
-
-    $('bot').textContent = '';
-
-    for (let i = 0; i < size; i++)
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
-        // gen random number
-        gen_array[i] = genRandomNumber(bar_height_min, bar_height_max);
+        gen_array[i] = genRandomNumber(5, $("bar_height_slider").value);
 
-        // print bars
-        let divTag = document.createElement("span");
-        divTag.id = "span" + i;
-        //divTag.innerHTML = gen_array[i];
-        divTag.classList.add("bar");
-        divTag.style.height = gen_array[i] + "px";
-        $('bot').appendChild(divTag);
+        let span = document.createElement("span");
+        span.id = "span" + i;
+        //span.innerHTML = gen_array[i];
+        span.classList.add("bar");
+        span.style.height = gen_array[i] + "px";
+        $('bot').appendChild(span);
     }
 
-    let t = $('init_array');
+    // only for debug
+    //let t = $('init_array');
     //t.innerText = gen_array;
 
     array = [...gen_array];
