@@ -18,6 +18,14 @@ function setBarHeight()
     genRandomArray();
 }
 
+function setBarWidth()
+{
+    let slider = $("bar_width_slider");
+    let output = $("bar_width_value");
+    output.innerHTML = slider.value;
+    genRandomArray();
+}
+
 function genRandomArray()
 {
     $('bot').textContent = '';  // clean array
@@ -32,6 +40,7 @@ function genRandomArray()
         //span.innerHTML = gen_array[i];
         span.classList.add("bar");
         span.style.height = gen_array[i] + "px";
+        span.style.width = $("bar_width_slider").value + "px";
         $('bot').appendChild(span);
     }
 
@@ -48,7 +57,6 @@ function createSpan(span_id, array, parent)
     {
         let span = document.createElement("span");
         span.id = span_id + i;
-        //span.innerHTML = array[i];
         span.classList.add("bar");
         span.style.height = array[i] + "px";
         parent.appendChild(span);
@@ -58,9 +66,8 @@ function createSpan(span_id, array, parent)
 async function selectionSortUnstable()
 {
     let array = [...g_array];
-
-    // init array
     let span_id = "span_selection_u";
+
     $('selection_u').textContent = '';
 
     createSpan(span_id, array, $('selection_u'));
@@ -68,8 +75,8 @@ async function selectionSortUnstable()
     for (let i = 0; i < array.length; i++)
     {
         await sleep(delay_ms);
-        let min_i = i;
 
+        let min_i = i;
         for (let j = i + 1; j < array.length; j++)
             if (array[j] < array[min_i])
                 min_i = j;
@@ -78,16 +85,10 @@ async function selectionSortUnstable()
         let temp = array[min_i];
         array[min_i] = array[i];
         array[i] = temp;
-
-        let minindex = $(span_id + min_i);
-        let temp_bar = $(span_id + min_i);
-        let arri = $(span_id + i);
         
-        let tempheigth = temp_bar.style.height;
-
-        minindex.style.height = arri.style.height;
-
-        arri.style.height = tempheigth;
+        let temp_heigth = $(span_id + min_i).style.height;
+        $(span_id + min_i).style.height = $(span_id + i).style.height;
+        $(span_id + i).style.height = temp_heigth;
     }
 }
 

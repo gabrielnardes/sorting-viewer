@@ -9,11 +9,14 @@
     <!-- <p id="init_array">?</p> -->
     <p><button onclick='genRandomArray()'>Generate random array</button></p>
 
-    <p>Number of elements <span id="bar_qty_value">250</span></p>
+    <p>Number of elements: <span id="bar_qty_value">150</span></p>
     <input type="range" min="5" max="300" id="bar_qty_slider" oninput="setBarQty()">
 
-    <p>Max bar height <span id="bar_height_value">250</span></p>
+    <p>Max bar height: <span id="bar_height_value">150</span></p>
     <input type="range" min="10" max="300" id="bar_height_slider" oninput="setBarHeight()">
+
+    <p>Bar width: <span id="bar_width_value">10</span></p>
+    <input type="range" min="1" max="20" id="bar_width_slider" oninput="setBarWidth()">
 
     <div id="selection_u"></div>
     <button onclick="selectionSortUnstable()">Selection unstable sort</button>
