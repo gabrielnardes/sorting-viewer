@@ -1,4 +1,4 @@
-var array = [];
+var g_array = [];
 var delay_ms = 10;
 
 
@@ -39,7 +39,7 @@ function genRandomArray()
     //let t = $('init_array');
     //t.innerText = gen_array;
 
-    array = [...gen_array];
+    g_array = [...gen_array];
 }
 
 function createSpan(span_id, length, my_array, parent)
@@ -57,8 +57,8 @@ function createSpan(span_id, length, my_array, parent)
 
 async function selectionSortUnstable()
 {
-    let my_array = [...array];
-    let length = array.length;
+    let my_array = [...g_array];
+    let length = g_array.length;
     
     let bar = $('bar_array_unstable');
     //bar.innerText = my_array;
@@ -103,8 +103,8 @@ async function selectionSortUnstable()
 
 async function selectionSortStable()
 {
-    let my_array = [...array];
-    let length = array.length;
+    let my_array = [...g_array];
+    let length = g_array.length;
     
     let bar = $('bar_array_stable');
     //bar.innerText = my_array;
@@ -161,8 +161,8 @@ async function selectionSortStable()
 
 async function bubbleSort()
 {
-    let my_array = [...array];
-    let length = array.length;
+    let my_array = [...g_array];
+    let length = g_array.length;
     
     let bar = $('bar_array_bubble');
     //bar.innerText = my_array;
