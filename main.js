@@ -42,33 +42,33 @@ function genRandomArray()
     g_array = [...gen_array];
 }
 
-function createSpan(span_id, length, my_array, parent)
+function createSpan(span_id, length, array, parent)
 {
     for (let i = 0; i < length; i++)
     {
         let span = document.createElement("span");
         span.id = span_id + i;
-        //span.innerHTML = my_array[i];
+        //span.innerHTML = array[i];
         span.classList.add("bar");
-        span.style.height = my_array[i] + "px";
+        span.style.height = array[i] + "px";
         parent.appendChild(span);
     }
 }
 
 async function selectionSortUnstable()
 {
-    let my_array = [...g_array];
+    let array = [...g_array];
     let length = g_array.length;
     
     let bar = $('bar_array_unstable');
-    //bar.innerText = my_array;
+    //bar.innerText = array;
 
     // init array
     let parent = $('selection_u');
     let span_id = "span_selection_u";
     parent.textContent = '';
 
-    createSpan(span_id, length, my_array, parent);
+    createSpan(span_id, length, array, parent);
 
     for (let i = 0; i < length; i++)
     {
@@ -76,15 +76,15 @@ async function selectionSortUnstable()
         let min_i = i;
 
         for (let j = i + 1; j < length; j++)
-            if (my_array[j] < my_array[min_i])
+            if (array[j] < array[min_i])
                 min_i = j;
 
         // swap
-        let temp = my_array[min_i];
-        my_array[min_i] = my_array[i];
-        my_array[i] = temp;
+        let temp = array[min_i];
+        array[min_i] = array[i];
+        array[i] = temp;
 
-        //bar.innerText = my_array;
+        //bar.innerText = array;
 
         let minindex = $(span_id + min_i);
         let temp_bar = $(span_id + min_i);
@@ -103,28 +103,28 @@ async function selectionSortUnstable()
 
 async function selectionSortStable()
 {
-    let my_array = [...g_array];
+    let array = [...g_array];
     let length = g_array.length;
     
     let bar = $('bar_array_stable');
-    //bar.innerText = my_array;
+    //bar.innerText = array;
 
     // init array
     let parent = $('selection_s');
     let span_id = "span_selection_s";
     parent.textContent = '';
-    createSpan(span_id, length, my_array, parent);
+    createSpan(span_id, length, array, parent);
 
     for (let i = 0; i < length; i++)
     {
         let min_i = i;
 
         for (let j = i + 1; j < length; j++)
-            if (my_array[j] < my_array[min_i])
+            if (array[j] < array[min_i])
                 min_i = j;
 
         //push elements
-        let min = my_array[min_i];
+        let min = array[min_i];
         let arrmin = $(span_id + min_i);
         //let armin_html = arrmin.innerHTML;
         let armin_heigth = arrmin.style.height;
@@ -141,17 +141,17 @@ async function selectionSortStable()
             //let armm_1_hmtl = arrm_1.innerHTML;
             let armm_1_heigth = arrm_1.style.height;
 
-            my_array[m] = my_array[m-1];
+            array[m] = array[m-1];
             //arrm.innerHTML = armm_1_hmtl;
             arrm.style.height = armm_1_heigth;
 
-            my_array[m-1] = min;
+            array[m-1] = min;
             //arrm_1.innerHTML = armin_html;
             arrm_1.style.height = armin_heigth;
-            //bar.innerText = my_array;
+            //bar.innerText = array;
         }
 
-        my_array[i] = min;
+        array[i] = min;
 
         let arri = $(span_id + i);
         //arri.innerHTML = armin_html;
@@ -161,17 +161,17 @@ async function selectionSortStable()
 
 async function bubbleSort()
 {
-    let my_array = [...g_array];
+    let array = [...g_array];
     let length = g_array.length;
     
     let bar = $('bar_array_bubble');
-    //bar.innerText = my_array;
+    //bar.innerText = array;
 
     // init array
     let parent = $('bubble');
     let span_id = "span_bubble";
     parent.textContent = '';
-    createSpan(span_id, length, my_array, parent);
+    createSpan(span_id, length, array, parent);
 
     let end = false;
     while (end == false)
@@ -181,8 +181,8 @@ async function bubbleSort()
         for (let i = 0; i < length; i++)
         {
 
-            let el = my_array[i];
-            let el_plus = my_array[i + 1];
+            let el = array[i];
+            let el_plus = array[i + 1];
 
             if (el_plus < el)
             {
@@ -195,9 +195,9 @@ async function bubbleSort()
                 let armi_1_heigth = arri_1.style.height;
 
                 let temp = el;
-                my_array[i] = el_plus;
-                my_array[i + 1] = el;
-                //bar.innerText = my_array;
+                array[i] = el_plus;
+                array[i + 1] = el;
+                //bar.innerText = array;
 
                 //arri.innerHTML = armi_1_hmtl;
                 arri.style.height = armi_1_heigth;
