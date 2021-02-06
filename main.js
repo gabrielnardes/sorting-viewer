@@ -51,12 +51,12 @@ function genRandomArray()
     g_array = [...gen_array];
 }
 
-function createSpan(span_id, array, parent)
+function createSpan(id, array, parent)
 {
     for (let i = 0; i < array.length; i++)
     {
         let span = document.createElement("span");
-        span.id = span_id + i;
+        span.id = id + i;
         span.classList.add("bar");
         span.style.height = array[i] + "px";
         parent.appendChild(span);
@@ -66,11 +66,11 @@ function createSpan(span_id, array, parent)
 async function selectionSortUnstable()
 {
     let array = [...g_array];
-    let span_id = "span_selection_u";
+    let id = "span_selection_u";
 
     $('selection_u').textContent = '';
 
-    createSpan(span_id, array, $('selection_u'));
+    createSpan(id, array, $('selection_u'));
 
     for (let i = 0; i < array.length; i++)
     {
@@ -86,20 +86,20 @@ async function selectionSortUnstable()
         array[min_i] = array[i];
         array[i] = temp;
         
-        let temp_heigth = $(span_id + min_i).style.height;
-        $(span_id + min_i).style.height = $(span_id + i).style.height;
-        $(span_id + i).style.height = temp_heigth;
+        let temp_heigth = $(id + min_i).style.height;
+        $(id + min_i).style.height = $(id + i).style.height;
+        $(id + i).style.height = temp_heigth;
     }
 }
 
 async function selectionSortStable()
 {
     let array = [...g_array];
-    let span_id = "span_selection_s";
+    let id = "span_selection_s";
 
     $('selection_s').textContent = '';
 
-    createSpan(span_id, array, $('selection_s'));
+    createSpan(id, array, $('selection_s'));
 
     for (let i = 0; i < array.length; i++)
     {
@@ -112,72 +112,63 @@ async function selectionSortStable()
 
         // push elements
         let min = array[min_i];
-        let min_heigth = $(span_id + min_i).style.height;
+        let min_heigth = $(id + min_i).style.height;
         for (let m = min_i; m > i; m--)
         {
             array[m] = array[m-1];
-            $(span_id + m).style.height = $(span_id + (m - 1)).style.height;
+            $(id + m).style.height = $(id + (m - 1)).style.height;
 
             array[m-1] = min;
-            $(span_id + (m - 1)).style.height = min_heigth;
+            $(id + (m - 1)).style.height = min_heigth;
         }
 
         array[i] = min;
-        $(span_id + i).style.height = min_heigth;
+        $(id + i).style.height = min_heigth;
     }
 }
 
 async function bubbleSort()
 {
     let array = [...g_array];
-    
-    let bar = $('bar_array_bubble');
+    let id = "span_bubble";
 
-    // init array
-    let span_id = "span_bubble";
     $('bubble').textContent = '';
-    createSpan(span_id, array, $('bubble'));
 
-    let end = false;
-    while (end == false)
+    createSpan(id, array, $('bubble'));
+
+    let sort_incomplete = true;
+    while (sort_incomplete)
     {
-        end = true;
-            await sleep(delay_ms);
+        await sleep(delay_ms);
+        
+        sort_incomplete = false;
         for (let i = 0; i < array.length; i++)
         {
-
-            let el = array[i];
-            let el_plus = array[i + 1];
-
-            if (el_plus < el)
+            if (array[i + 1] < array[i])
             {
-                let arri = $(span_id + i);
-                let armi_heigth = arri.style.height;
+                let temp = array[i];
+                let temp_bar = $(id + i).style.height;
 
-                let arri_1 = $(span_id + (i + 1));
-                let armi_1_heigth = arri_1.style.height;
+                array[i] = array[i + 1];
+                $(id + i).style.height = $(id + (i + 1)).style.height;
 
-                let temp = el;
-                array[i] = el_plus;
-                array[i + 1] = el;
+                array[i + 1] = temp;
+                $(id + (i + 1)).style.height = temp_bar;
 
-                arri.style.height = armi_1_heigth;
-
-                arri_1.style.height = armi_heigth;
-
-                end = false;
+                sort_incomplete = true;
             }
         }
     }
-    console.log("end");
 }
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function genRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) ) + min;
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 
-function $(x) { return document.getElementById(x); } 
+function $(x) { 
+    return document.getElementById(x); 
+} 
