@@ -1,22 +1,29 @@
 var g_array = [];
 var delay_ms = 10;
 
+function mySpan(id, height, div, i)
+{
+    let span = document.createElement("span");
+    span.id = id + i;
+    span.classList.add("bar");
+    span.style.height = height + "px";
+    span.style.width = $("bar_width_slider").value + "px";
+    $(div).appendChild(span);
+}
+
 function createBars()
 {
-    $('bot').textContent = '';  // clean array
+    $("bot").textContent = '';  // clean array
 
     let gen_array = [];
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
         gen_array[i] = genRandomNumber(5, $("bar_height_slider").value);
 
-        let span = document.createElement("span");
-        span.id = "span" + i;
-        //span.innerHTML = gen_array[i];
-        span.classList.add("bar");
-        span.style.height = gen_array[i] + "px";
-        span.style.width = $("bar_width_slider").value + "px";
-        $('bot').appendChild(span);
+        mySpan("span", gen_array[i], "bot", i);
+        mySpan("span_selection_u", gen_array[i], "selection_u", i);
+        mySpan("span_selection_s", gen_array[i], "selection_s", i);
+        mySpan("span_bubble", gen_array[i], "bubble", i);
     }
 
     g_array = [...gen_array];
@@ -47,9 +54,9 @@ function setBarWidth()
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
         $("span" + i).style.width = width;
-        //$("span_selection_u" + i).style.width = width;
-        //$("span_selection_s" + i).style.width = width;
-        //$("span_bubble" + i).style.width = width;
+        $("span_selection_u" + i).style.width = width;
+        $("span_selection_s" + i).style.width = width;
+        $("span_bubble" + i).style.width = width;
     }
 }
 
@@ -97,7 +104,7 @@ async function selectionSortUnstable()
     let array = [...g_array];
     let id = "span_selection_u";
 
-    $('selection_u').textContent = '';
+    $("selection_u").textContent = '';
 
     createSpan(id, array, $('selection_u'));
 
@@ -114,7 +121,8 @@ async function selectionSortUnstable()
         let temp = array[min_i];
         array[min_i] = array[i];
         array[i] = temp;
-        
+
+
         let temp_heigth = $(id + min_i).style.height;
         $(id + min_i).style.height = $(id + i).style.height;
         $(id + i).style.height = temp_heigth;
