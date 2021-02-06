@@ -64,8 +64,8 @@ async function selectionSortUnstable()
     //bar.innerText = my_array;
 
     // init array
-    let parent = $('div_unstable');
-    let span_id = "span_unstable";
+    let parent = $('selection_u');
+    let span_id = "span_selection_u";
     parent.textContent = '';
 
     createSpan(span_id, length, my_array, parent);
@@ -110,8 +110,8 @@ async function selectionSortStable()
     //bar.innerText = my_array;
 
     // init array
-    let parent = $('div_stable');
-    let span_id = "span_stable";
+    let parent = $('selection_s');
+    let span_id = "span_selection_s";
     parent.textContent = '';
     createSpan(span_id, length, my_array, parent);
 
@@ -168,7 +168,7 @@ async function bubbleSort()
     //bar.innerText = my_array;
 
     // init array
-    let parent = $('div_bubble');
+    let parent = $('bubble');
     let span_id = "span_bubble";
     parent.textContent = '';
     createSpan(span_id, length, my_array, parent);
