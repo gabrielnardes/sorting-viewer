@@ -1,6 +1,26 @@
 var g_array = [];
 var delay_ms = 10;
 
+function createBars()
+{
+    $('bot').textContent = '';  // clean array
+
+    let gen_array = [];
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
+    {
+        gen_array[i] = genRandomNumber(5, $("bar_height_slider").value);
+
+        let span = document.createElement("span");
+        span.id = "span" + i;
+        //span.innerHTML = gen_array[i];
+        span.classList.add("bar");
+        span.style.height = gen_array[i] + "px";
+        span.style.width = $("bar_width_slider").value + "px";
+        $('bot').appendChild(span);
+    }
+
+    g_array = [...gen_array];
+}
 
 function setBarQty()
 {
@@ -20,10 +40,17 @@ function setBarHeight()
 
 function setBarWidth()
 {
-    let slider = $("bar_width_slider");
-    let output = $("bar_width_value");
-    output.innerHTML = slider.value;
-    genRandomArray();
+    $("bar_width_value").innerHTML = $("bar_width_slider").value;
+
+    let width = $("bar_width_slider").value + "px";
+
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
+    {
+        $("span" + i).style.width = width;
+        //$("span_selection_u" + i).style.width = width;
+        //$("span_selection_s" + i).style.width = width;
+        //$("span_bubble" + i).style.width = width;
+    }
 }
 
 function genRandomArray()
@@ -36,6 +63,7 @@ function genRandomArray()
         gen_array[i] = genRandomNumber(5, $("bar_height_slider").value);
 
         let span = document.createElement("span");
+        //let span = $("span" + i);
         span.id = "span" + i;
         //span.innerHTML = gen_array[i];
         span.classList.add("bar");
@@ -58,6 +86,7 @@ function createSpan(id, array, parent)
         let span = document.createElement("span");
         span.id = id + i;
         span.classList.add("bar");
+        span.style.width = $("bar_width_slider").value + "px";
         span.style.height = array[i] + "px";
         parent.appendChild(span);
     }
