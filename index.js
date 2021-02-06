@@ -1,4 +1,5 @@
 var g_array = [];
+var random_array = [];
 var delay_ms = 10;
 
 function mySpan(id, height, div, i)
@@ -18,7 +19,9 @@ function createBars()
     let gen_array = [];
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
-        gen_array[i] = genRandomNumber(5, $("bar_height_slider").value);
+        //gen_array[i] = genRandomNumber(5, $("bar_height_slider").value);
+        random_array[i] = genRandomNumber(5, 300);
+        gen_array[i] =  random_array[i] * $("bar_height_slider").value / 100;
 
         mySpan("span", gen_array[i], "bot", i);
         mySpan("span_selection_u", gen_array[i], "selection_u", i);
@@ -39,10 +42,24 @@ function setBarQty()
 
 function setBarHeight()
 {
-    let slider = $("bar_height_slider");
-    let output = $("bar_height_value");
-    output.innerHTML = slider.value;
-    genRandomArray();
+    let gen_array = [];
+
+    $("bar_height_value").innerHTML = $("bar_height_slider").value;
+
+    $('bot').textContent = '';
+    $('selection_u').textContent = '';
+    $('selection_s').textContent = '';
+    $('bubble').textContent = '';
+
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
+    {
+        g_array[i] =  random_array[i] * $("bar_height_slider").value / 100;
+
+        mySpan("span", g_array[i], "bot", i);
+        mySpan("span_selection_u", g_array[i], "selection_u", i);
+        mySpan("span_selection_s", g_array[i], "selection_s", i);
+        mySpan("span_bubble", g_array[i], "bubble", i);
+    }
 }
 
 function setBarWidth()
@@ -67,7 +84,11 @@ function genRandomArray()
     let gen_array = [];
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
-        gen_array[i] = genRandomNumber(5, $("bar_height_slider").value);
+        //gen_array[i] = genRandomNumber(5, $("bar_height_slider").value);
+        //gen_array[i] = genRandomNumber(5, 300) * $("bar_height_slider").value / 100;
+
+        random_array[i] = genRandomNumber(5, 300);
+        gen_array[i] =  random_array[i] * $("bar_height_slider").value / 100;
 
         let span = document.createElement("span");
         //let span = $("span" + i);
