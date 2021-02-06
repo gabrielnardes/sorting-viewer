@@ -81,7 +81,7 @@ async function selectionSortUnstable()
             if (array[j] < array[min_i])
                 min_i = j;
 
-        // swap
+        // swap elements
         let temp = array[min_i];
         array[min_i] = array[i];
         array[i] = temp;
@@ -95,48 +95,35 @@ async function selectionSortUnstable()
 async function selectionSortStable()
 {
     let array = [...g_array];
-    
-    let bar = $('bar_array_stable');
-
-    // init array
     let span_id = "span_selection_s";
+
     $('selection_s').textContent = '';
+
     createSpan(span_id, array, $('selection_s'));
 
     for (let i = 0; i < array.length; i++)
     {
-        let min_i = i;
+        await sleep(delay_ms);
 
+        let min_i = i;
         for (let j = i + 1; j < array.length; j++)
             if (array[j] < array[min_i])
                 min_i = j;
 
-        //push elements
+        // push elements
         let min = array[min_i];
-        let arrmin = $(span_id + min_i);
-        let armin_heigth = arrmin.style.height;
-
-        await sleep(delay_ms);
+        let min_heigth = $(span_id + min_i).style.height;
         for (let m = min_i; m > i; m--)
         {
-
-            let arrm = $(span_id + m);
-            let armm_heigth = arrm.style.height;
-
-            let arrm_1 = $(span_id + (m - 1));
-            let armm_1_heigth = arrm_1.style.height;
-
             array[m] = array[m-1];
-            arrm.style.height = armm_1_heigth;
+            $(span_id + m).style.height = $(span_id + (m - 1)).style.height;
 
             array[m-1] = min;
-            arrm_1.style.height = armin_heigth;
+            $(span_id + (m - 1)).style.height = min_heigth;
         }
 
         array[i] = min;
-
-        let arri = $(span_id + i);
-        arri.style.height = armin_heigth;
+        $(span_id + i).style.height = min_heigth;
     }
 }
 
