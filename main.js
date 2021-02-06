@@ -2,16 +2,38 @@ var array = [];
 var delay_ms = 10;
 
 
-function gen_array(size, min, max)
+function setNumberOfBars()
 {
+    let slider = $("n_bar_slider");
+    let output = $("n_bar_value");
+    output.innerHTML = slider.value;
+    genRandomArray();
+}
+
+function setBarHeight()
+{
+    let slider = $("bar_height_slider");
+    let output = $("bar_height_value");
+    output.innerHTML = slider.value;
+    genRandomArray();
+}
+
+function genRandomArray()
+{
+    let slider_bar_number = $("n_bar_slider");
+    let slider_bar_height = $("bar_height_slider");
+
+    let bar_height_min = 5;
+    let bar_height_max = slider_bar_height.value;
     let gen_array = [];
+    let size = slider_bar_number.value;
 
     $('bot').textContent = '';
 
     for (let i = 0; i < size; i++)
     {
         // gen random number
-        gen_array[i] = random(min, max);
+        gen_array[i] = random(bar_height_min, bar_height_max);
 
         // print bars
         let divTag = document.createElement("span");

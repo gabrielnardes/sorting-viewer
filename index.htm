@@ -4,11 +4,16 @@
     <title>Selection sorting</title>
     <script src="main.js"></script>
     <link rel="stylesheet" href="main.css">
-
 </head>
 <body>
     <!-- <p id="init_array">?</p> -->
-    <p><button onclick='gen_array(300, 5, 200)'>Generate random array</button></p>
+    <p><button onclick='genRandomArray()'>Generate random array</button></p>
+
+    <p>Number of elements <span id="n_bar_value">250</span></p>
+    <input type="range" min="5" max="300" id="n_bar_slider" oninput="setNumberOfBars()">
+
+    <p>Max bar height <span id="bar_height_value">250</span></p>
+    <input type="range" min="10" max="300" id="bar_height_slider" oninput="setBarHeight()">
 
     <div id="div_unstable"></div>
     <button onclick="selection_sort_unstable()">Selection unstable sort</button>
