@@ -132,6 +132,13 @@ function reset(id)
     }
 }
 
+function resetAll()
+{
+    reset("span_selection_u");
+    reset("span_selection_s");
+    reset("span_bubble");
+}
+
 async function selectionSortUnstable()
 {
     let array = [...random_array];
