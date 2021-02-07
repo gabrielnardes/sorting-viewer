@@ -7,7 +7,7 @@ I wanted to learn front-end development, so it seemed like a good project to sta
 ### Goal features
 :white_check_mark: Bar width slider control
 
-:white_large_square: Bar height slider control
+:white_check_mark: Bar height slider control
 
 :white_large_square: Quantity of bars slider control
 

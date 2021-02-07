@@ -1,4 +1,3 @@
-var g_array = [];
 var random_array = [];
 var delay_ms = 10;
 var old_height = 55;
@@ -11,25 +10,22 @@ function createRandomArray()
 
 function createBars()
 {
-    //let gen_array = [];
     // CHANGE THIS SLIDER
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
         let random =  random_array[i] * $("bar_height_slider").value / 100;
-        mySpan("span", random, "bot", i);
-        mySpan("span_selection_u", random, "selection_u", i);
-        mySpan("span_selection_s", random, "selection_s", i);
-        mySpan("span_bubble", random, "bubble", i);
-    }
 
-    //g_array = [...gen_array];
+        createSpan("span",             random, "bot",         i);
+        createSpan("span_selection_u", random, "selection_u", i);
+        createSpan("span_selection_s", random, "selection_s", i);
+        createSpan("span_bubble",      random, "bubble",      i);
+    }
 
     $("bar_height_value").innerHTML = $("bar_height_slider").value;
 }
 
 function genRandomArray()
 {
-    reset("span");
     resetAll();   
 
     for (let i = 0; i < $("bar_qty_slider").value; i++)
@@ -45,14 +41,14 @@ function genRandomArray()
     }
 }
 
-function mySpan(id, height, div, i)
+function createSpan(id, height, parent, i)
 {
     let span = document.createElement("span");
     span.id = id + i;
     span.classList.add("bar");
     span.style.height = height + "px";
     span.style.width = $("bar_width_slider").value + "px";
-    $(div).appendChild(span);
+    $(parent).appendChild(span);
 }
 
 function setBarQty()
@@ -99,32 +95,35 @@ function setBarWidth()
     }
 }
 
-function createSpan(id, array, parent)
-{
-    for (let i = 0; i < array.length; i++)
-    {
-        let span = document.createElement("span");
-        span.id = id + i;
-        span.classList.add("bar");
-        span.style.width = $("bar_width_slider").value + "px";
-        span.style.height = array[i] + "px";
-        parent.appendChild(span);
-    }
-}
-
 function reset(id)
 {
     for (let i = 0; i < $("bar_qty_slider").value; i++)
-    {
         $(id + i).style.height = random_array[i] * $("bar_height_slider").value / 100 + "px";
+}
+
+function resetAlgorithms()
+{
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
+    {
+        let random_scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
+
+        $("span_selection_u" + i).style.height = random_scaled;
+        $("span_selection_s" + i).style.height = random_scaled;
+        $("span_bubble" + i).style.height = random_scaled;
     }
 }
 
 function resetAll()
 {
-    reset("span_selection_u");
-    reset("span_selection_s");
-    reset("span_bubble");
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
+    {
+        let random_scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
+
+        $("span" + i).style.height =             random_scaled;
+        $("span_selection_u" + i).style.height = random_scaled;
+        $("span_selection_s" + i).style.height = random_scaled;
+        $("span_bubble" + i).style.height =      random_scaled;
+    }
 }
 
 async function selectionSortUnstable()
