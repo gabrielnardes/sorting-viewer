@@ -29,32 +29,20 @@ function createBars()
 
 function genRandomArray()
 {
-    $('bot').textContent = '';  // clean array
+    reset("span");
+    resetAll();   
 
-    let gen_array = [];
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
-        //gen_array[i] = genRandomNumber(5, $("bar_height_slider").value);
-        //gen_array[i] = genRandomNumber(5, 300) * $("bar_height_slider").value / 100;
-
         random_array[i] = genRandomNumber(5, 300);
-        gen_array[i] =  random_array[i] * $("bar_height_slider").value / 100;
 
-        let span = document.createElement("span");
-        //let span = $("span" + i);
-        span.id = "span" + i;
-        //span.innerHTML = gen_array[i];
-        span.classList.add("bar");
-        span.style.height = gen_array[i] + "px";
-        span.style.width = $("bar_width_slider").value + "px";
-        $('bot').appendChild(span);
+        let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
+
+        $("span" + i).style.height             = random_scaled;
+        $("span_selection_u" + i).style.height = random_scaled;
+        $("span_selection_s" + i).style.height = random_scaled;
+        $("span_bubble" + i).style.height      = random_scaled;
     }
-
-    // only for debug
-    //let t = $('init_array');
-    //t.innerText = gen_array;
-
-    g_array = [...gen_array];
 }
 
 function mySpan(id, height, div, i)
