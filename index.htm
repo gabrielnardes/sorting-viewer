@@ -5,7 +5,7 @@
     <script src="index.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
-<body onload="createBars()">
+<body onload="createRandomArray(); createBars()">
     <!-- <p id="init_array">?</p> -->
     <p><button onclick='genRandomArray()'>Generate random array</button></p>
 
@@ -15,10 +15,10 @@
                      bubbleSort()">All</button>
     </p>
 
-    <p>Number of elements: <span id="bar_qty_value">148</span></p>
+    <p>Number of elements: <span id="bar_qty_value">153</span></p>
     <input type="range" min="5" max="300" id="bar_qty_slider" oninput="setBarQty()">
 
-    <p>Max bar height: <span id="bar_height_value">50</span>%</p>
+    <p>Max bar height: <span id="bar_height_value"></span>%</p>
     <input type="range" min="10" max="100" id="bar_height_slider" oninput="setBarHeight()">
 
     <p>Bar width: <span id="bar_width_value">4</span></p>
