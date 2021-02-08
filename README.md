@@ -9,7 +9,7 @@ I wanted to learn front-end development, so it seemed like a good project to sta
 
 :white_check_mark: Bar height slider control
 
-:white_large_square: Quantity of bars slider control
+:white_check_mark: Quantity of bars slider control
 
 :white_large_square: Download video of the algoritms
 
