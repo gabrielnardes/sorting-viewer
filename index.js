@@ -10,14 +10,8 @@ function createRandomArray()
         random_array[i] = genRandomNumber(5, 300);      // height: min and max
 
         while (random_array[i] % 10 !== 0)
-        {
-            random_array[i] = genRandomNumber(5, 300); 
-        }
-
-        console.log(random_array[i]);
-
+            random_array[i] = genRandomNumber(5, 300);
     }
-    console.log("end");
 }
 
 function createBars()
@@ -28,8 +22,6 @@ function createBars()
         createSpan("span_selection_u", "selection_u", i);
         createSpan("span_selection_s", "selection_s", i);
         createSpan("span_bubble",      "bubble",      i);
-                console.log(i);
-
     }
 
     for (let i = 0; i < $("bar_qty_slider").value; i++)
@@ -67,6 +59,9 @@ function genRandomArray()
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
         random_array[i] = genRandomNumber(5, 300);
+        while (random_array[i] % 10 !== 0)
+            random_array[i] = genRandomNumber(5, 300);
+
         let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
 
         $("span" + i).style.height             = random_scaled;
@@ -82,10 +77,6 @@ function setBarQty()
     $("bar_qty_value").innerHTML = $("bar_qty_slider").value;
 
     let next_bar_qty = parseInt($("bar_qty_slider").value);
-
-    console.log(bar_qty);
-    console.log(next_bar_qty);
-
 
     if (bar_qty > next_bar_qty)
     {
@@ -152,6 +143,12 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_selection_u" + i).style.height = random_scaled;
         $("span_selection_s" + i).style.height = random_scaled;
         $("span_bubble" + i).style.height      = random_scaled;
+
+        let width = $("bar_width_slider").value + "px";
+        $("span" + i).style.width = width;
+        $("span_selection_u" + i).style.width = width;
+        $("span_selection_s" + i).style.width = width;
+        $("span_bubble" + i).style.width = width;
     }
 }
 
@@ -159,7 +156,6 @@ function subBarQty(bar_qty, next_bar_qty)
 {
     for (let i = $("bar_qty_slider").max - 1; i >= next_bar_qty; i--)
     { 
-        console.log(i);
         let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
 
         $("span" + i).style.height             = 0;
@@ -257,10 +253,6 @@ async function selectionSortUnstable()
 
         array[min_i] = array[i];
         $(id + min_i).style.height = Math.round(array[i] * $("bar_height_slider").value / 100) + "px";
-        console.log($(id + min_i).style.height);
-        //console.log(array[i] * $("bar_height_slider").value / 100 + "px");
-        console.log("  ");
-
 
         array[i] = temp;
         $(id + i).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
