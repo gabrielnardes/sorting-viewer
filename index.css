@@ -4,3 +4,8 @@
     display:inline-block;
     width: 3px;
 }
+
+.graph {
+    border-style: solid;
+
+}

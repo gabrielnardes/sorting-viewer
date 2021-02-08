@@ -14,6 +14,7 @@
                      selectionSortStable();
                      bubbleSort()">Play all</button>
     <button onclick="resetAlgorithms()">Reset all</button>
+    <button onclick="count()">count</button>
     </p>
 
     <p>Number of elements: <span id="bar_qty_value"></span></p>
@@ -25,20 +26,21 @@
     <p>Bar width: <span id="bar_width_value"></span></p>
     <input type="range" min="1" max="7" id="bar_width_slider" oninput="setBarWidth()">
 
-    <div id="selection_u"></div>
+    <div id="selection_u" class="graph"></div>
     <button onclick="selectionSortUnstable()">Play</button>
     <button onclick="reset('span_selection_u')">Reset</button>
     <span>Selection unstable sort</span> 
 
-    <div id="selection_s"></div>
+    <div id="bubble" class="graph"></div>
+    <button onclick="bubbleSort()">Play</button>
+    <button onclick="reset('span_bubble')">Reset</button>
+    <span>Bubble sort</span> 
+
+    <div id="selection_s" class="graph"></div>
     <button onclick="selectionSortStable()">Play</button>
     <button onclick="reset('span_selection_s')">Reset</button>
     <span>Selection stable sort</span> 
 
-    <div id="bubble"></div>
-    <button onclick="bubbleSort()">Play</button>
-    <button onclick="reset('span_bubble')">Reset</button>
-    <span>Bubble sort</span> 
 
     <p id="bot"></p>
 
