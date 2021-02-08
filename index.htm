@@ -7,41 +7,78 @@
 </head>
 <body onload="createRandomArray(); createBars()">
     <!-- <p id="init_array">?</p> -->
-    <p><button onclick='genRandomArray()'>Generate random array</button></p>
-
-    <p>
-    <button onclick="selectionSortUnstable();
-                     selectionSortStable();
-                     bubbleSort()">Play all</button>
-    <button onclick="resetAlgorithms()">Reset all</button>
-    </p>
-
-    <p>Number of elements: <span id="bar_qty_value"></span></p>
-    <input type="range" min="5" max="100" id="bar_qty_slider" oninput="setBarQty()">
-
-    <p>Max bar height: <span id="bar_height_value"></span>%</p>
-    <input type="range" min="10" max="100" id="bar_height_slider" oninput="setBarHeight()">
-
-    <p>Bar width: <span id="bar_width_value"></span></p>
-    <input type="range" min="1" max="7" id="bar_width_slider" oninput="setBarWidth()">
-
-    <div id="selection_u" class="graph"></div>
-    <button onclick="selectionSortUnstable()">Play</button>
-    <button onclick="reset('span_selection_u')">Reset</button>
-    <span>Selection unstable sort</span> 
-
-    <div id="bubble" class="graph"></div>
-    <button onclick="bubbleSort()">Play</button>
-    <button onclick="reset('span_bubble')">Reset</button>
-    <span>Bubble sort</span> 
-
-    <div id="selection_s" class="graph"></div>
-    <button onclick="selectionSortStable()">Play</button>
-    <button onclick="reset('span_selection_s')">Reset</button>
-    <span>Selection stable sort</span> 
-
-
+    <div id="top_bar">
+        <span>
+            <button onclick='genRandomArray()'>Generate random array</button>
+            <button onclick="selectionSortUnstable();
+                             selectionSortStable();
+                             bubbleSort()
+                             insertionSort()">Play all</button>
+            <button onclick="resetAlgorithms()">Reset all</button>
+        </span>
+        <span>
+            <span>Number of elements: <span id="bar_qty_value"></span></span>
+            <input type="range" min="15" max="250" id="bar_qty_slider" oninput="setBarQty()">
+        </span>
+        <span>
+            <span>Max bar height: <span id="bar_height_value"></span>%</span>
+            <input type="range" min="10" max="100" id="bar_height_slider" oninput="setBarHeight()">
+        </span>
+        <span>
+            <span>Bar width: <span id="bar_width_value"></span></span>
+            <input type="range" min="1" max="6" id="bar_width_slider" oninput="setBarWidth()">
+        </span>
+    </div>
+    <table>
+        <tr>
+            <td id="selection_u" class="graph"></td>
+            <td id="selection_s" class="graph"></td>
+            <td id="bubble" class="graph"></td>
+        </tr>
+        <tr>
+            <td><button onclick="selectionSortUnstable()">Play</button>
+                <button onclick="reset('span_selection_u')">Reset</button>
+                <span>Selection unstable sort</span> </td>
+            <td><button onclick="selectionSortStable()">Play</button>
+                <button onclick="reset('span_selection_s')">Reset</button>
+                <span>Selection stable sort</span> </td>
+            <td><button onclick="bubbleSort()">Play</button>
+                <button onclick="reset('span_bubble')">Reset</button>
+                <span>Bubble sort</span>  </td>  
+        </tr>
+        <tr>
+            <td id="insertion" class="graph"></td>
+            <td id="merge" class="graph"></td>
+            <td id="quick" class="graph"></td>
+        </tr>
+        <tr>
+            <td><button onclick="insertionSort()">Play</button>
+                <button onclick="reset('span_insertion')">Reset</button>
+                <span>Insertion sort</span>  </td>  
+            <td><button onclick="mergeSort()">Play</button>
+                <button onclick="reset('span_merge')">Reset</button>
+                <span>Merge sort</span> </td>
+            <td><button onclick="quickSort()">Play</button>
+                <button onclick="reset('span_quick')">Reset</button>
+                <span>Quick sort</span>  </td>  
+        </tr>
+        <tr>
+            <td id="heap" class="graph"></td>
+            <td id="counting" class="graph"></td>
+            <td id="bucket" class="graph"></td>
+        </tr>
+        <tr>
+            <td><button onclick="heapSort()">Play</button>
+                <button onclick="reset('span_heap')">Reset</button>
+                <span>Heap sort</span> </td>
+            <td><button onclick="countingSort()">Play</button>
+                <button onclick="reset('span_counting')">Reset</button>
+                <span>Counting sort</span>  </td>  
+            <td><button onclick="bucketSort()">Play</button>
+                <button onclick="reset('span_bucket')">Reset</button>
+                <span>Bucket sort</span>  </td>  
+        </tr>
+    </table>
     <p id="bot"></p>
-
 </body>
 </html>
