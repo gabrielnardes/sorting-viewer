@@ -79,58 +79,11 @@ function setBarQty()
     let next_bar_qty = parseInt($("bar_qty_slider").value);
 
     if (bar_qty > next_bar_qty)
-    {
-        subBarQty(bar_qty, next_bar_qty)
-    }
+        subBarQty(bar_qty, next_bar_qty);
     else if (bar_qty < next_bar_qty)
-    {
-        addBarQty(bar_qty, next_bar_qty)
-    }
-
-    // for (let i = 0; i < next_bar_qty; i++)
-    // { 
-    //     let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
-
-    //     $("span" + i).style.height             = random_scaled;
-    //     $("span_selection_u" + i).style.height = random_scaled;
-    //     $("span_selection_s" + i).style.height = random_scaled;
-    //     $("span_bubble" + i).style.height      = random_scaled;
-    // }
+        addBarQty(bar_qty, next_bar_qty);
 
     bar_qty = next_bar_qty;
-}
-
-function count()
-{
-    for (let i = 0; i < $("bar_qty_slider").value; i++)
-    { 
-        //console.log("g" + $("span" + i).style.height);
-
-        let u = parseFloat($("span_selection_u" + i).style.height);
-        let s = parseFloat($("span_selection_s" + i).style.height);
-        let b = parseFloat($("span_bubble" + i).style.height)
-
-        if (u - s != 0)
-        {
-            console.log("u - s " + (u - s));
-        }  
-
-        if (u - b != 0)
-        {
-            console.log("u - b " + (u - b));
-        }  
-
-        if (s - b != 0)
-        {
-            console.log("s - b " + (s - b));
-        }  
-
-        console.log(u);
-        console.log(s);
-        console.log(b);
-        console.log("  ");
-    }
-    console.log("end");
 }
 
 function addBarQty(bar_qty, next_bar_qty)
@@ -154,6 +107,22 @@ function addBarQty(bar_qty, next_bar_qty)
 
 function subBarQty(bar_qty, next_bar_qty)
 {
+    for (let i = 0; i < next_bar_qty; i++)
+    { 
+        let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
+
+        $("span" + i).style.height             = random_scaled;
+        $("span_selection_u" + i).style.height = random_scaled;
+        $("span_selection_s" + i).style.height = random_scaled;
+        $("span_bubble" + i).style.height      = random_scaled;
+
+        let width = $("bar_width_slider").value + "px";
+        $("span" + i).style.width = width;
+        $("span_selection_u" + i).style.width = width;
+        $("span_selection_s" + i).style.width = width;
+        $("span_bubble" + i).style.width = width;
+    }
+
     for (let i = $("bar_qty_slider").max - 1; i >= next_bar_qty; i--)
     { 
         let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
@@ -257,33 +226,6 @@ async function selectionSortUnstable()
         array[i] = temp;
         $(id + i).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
     }
-
-    // for (let i = 0; i < $("bar_qty_slider").max; i++)
-    // {
-    //     let min_i = i;
-    //     for (let j = i + 1; j < $("bar_qty_slider").max; j++)
-    //         if (array[j] < array[min_i])
-    //             min_i = j;
-
-    //     // swap elements
-    //     let temp = array[min_i];
-    //     array[min_i] = array[i];
-    //     array[i] = temp;
-    // }
-
-    // // ele esta colocando pra dentro do grafico valores la da frente, por isso ta parecendo menor
-    // for (let i = 0; i < $("bar_qty_slider").value; i++)
-    // {
-    //     await sleep(delay_ms);
-
-    //     $(id + i).style.height = array[i] * $("bar_height_slider").value / 100 + "px";
-    // }
-
-    // for (let i = $("bar_qty_slider").value; i < 300; i++)
-    // {
-    //     //$(id + i).style.height = array[i] * $("bar_height_slider").value / 100 + "px";
-    //     //$(id + i).style.backgroundColor = white;
-    // }
 }
 
 async function selectionSortStable()
