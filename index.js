@@ -7,38 +7,39 @@ var max_random = 100;
 var mult_random = 5;
 var mydebug = false;
 
-let superArray = [ 
-    [80], 
-    [15], 
-    [50], 
-    [35],
-    [90],
-    [85],
-    [100],
-    [2],
-    [45],
-    [22],
-    [85],
-    [1],
-    [5],
-    [43],
-    [21],
-    [67],
-    [90],
-    [111],
-    [34],
-    [54],
-    [1],
-    [67],
-    [43],
-    [8],
-    [98],
-    [4],
-    [56],
-    [26],
-    [79],
-    [1000]
-];
+let mysuperArray = [];
+// let superArray = [ 
+//     [80], 
+//     [15], 
+//     [50], 
+//     [35],
+//     [90],
+//     [85],
+//     [100],
+//     [2],
+//     [45],
+//     [22],
+//     [85],
+//     [1],
+//     [5],
+//     [43],
+//     [21],
+//     [67],
+//     [90],
+//     [111],
+//     [34],
+//     [54],
+//     [1],
+//     [67],
+//     [43],
+//     [8],
+//     [98],
+//     [4],
+//     [56],
+//     [26],
+//     [79],
+//     [1000]
+// ];
 
 function quickSort()
 {
@@ -297,45 +298,62 @@ function mergeSort()
     {
         //sort(array, 0, parseInt($("bar_qty_slider").value) - 1);
         //console.log("end " + array);
-        let newArray = [ 
-            [0, 80], 
-            [1, 15], 
-            [2, 50], 
-            [3, 35],
-            [4, 90],
-            [5, 85],
-            [6, 100],
-            [7, 2],
-            [8, 45],
-            [9, 22],
-            [10, 85],
-            [11, 1],
-            [12, 5],
-            [13, 43],
-            [14, 21],
-            [15, 67],
-            [16, 90],
-            [17, 111],
-            [18, 34],
-            [19, 54],
-            [20, 1],
-            [21, 67],
-            [22, 43],
-            [23, 8],
-            [24, 98],
-            [25, 4],
-            [26, 56],
-            [27, 26],
-            [28, 79],
-            [29, 1000],
-        ];
+        // let newArray = [ 
+        //     [0, 80], 
+        //     [1, 15], 
+        //     [2, 50], 
+        //     [3, 35],
+        //     [4, 90],
+        //     [5, 85],
+        //     [6, 100],
+        //     [7, 2],
+        //     [8, 45],
+        //     [9, 22],
+        //     [10, 85],
+        //     [11, 1],
+        //     [12, 5],
+        //     [13, 43],
+        //     [14, 21],
+        //     [15, 67],
+        //     [16, 90],
+        //     [17, 111],
+        //     [18, 34],
+        //     [19, 54],
+        //     [20, 1],
+        //     [21, 67],
+        //     [22, 43],
+        //     [23, 8],
+        //     [24, 98],
+        //     [25, 4],
+        //     [26, 56],
+        //     [27, 26],
+        //     [28, 79],
+        //     [29, 1000],
+        // ];
+
+        let mynewArray = [];
+        for (let i = 0; i < 30; i++)
+        {
+            mynewArray[i] = [i, genRandomNumber(5, max_random)];
+            mysuperArray[i] = mynewArray[i][1];
+        }
+
+        // console.log("first " + newArray);
+        // console.log("second " + superArray);
+
+        console.log("first " + mynewArray);
+        console.log("second " + mysuperArray);
 
         for (let i = 0; i < 7; i++)
             //console.log(newArray[i]);
 
-        newArray = otherMergeSort(newArray);
+        // newArray = otherMergeSort(newArray);
+        // console.log("real end");
+        // console.log(superArray);
+
+        mynewArray = otherMergeSort(mynewArray);
         console.log("real end");
-        console.log(superArray);
+        console.log(mysuperArray);
 
         //for (let i = 0; i < 7; i++)
             //console.log(newArray[i][0]);
@@ -372,8 +390,10 @@ function otherMerge(left, right) {
             console.log("l " + temp_l_id + " = " + left[0][1] + " " + temp_l_val);
             console.log("r " + temp_r_id + " = " + right[0][1] + " " +  temp_r_val);
 
-            superArray[temp_l_id] = left[0][1];
-            superArray[temp_r_id] = right[0][1];
+            // superArray[temp_l_id] = left[0][1];
+            // superArray[temp_r_id] = right[0][1];
+            mysuperArray[temp_l_id] = left[0][1];
+            mysuperArray[temp_r_id] = right[0][1];
 
             if (temp_l_id > temp_r_id)
             {
@@ -381,12 +401,10 @@ function otherMerge(left, right) {
                 right[0][0] = temp_l_id;
             }
 
-
-
             console.log("l " + left[0][0] + " = " + left[0][1]);
             console.log("r " + right[0][0] + " = " + right[0][1]);
 
-            console.log("superglobal" + superArray);
+            console.log("superglobal" + mysuperArray);
             arr.push(left.shift())  
             if (mydebug == true) debugger;
         } else {
@@ -400,8 +418,10 @@ function otherMerge(left, right) {
             console.log("l " + temp_l_id + " = " + left[0][1] + " " + temp_l_val);
             console.log("r " + temp_r_id + " = " + right[0][1] + " " +  temp_r_val);
 
-            superArray[temp_l_id] = right[0][1];
-            superArray[temp_r_id] = left[0][1];
+            // superArray[temp_l_id] = right[0][1];
+            // superArray[temp_r_id] = left[0][1];
+            mysuperArray[temp_l_id] = right[0][1];
+            mysuperArray[temp_r_id] = left[0][1];
 
             if (temp_r_id > temp_l_id)
             {
@@ -412,7 +432,7 @@ function otherMerge(left, right) {
             console.log("l " + left[0][0] + " = " + left[0][1]);
             console.log("r " + right[0][0] + " = " + right[0][1]);
 
-            console.log("super" + superArray);
+            console.log("super" + mysuperArray);
             arr.push(right.shift()) 
         }
     }
