@@ -1,3 +1,9 @@
+* {
+    padding: 0px;
+    border: 0px;
+    margin: 0px;
+
+}
 
 .bar {
     background-color: red;
@@ -7,15 +13,30 @@
 
 .graph {
     height: 100px;
-    border: 5px solid black;
-
+    padding: 5px;
+    border: 2px solid black;
+    margin: 15px;
 }
+
+button {
+    padding: 10px;
+    border: 5px solid black;
+    margin: 5px;
+    background-color: #4d79ff;
+    color: white;
+    font-weight: bolder;
+}
+
+button:hover {
+    background-color: #0040ff;
+}
+
+button:active {
+    box-shadow: 0 2px #666;
+    transform: translateY(2px);
+}
+
 
 table {
   width: 100%;
-}
-
-.v {
-    background-color: red;
-    width: 50vw
 }
