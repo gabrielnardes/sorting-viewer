@@ -18,7 +18,7 @@
         </span>
         <span>
             <span>Number of elements: <span id="bar_qty_value"></span></span>
-            <input type="range" min="15" max="250" id="bar_qty_slider" oninput="setBarQty()">
+            <input type="range" min="10" max="100" id="bar_qty_slider" oninput="setBarQty()">
         </span>
         <span>
             <span>Max bar height: <span id="bar_height_value"></span>%</span>
@@ -38,6 +38,9 @@
         <tr>
             <td><button onclick="selectionSortUnstable()">Play</button>
                 <button onclick="reset('span_selection_u')">Reset</button>
+                <input type="checkbox" id="selection_u_fast" name="fast"
+                         >
+                  <label for="fast">Fast</label>
                 <span>Selection unstable sort</span> </td>
             <td><button onclick="selectionSortStable()">Play</button>
                 <button onclick="reset('span_selection_s')">Reset</button>

@@ -11,14 +11,34 @@ I wanted to learn front-end development, so it seemed like a good project to sta
 
 :white_check_mark: Quantity of bars slider control
 
+:white_large_square: Fast delay slider control
+
+:white_large_square: Slow delay slider control
+
 :white_large_square: Download video of the algoritms
 
-:white_large_square: Add different color to the current index bar
+:white_check_mark: Fast and slow version for Selection Unstable Sort
+
+:white_large_square: Fast and slow version for Selection Stable Sort
+
+:white_large_square: Fast and slow version for Bubble Sort
+
+:white_large_square: Fast and slow version for Insertion Sort
+
+:white_large_square: Fast and slow version for Merge Sort
+
+:white_large_square: Fast and slow version for QuickSort Sort
+
+:white_large_square: Fast and slow version for HeapSort Sort
+
+:white_large_square: Fast and slow version for Counting Sort
+
+:white_large_square: Fast and slow version for Bucket Sort
 
 ### Algorithms
-:white_check_mark: Selection Stable Sort
-
 :white_check_mark: Selection Unstable Sort
+
+:white_check_mark: Selection Stable Sort
 
 :white_check_mark: Bubble Sort
 
