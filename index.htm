@@ -6,19 +6,15 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body onload="createRandomArray(); createBars()">
-    <!-- <p id="init_array">?</p> -->
     <div id="top_bar">
         <span>
             <button onclick='genRandomArray()'>Generate random array</button>
-            <button onclick="selectionSortUnstable();
-                             selectionSortStable();
-                             bubbleSort()
-                             insertionSort()">Play all</button>
+            <button onclick="playAll()">Play all</button>
             <button onclick="resetAlgorithms()">Reset all</button>
         </span>
         <span>
             <span>Number of elements: <span id="bar_qty_value"></span></span>
-            <input type="range" class="slider" min="10" max="100" id="bar_qty_slider" oninput="setBarQty()">
+            <input type="range" class="slider" min="7" max="7" id="bar_qty_slider" oninput="setBarQty()">
         </span>
         <span>
             <span>Max bar height: <span id="bar_height_value"></span>%</span>
@@ -39,14 +35,18 @@
             <td><button onclick="selectionSortUnstable()">Play</button>
                 <button onclick="reset('span_selection_u')">Reset</button>
                 <input type="checkbox" id="selection_u_fast" name="fast" checked>
-                  <label for="fast">Fast</label>
-                <span>Selection unstable sort</span> </td>
+                <label for="fast">Fast</label>
+                <span>Selection unstable sort</span></td>
             <td><button onclick="selectionSortStable()">Play</button>
                 <button onclick="reset('span_selection_s')">Reset</button>
+                <input type="checkbox" id="selection_s_fast" name="fast" checked>
+                <label for="fast">Fast</label>
                 <span>Selection stable sort</span> </td>
             <td><button onclick="bubbleSort()">Play</button>
                 <button onclick="reset('span_bubble')">Reset</button>
-                <span>Bubble sort</span>  </td>  
+                <input type="checkbox" id="selection_bubble" name="fast" checked>
+                <label for="fast">Fast</label>
+                <span>Bubble sort</span></td>  
         </tr>
         <tr>
             <td id="insertion" class="graph"></td>
@@ -56,13 +56,19 @@
         <tr>
             <td><button onclick="insertionSort()">Play</button>
                 <button onclick="reset('span_insertion')">Reset</button>
+                <input type="checkbox" id="selection_insertion" name="fast" checked>
+                <label for="fast">Fast</label>
                 <span>Insertion sort</span>  </td>  
             <td><button onclick="mergeSort()">Play</button>
                 <button onclick="reset('span_merge')">Reset</button>
+                <input type="checkbox" id="selection_merge" checked>
+                <label for="fast">Fast</label>
                 <span>Merge sort</span> </td>
             <td><button onclick="quickSort()">Play</button>
                 <button onclick="reset('span_quick')">Reset</button>
-                <span>Quick sort</span>  </td>  
+                <input type="checkbox" id="selection_quick" name="fast" checked>
+                <label for="fast">Fast</label>
+                <span>Quick sort</span></td>  
         </tr>
         <tr>
             <td id="heap" class="graph"></td>
@@ -72,13 +78,19 @@
         <tr>
             <td><button onclick="heapSort()">Play</button>
                 <button onclick="reset('span_heap')">Reset</button>
+                <input type="checkbox" id="selection_heap" name="fast" checked>
+                <label for="fast">Fast</label>
                 <span>Heap sort</span> </td>
             <td><button onclick="countingSort()">Play</button>
                 <button onclick="reset('span_counting')">Reset</button>
+                <input type="checkbox" id="selection_counting" name="fast" checked>
+                <label for="fast">Fast</label>
                 <span>Counting sort</span>  </td>  
             <td><button onclick="bucketSort()">Play</button>
                 <button onclick="reset('span_bucket')">Reset</button>
-                <span>Bucket sort</span>  </td>  
+                <input type="checkbox" id="selection_bucket" name="fast" checked>
+                <label for="fast">Fast</label>
+                <span>Bucket sort</span></td>  
         </tr>
     </table>
     <p id="bot"></p>

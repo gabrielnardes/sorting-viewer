@@ -5,13 +5,40 @@ var old_height;
 var bar_qty;
 var max_random = 100;
 var mult_random = 5;
+var mydebug = false;
 
-
-
-function mergeSort()
-{
-   
-}
+let superArray = [ 
+    [80], 
+    [15], 
+    [50], 
+    [35],
+    [90],
+    [85],
+    [100],
+    [2],
+    [45],
+    [22],
+    [85],
+    [1],
+    [5],
+    [43],
+    [21],
+    [67],
+    [90],
+    [111],
+    [34],
+    [54],
+    [1],
+    [67],
+    [43],
+    [8],
+    [98],
+    [4],
+    [56],
+    [26],
+    [79],
+    [1000]
+];
 
 function quickSort()
 {
@@ -34,12 +61,11 @@ function bucketSort()
 }
 
 
-
 function createRandomArray()
 {
     for (let i = 0; i < $("bar_qty_slider").max; i++)
     {
-        random_array[i] = genRandomNumber(5, max_random);      // height: min and max
+        random_array[i] = genRandomNumber(5, max_random);// height: min and max
 
         while (random_array[i] % mult_random !== 0)
             random_array[i] = genRandomNumber(5, max_random);
@@ -55,17 +81,18 @@ function createBars()
         createSpan("span_selection_s", "selection_s", i);
         createSpan("span_bubble",      "bubble",      i);
         createSpan("span_insertion",   "insertion",   i);
+        createSpan("span_merge",       "merge",       i);
     }
 
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
         let random_scaled =  random_array[i] * $("bar_height_slider").value / 100;
-
-        $("span" + i).style.height             = random_scaled + "px";
+        $("span"             + i).style.height = random_scaled + "px";
         $("span_selection_u" + i).style.height = random_scaled + "px";
         $("span_selection_s" + i).style.height = random_scaled + "px";
-        $("span_bubble" + i).style.height      = random_scaled + "px";
-        $("span_insertion" + i).style.height      = random_scaled + "px";
+        $("span_bubble"      + i).style.height = random_scaled + "px";
+        $("span_insertion"   + i).style.height = random_scaled + "px";
+        $("span_merge"       + i).style.height = random_scaled + "px";
     }
 
     $("bar_height_value").innerHTML = $("bar_height_slider").value;
@@ -98,11 +125,12 @@ function genRandomArray()
 
         let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
 
-        $("span" + i).style.height             = random_scaled;
+        $("span"             + i).style.height = random_scaled;
         $("span_selection_u" + i).style.height = random_scaled;
         $("span_selection_s" + i).style.height = random_scaled;
-        $("span_bubble" + i).style.height      = random_scaled;
-        $("span_insertion" + i).style.height   = random_scaled;
+        $("span_bubble"      + i).style.height = random_scaled;
+        $("span_insertion"   + i).style.height = random_scaled;
+        $("span_merge"       + i).style.height = random_scaled;
     }
 }
 
@@ -130,6 +158,7 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_selection_s" + i).style.height = random_scaled;
         $("span_bubble"      + i).style.height = random_scaled;
         $("span_insertion"   + i).style.height = random_scaled;
+        $("span_merge"       + i).style.height = random_scaled;
 
         let width = $("bar_width_slider").value + "px";
         $("span"             + i).style.width = width;
@@ -137,6 +166,7 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_selection_s" + i).style.width = width;
         $("span_bubble"      + i).style.width = width;
         $("span_insertion"   + i).style.width = width;
+        $("span_merge"       + i).style.width = width;
     }
 }
 
@@ -150,6 +180,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_selection_s" + i).style.height = random_scaled;
         $("span_bubble"      + i).style.height = random_scaled;
         $("span_insertion"   + i).style.height = random_scaled;
+        $("span_merge"       + i).style.height = random_scaled;
 
         let width = $("bar_width_slider").value + "px";
         $("span"             + i).style.width = width;
@@ -157,17 +188,18 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_selection_s" + i).style.width = width;
         $("span_bubble"      + i).style.width = width;
         $("span_insertion"   + i).style.width = width;
+        $("span_merge"       + i).style.width = width;
     }
 
     for (let i = $("bar_qty_slider").max - 1; i >= next_bar_qty; i--)
     { 
         let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
-
         $("span"             + i).style.height = 0;
         $("span_selection_u" + i).style.height = 0;
         $("span_selection_s" + i).style.height = 0;
         $("span_bubble"      + i).style.height = 0;
         $("span_insertion"   + i).style.height = 0;
+        $("span_merge"       + i).style.height = 0;
     }
 }
 
@@ -182,6 +214,7 @@ function setBarHeight()
         scale("span_selection_s", i);
         scale("span_bubble",      i);
         scale("span_insertion",   i);
+        scale("span_merge",       i);
     }
     
     old_height = $("bar_height_slider").value;
@@ -206,6 +239,7 @@ function setBarWidth()
         $("span_selection_s" + i).style.width = width;
         $("span_bubble"      + i).style.width = width;
         $("span_insertion"   + i).style.width = width;
+        $("span_merge"       + i).style.width = width;
     }
 }
 
@@ -229,11 +263,11 @@ function resetAlgorithms()
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
         let random_scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
-
         resetA("span_selection_u", i, random_scaled);
         resetA("span_selection_s", i, random_scaled);
         resetA("span_bubble",      i, random_scaled);
         resetA("span_insertion",   i, random_scaled);
+        resetA("span_merge",       i, random_scaled);
     }
 }
 
@@ -242,13 +276,292 @@ function resetAll()
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
         let random_scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
-
         resetA("span",             i, random_scaled);
         resetA("span_selection_u", i, random_scaled);
         resetA("span_selection_s", i, random_scaled);
         resetA("span_bubble",      i, random_scaled);
         resetA("span_insertion",   i, random_scaled);
+        resetA("span_merge",       i, random_scaled);
     }
+}
+
+function mergeSort()
+{
+    let array = [...random_array];
+    let id = "span_merge";
+    reset(id);
+
+    //console.log("init " + array);
+
+    if ($("selection_merge").checked == true)
+    {
+        //sort(array, 0, parseInt($("bar_qty_slider").value) - 1);
+        //console.log("end " + array);
+        let newArray = [ 
+            [0, 80], 
+            [1, 15], 
+            [2, 50], 
+            [3, 35],
+            [4, 90],
+            [5, 85],
+            [6, 100],
+            [7, 2],
+            [8, 45],
+            [9, 22],
+            [10, 85],
+            [11, 1],
+            [12, 5],
+            [13, 43],
+            [14, 21],
+            [15, 67],
+            [16, 90],
+            [17, 111],
+            [18, 34],
+            [19, 54],
+            [20, 1],
+            [21, 67],
+            [22, 43],
+            [23, 8],
+            [24, 98],
+            [25, 4],
+            [26, 56],
+            [27, 26],
+            [28, 79],
+            [29, 1000],
+        ];
+
+        for (let i = 0; i < 7; i++)
+            //console.log(newArray[i]);
+
+        newArray = otherMergeSort(newArray);
+        console.log("real end");
+        console.log(superArray);
+
+        //for (let i = 0; i < 7; i++)
+            //console.log(newArray[i][0]);
+
+    }
+    else
+    {
+
+    }
+
+    console.log("END mergeSort");
+
+}
+
+// https://stackabuse.com/merge-sort-in-javascript/
+function otherMerge(left, right) {
+    let arr = []
+    // console.log(left);
+    // console.log(right);
+    // console.log(left[0][1]);
+    // console.log(right[0][1]);
+    console.log("l " + left[0][1] + " r " + right[0][1]);
+    //if (mydebug == true) debugger;
+    // Break out of loop if any one of the array gets empty
+    while (left.length && right.length) {
+        // Pick the smaller among the smallest element of left and right sub arrays 
+        if (left[0][1] < right[0][1]) {
+            //console.log(arr);
+            let temp_l_id = left[0][0];
+            let temp_r_id = right[0][0];
+            let temp_l_val = left[0][1];
+            let temp_r_val = right[0][1];
+
+            console.log("l " + temp_l_id + " = " + left[0][1] + " " + temp_l_val);
+            console.log("r " + temp_r_id + " = " + right[0][1] + " " +  temp_r_val);
+
+            superArray[temp_l_id] = left[0][1];
+            superArray[temp_r_id] = right[0][1];
+
+            if (temp_l_id > temp_r_id)
+            {
+                left[0][0] = temp_r_id;
+                right[0][0] = temp_l_id;
+            }
+
+
+
+            console.log("l " + left[0][0] + " = " + left[0][1]);
+            console.log("r " + right[0][0] + " = " + right[0][1]);
+
+            console.log("superglobal" + superArray);
+            arr.push(left.shift())  
+            if (mydebug == true) debugger;
+        } else {
+            //console.log(arr);
+            if (mydebug == true) debugger;
+            let temp_l_id  =  left[0][0];
+            let temp_l_val =  left[0][1];
+            let temp_r_id  = right[0][0];
+            let temp_r_val = right[0][1];
+
+            console.log("l " + temp_l_id + " = " + left[0][1] + " " + temp_l_val);
+            console.log("r " + temp_r_id + " = " + right[0][1] + " " +  temp_r_val);
+
+            superArray[temp_l_id] = right[0][1];
+            superArray[temp_r_id] = left[0][1];
+
+            if (temp_r_id > temp_l_id)
+            {
+                left[0][0] = temp_r_id;
+                right[0][0] = temp_l_id;
+            }
+
+            console.log("l " + left[0][0] + " = " + left[0][1]);
+            console.log("r " + right[0][0] + " = " + right[0][1]);
+
+            console.log("super" + superArray);
+            arr.push(right.shift()) 
+        }
+    }
+    //if (mydebug == true) debugger;
+    console.log("arra " + arr);
+    console.log("super " + [...arr, ...left, ...right]);
+   
+    // Concatenating the leftover elements
+    // (in case we didn't go through the entire left or right array)
+    return [ ...arr, ...left, ...right ]
+}
+
+function otherMergeSort(otherArray) {
+  const half = otherArray.length / 2
+
+    for (let i = 0; i < 7; i++)
+        //console.log(otherArray[i][0]);
+
+    for (let i = 0; i < 7; i++)
+        //console.log(otherArray[i][1]);
+
+  // Base case or terminating case
+  //console.log(otherArray.length);
+  if(otherArray.length < 2)
+  {
+    //console.log("terminating");
+    //if (mydebug == true) debugger;
+    return otherArray 
+  }
+  
+  //const left = [];
+
+  // for (let i = 0; i < half; i++)
+  // {
+  //   left[i] = otherArray[i];
+  // }
+
+  const left = otherArray.splice(0, half)
+
+  // console.log("left" + left);
+  // console.log("otherarray" + otherArray);
+  //if (mydebug == true) debugger;
+
+
+  return otherMerge(otherMergeSort(left),otherMergeSort(otherArray))
+}
+
+/*
+95, 80, 50, 75, 65, 20, 70
+95, 80, 50, 75 | 65, 20, 70
+95, 80, 50, 75, 65, 20, 70
+
+
+*/
+
+async function merge(array, l, m, r)
+{
+    let ls = [];
+    let rs = [];
+
+    let s1 = m - l + 1;
+    let s2 = r - m;
+
+    // console.log("  ");
+    // console.log("l " + l);
+    // console.log("m " + m);
+    // console.log("r " + r);
+    // console.log("s1 " + s1);
+    // console.log("s2 " + s2);
+
+    // console.log("loop");
+    for (let k = l; k <= r; k++)
+    {
+        // console.log(k + " " + array[k]);
+    }
+
+    for (let i = 0; i < s1; i++)
+        ls[i] = array[l + i];
+
+    for (let j = 0; j < s2; j++)
+        rs[j] = array[m + 1 + j];
+
+    let i = 0, j = 0;
+
+    let k = l;
+    while (i < s1 && j < s2) 
+    {
+        if (ls[i] <= rs[j]) 
+        {
+            //await sleep(2000);
+            array[k] = ls[i];
+            i++;
+        }
+        else 
+        {
+            //await sleep(2000);
+            array[k] = rs[j];
+            //console.log("ls[i] > rs[j]" + array);
+            j++;
+        }
+        k++;
+        
+        // console.log("ls[i] <= rs[j] " + array);
+    }
+    //init 35,70,95,80, 90,90,10
+    //index.js:260 init 15,15,45,5,75,40,80
+
+
+    while (i < s1) 
+    {
+       // await sleep(2000);
+        array[k] = ls[i];
+        // console.log("i < s1 " + array);
+        i++;
+        k++;
+    }
+
+    while (j < s2) 
+    {
+        //await sleep(2000);
+        array[k] = rs[j];
+        // console.log("j < s2 " + array);
+        j++;
+        k++;
+    }
+    // console.log("END merge");
+}
+
+function sort(array, l, r)
+{
+    if (l < r)
+    {
+        let m = Math.floor(l + (r - l) / 2);
+
+        sort(array, l, m);
+        sort(array, m + 1, r);
+        merge(array, l, m, r);
+    }
+}
+
+
+
+function playAll()
+{
+    selectionSortUnstable();
+    selectionSortStable();
+    bubbleSort();
+    insertionSort();
+    mergeSort();
 }
 
 async function selectionSortUnstable()
