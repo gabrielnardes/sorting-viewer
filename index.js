@@ -36,6 +36,15 @@ function createRandomArray()
 
 function createBars()
 {
+    $("bar_height_slider").value = $("bar_height_slider").max;
+    $("bar_height_value").innerHTML = $("bar_height_slider").value;
+
+    $("bar_qty_slider").value = $("bar_qty_slider").max;
+    $("bar_qty_value").innerHTML = $("bar_qty_slider").value;
+
+    $("bar_width_slider").value = $("bar_width_slider").min;
+    $("bar_width_value").innerHTML = $("bar_width_slider").value;
+
     for (let i = 0; i < $("bar_qty_slider").max; i++)
     {
         createSpan("span",             "bot",         i);
@@ -58,10 +67,6 @@ function createBars()
         $("span_merge"       + i).style.height = random_scaled + "px";
         $("span_quick"       + i).style.height = random_scaled + "px";
     }
-
-    $("bar_height_value").innerHTML = $("bar_height_slider").value;
-    $("bar_qty_value").innerHTML = $("bar_qty_slider").value;
-    $("bar_width_value").innerHTML = $("bar_width_slider").value;
 
     old_height = $("bar_height_slider").value;
     bar_qty = parseInt($("bar_qty_slider").value);
