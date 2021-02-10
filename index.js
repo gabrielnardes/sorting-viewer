@@ -8,38 +8,6 @@ var mult_random = 5;
 var mydebug = false;
 
 let mysuperArray = [];
-// let superArray = [ 
-//     [80], 
-//     [15], 
-//     [50], 
-//     [35],
-//     [90],
-//     [85],
-//     [100],
-//     [2],
-//     [45],
-//     [22],
-//     [85],
-//     [1],
-//     [5],
-//     [43],
-//     [21],
-//     [67],
-//     [90],
-//     [111],
-//     [34],
-//     [54],
-//     [1],
-//     [67],
-//     [43],
-//     [8],
-//     [98],
-//     [4],
-//     [56],
-//     [26],
-//     [79],
-//     [1000]
-// ];
 
 function quickSort()
 {
@@ -291,72 +259,43 @@ function mergeSort()
     let array = [...random_array];
     let id = "span_merge";
     reset(id);
-
-    //console.log("init " + array);
+    let size = 100;
 
     if ($("selection_merge").checked == true)
     {
-        //sort(array, 0, parseInt($("bar_qty_slider").value) - 1);
-        //console.log("end " + array);
-        // let newArray = [ 
-        //     [0, 80], 
-        //     [1, 15], 
-        //     [2, 50], 
-        //     [3, 35],
-        //     [4, 90],
-        //     [5, 85],
-        //     [6, 100],
-        //     [7, 2],
-        //     [8, 45],
-        //     [9, 22],
-        //     [10, 85],
-        //     [11, 1],
-        //     [12, 5],
-        //     [13, 43],
-        //     [14, 21],
-        //     [15, 67],
-        //     [16, 90],
-        //     [17, 111],
-        //     [18, 34],
-        //     [19, 54],
-        //     [20, 1],
-        //     [21, 67],
-        //     [22, 43],
-        //     [23, 8],
-        //     [24, 98],
-        //     [25, 4],
-        //     [26, 56],
-        //     [27, 26],
-        //     [28, 79],
-        //     [29, 1000],
-        // ];
-
         let mynewArray = [];
-        for (let i = 0; i < 30; i++)
+        for (let i = 0; i < size; i++)
         {
             mynewArray[i] = [i, genRandomNumber(5, max_random)];
             mysuperArray[i] = mynewArray[i][1];
         }
 
-        // console.log("first " + newArray);
-        // console.log("second " + superArray);
+        // let mynewArray = [ [0,84],[1,88],[2,7],[3,2],[4,57],[5,54],[6,13] ];
+        // for (let i = 0; i < size; i++)
+        // {
+        //     mysuperArray[i] = mynewArray[i][1];
+        // }
 
         console.log("first " + mynewArray);
         console.log("second " + mysuperArray);
 
-        for (let i = 0; i < 7; i++)
-            //console.log(newArray[i]);
-
-        // newArray = otherMergeSort(newArray);
-        // console.log("real end");
-        // console.log(superArray);
-
+        // for (let i = 0; i < 7; i++)
         mynewArray = otherMergeSort(mynewArray);
-        console.log("real end");
-        console.log(mysuperArray);
 
-        //for (let i = 0; i < 7; i++)
-            //console.log(newArray[i][0]);
+        console.log("real end");
+        for (let i = 0; i < size; i++)
+        {
+            console.log(mysuperArray[i]);
+        }
+
+        // console.log("buggy ");
+        // console.log(mysuperArray);
+
+        console.log("realother end");
+        for (let i = 0; i < size; i++)
+        {
+            console.log(mynewArray[i][1]);
+        }
 
     }
     else
@@ -369,98 +308,229 @@ function mergeSort()
 }
 
 // https://stackabuse.com/merge-sort-in-javascript/
-function otherMerge(left, right) {
-    let arr = []
+function otherMerge(left, right) 
+{
+    let arr = [];
     // console.log(left);
     // console.log(right);
     // console.log(left[0][1]);
     // console.log(right[0][1]);
-    console.log("l " + left[0][1] + " r " + right[0][1]);
+    //console.log("l " + left[0][1] + " r " + right[0][1]);
     //if (mydebug == true) debugger;
     // Break out of loop if any one of the array gets empty
-    while (left.length && right.length) {
+    while (left.length && right.length) 
+    {
+        let temp_l_id = left[0][0];
+        let temp_r_id = right[0][0];
+        let temp_l_val = left[0][1];
+        let temp_r_val = right[0][1];
         // Pick the smaller among the smallest element of left and right sub arrays 
-        if (left[0][1] < right[0][1]) {
+        if (left[0][1] < right[0][1]) 
+        {
             //console.log(arr);
-            let temp_l_id = left[0][0];
-            let temp_r_id = right[0][0];
-            let temp_l_val = left[0][1];
-            let temp_r_val = right[0][1];
-
-            console.log("l " + temp_l_id + " = " + left[0][1] + " " + temp_l_val);
-            console.log("r " + temp_r_id + " = " + right[0][1] + " " +  temp_r_val);
-
-            // superArray[temp_l_id] = left[0][1];
-            // superArray[temp_r_id] = right[0][1];
-            mysuperArray[temp_l_id] = left[0][1];
-            mysuperArray[temp_r_id] = right[0][1];
+            // console.log("l " + temp_l_id + " = " + left[0][1] + " " + temp_l_val);
+            // console.log("r " + temp_r_id + " = " + right[0][1] + " " +  temp_r_val);
 
             if (temp_l_id > temp_r_id)
             {
-                left[0][0] = temp_r_id;
-                right[0][0] = temp_l_id;
+                // mysuperArray[temp_r_id] = left[0][1];
+                // mysuperArray[temp_l_id] = right[0][1];
+
+                // left[0][0] = temp_r_id;
+                // right[0][0] = temp_l_id;
+            }
+            else if (temp_l_id < temp_r_id)
+            {
+                // mysuperArray[temp_l_id] = left[0][1];
+                // mysuperArray[temp_r_id] = right[0][1];
+            }
+            else 
+            {
+                console.log("ferrou");
             }
 
             console.log("l " + left[0][0] + " = " + left[0][1]);
             console.log("r " + right[0][0] + " = " + right[0][1]);
 
-            console.log("superglobal" + mysuperArray);
+            console.log("superglobal " + mysuperArray);
+            //console.log("            ");
             arr.push(left.shift())  
-            if (mydebug == true) debugger;
-        } else {
+            if (mydebug == true) {debugger};
+        } 
+        else 
+        {
+            let min = right[0][1];
+            let id_min = right[0][0];
+            let id_swap = left[0][0];
+            console.log("swap");
+            console.log("min " + min);
+            console.log("id_min " + id_min);
+            console.log("id_swap " + id_swap);
+            for (let i = id_min; i > id_swap; i--)
+            {
+                mysuperArray[i] = mysuperArray[i-1];
+                mysuperArray[i-1] = min;
+
+
+            }
+            console.log("superglobal " + mysuperArray);
+
+            right[0][0] = id_swap;
+            for (let i = 0; i < left.length; i++)
+            {
+                left[i][0]++;
+            }
+            
+            // for (let i = )
+            // {
+
+            // }
+
+            // let id_temp = right[0][0];
+            // right[0][0] = left[0][0];
+
+
+
             //console.log(arr);
-            if (mydebug == true) debugger;
-            let temp_l_id  =  left[0][0];
-            let temp_l_val =  left[0][1];
-            let temp_r_id  = right[0][0];
-            let temp_r_val = right[0][1];
+            if (mydebug == true) {debugger};
 
-            console.log("l " + temp_l_id + " = " + left[0][1] + " " + temp_l_val);
-            console.log("r " + temp_r_id + " = " + right[0][1] + " " +  temp_r_val);
-
-            // superArray[temp_l_id] = right[0][1];
-            // superArray[temp_r_id] = left[0][1];
-            mysuperArray[temp_l_id] = right[0][1];
-            mysuperArray[temp_r_id] = left[0][1];
+            // console.log("l " + temp_l_id + " = " + left[0][1] + " " + temp_l_val);
+            // console.log("r " + temp_r_id + " = " + right[0][1] + " " +  temp_r_val);
 
             if (temp_r_id > temp_l_id)
             {
-                left[0][0] = temp_r_id;
-                right[0][0] = temp_l_id;
+                // mysuperArray[temp_l_id] = right[0][1];
+                // mysuperArray[temp_r_id] = left[0][1];
+
+                // left[0][0] = temp_l_id;
+                // right[0][0] = temp_r_id;
+            }
+            else if (temp_r_id < temp_l_id)
+            {
+                // left[0][0] = temp_r_id;
+                // right[0][0] = temp_l_id;
+                // mysuperArray[temp_r_id] = right[0][1];
+                // mysuperArray[temp_l_id] = left[0][1];
+            }
+            else
+            {
+                console.log("ferrou");
             }
 
-            console.log("l " + left[0][0] + " = " + left[0][1]);
-            console.log("r " + right[0][0] + " = " + right[0][1]);
+ //           for (let m = 0; m )
 
-            console.log("super" + mysuperArray);
-            arr.push(right.shift()) 
+            console.log("r " + right[0][0] + " = " + right[0][1]);
+            console.log("l " + left[0][0] + " = " + left[0][1]);
+
+            //console.log("superglobal " + mysuperArray);
+            //console.log("            ");
+            console.log("before");
+            console.log("arr " + arr + " left " + left + " right " + right);
+            arr.push(right.shift());
         }
+        console.log("arr " + arr + " left " + left + " right " + right);
     }
     //if (mydebug == true) debugger;
-    console.log("arra " + arr);
-    console.log("super " + [...arr, ...left, ...right]);
+    // console.log("arra " + arr);
+    // console.log("super " + [...arr, ...left, ...right]);
+    console.log(" ");
    
     // Concatenating the leftover elements
     // (in case we didn't go through the entire left or right array)
-    return [ ...arr, ...left, ...right ]
+    return [ ...arr, ...left, ...right ];
 }
 
-function otherMergeSort(otherArray) {
-  const half = otherArray.length / 2
+/*
+84-88-7                 84 88 7
 
-    for (let i = 0; i < 7; i++)
-        //console.log(otherArray[i][0]);
+84-88     7             84 88 7
 
-    for (let i = 0; i < 7; i++)
+84    88     7          84 88 7
+
+84-88     7             84 88 7
+
+7-84-88                 7 84 88
+
+
+
+84-88-7-2-57-54-13                  84[0] 88[1] 7[2] 2[3] 57[4] 54[5] 13[6]
+
+84-88-7-2     57-54-13              84[0] 88[1] 7[2] 2[3] 57[4] 54[5] 13[6]
+
+84-88   7-2     57-54-13            84[0] 88[1] 7[2] 2[3] 57[4] 54[5] 13[6]
+
+84  88   7-2     57-54-13   84?88   84[0] 88[1] 7[2] 2[3] 57[4] 54[5] 13[6]
+
+84*88   7-2     57-54-13            84[0] 88[1] 7[2] 2[3] 57[4] 54[5] 13[6]
+
+84*88   7  2     57-54-13   7?2     84[0] 88[1] 7[2] 2[3] 57[4] 54[5] 13[6]
+
+84*88   2*7     57-54-13    2?84    84[0] 88[1] 2[2] 7[3] 57[4] 54[5] 13[6]
+                  R     min = 2[2]  
+                        id_min = 2
+                        id_swap = 0
+                        for (int i = id_min; i > id_swap; i--)
+                        {
+                            array[i] = array[i-1];
+                            array[i-1] = min;
+                        }
+                                    
+                                    84[0]  2[1] 88[2] 7[3] 57[4] 54[5] 13[6]
+                                     2[0] 84[1] 88[2] 7[3] 57[4] 54[5] 13[6]
+
+2*84*88   7     57-54-13     2?7     2[0] 84[1] 88[2] 7[3] 57[4] 54[5] 13[6]
+                             84?7
+
+2*7*84*88    57-54-13               2[0] 7[1] 84[2] 88[3] 57[4] 54[5] 13[6]
+
+2*7*84*88    57-54  13              2[0] 7[1] 84[2] 88[3] 57[4] 54[5] 13[6]
+
+2*7*84*88    57  54  13    57?54    2[0] 7[1] 84[2] 88[3] 57[4] 54[5] 13[6]
+
+2*7*84*88    54*57  13     13?54    2[0] 7[1] 84[2] 88[3] 54[4] 57[5] 13[6]
+
+2*7*84*88    13*54*57      2?13     2[0] 7[1] 84[2] 88[3] 13[4] 54[5] 57[6]
+                           7?13
+                           84?13
+
+                        min = 13[4]
+                        id_min = 4
+                        id_swap = 2
+                        for (int i = 4; i > 2; i--)
+                        {
+                            array[i] = array[i-1];
+                            array[i-1] = min;
+                        }
+
+2*7*84*88    13*54*57
+
+2*7*13*84*88   54*57
+
+2*7*13*54*84*88  57
+
+2*7*13*54*57*84*88
+
+
+
+*/
+
+function otherMergeSort(otherArray) 
+{
+  const half = Math.ceil(otherArray.length / 2);
+
+    // for (let i = 0; i < 7; i++)
+    //     //console.log(otherArray[i][0]);
+
+    // for (let i = 0; i < 7; i++)
         //console.log(otherArray[i][1]);
 
   // Base case or terminating case
   //console.log(otherArray.length);
-  if(otherArray.length < 2)
+  if (otherArray.length < 2)
   {
     //console.log("terminating");
     //if (mydebug == true) debugger;
-    return otherArray 
+    return otherArray;
   }
   
   //const left = [];
@@ -470,23 +540,14 @@ function otherMergeSort(otherArray) {
   //   left[i] = otherArray[i];
   // }
 
-  const left = otherArray.splice(0, half)
+  const left = otherArray.splice(0, half);
 
-  // console.log("left" + left);
-  // console.log("otherarray" + otherArray);
+  console.log("left" + left);
+  console.log("otherarray" + otherArray);
   //if (mydebug == true) debugger;
 
-
-  return otherMerge(otherMergeSort(left),otherMergeSort(otherArray))
+  return otherMerge(otherMergeSort(left),otherMergeSort(otherArray));
 }
-
-/*
-95, 80, 50, 75, 65, 20, 70
-95, 80, 50, 75 | 65, 20, 70
-95, 80, 50, 75, 65, 20, 70
-
-
-*/
 
 async function merge(array, l, m, r)
 {
