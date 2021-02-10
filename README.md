@@ -44,7 +44,7 @@ I wanted to learn front-end development, so it seemed like a good project to sta
 
 :white_check_mark: Insertion Sort
 
-:white_large_square: Merge Sort
+:white_check_mark: Merge Sort
 
 :white_large_square: QuickSort
 
