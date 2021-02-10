@@ -4,10 +4,8 @@ var delay_fast_ms = 10;
 var old_height;
 var bar_qty;
 var max_random = 100;
-var mult_random = 5;
+var mult_random = 2;
 var mydebug = false;
-
-let mergeArray = [];
 
 function quickSort()
 {
@@ -259,19 +257,14 @@ function mergeSort()
     let array = [...random_array];
     let id = "span_merge";
     reset(id);
-    let size = $("bar_qty_slider").value;
 
     if ($("selection_merge").checked == true)
     {
-        let mynewArray = [];
-        for (let i = 0; i < size; i++)
-            mynewArray[i] = [i, array[i]];
+        let helperArray = [];
+        for (let i = 0; i < $("bar_qty_slider").value; i++)
+            helperArray[i] = [i, array[i]];
 
-        sort(mynewArray,array, id);
-
-        console.log("real end");
-        for (let i = 0; i < size; i++)
-            console.log(array[i]);
+        sort(helperArray, array, id);
     }
     else
     {
@@ -280,9 +273,9 @@ function mergeSort()
 }
 
 // https://stackabuse.com/merge-sort-in-javascript/
-function merge(left, right, array, id) 
+async function merge(left, right, array, id) 
 {
-    let arr = [];
+    let arr = [];    
 
     // Break out of loop if any one of the array gets empty
     while (left.length && right.length) 
@@ -313,6 +306,7 @@ function merge(left, right, array, id)
             
             arr.push(right.shift());
         }
+        await sleep(delay_fast_ms);
     }
    
     // Concatenating the leftover elements
@@ -320,17 +314,17 @@ function merge(left, right, array, id)
     return [ ...arr, ...left, ...right ];
 }
 
-function sort(otherArray, array, id) 
+async function sort(helperArray, array, id) 
 {
-    const half = Math.ceil(otherArray.length / 2);
+    const half = Math.ceil(helperArray.length / 2);
 
     // Base case or terminating case
-    if (otherArray.length < 2)
-        return otherArray;
+    if (helperArray.length < 2)
+        return helperArray;
 
-    const left = otherArray.splice(0, half);
+    const left = helperArray.splice(0, half);
 
-    return merge(sort(left, array, id),sort(otherArray, array, id), array, id);
+    return await merge(await sort(left, array, id), await sort(helperArray, array, id), array, id);
 }
 
 function playAll()
