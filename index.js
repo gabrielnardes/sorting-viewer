@@ -7,11 +7,6 @@ var max_random = 100;
 var mult_random = 2;
 var mydebug = false;
 
-function quickSort()
-{
-   
-}
-
 function heapSort()
 {
    
@@ -49,6 +44,7 @@ function createBars()
         createSpan("span_bubble",      "bubble",      i);
         createSpan("span_insertion",   "insertion",   i);
         createSpan("span_merge",       "merge",       i);
+        createSpan("span_quick",       "quick",       i);
     }
 
     for (let i = 0; i < $("bar_qty_slider").value; i++)
@@ -60,6 +56,7 @@ function createBars()
         $("span_bubble"      + i).style.height = random_scaled + "px";
         $("span_insertion"   + i).style.height = random_scaled + "px";
         $("span_merge"       + i).style.height = random_scaled + "px";
+        $("span_quick"       + i).style.height = random_scaled + "px";
     }
 
     $("bar_height_value").innerHTML = $("bar_height_slider").value;
@@ -68,7 +65,6 @@ function createBars()
 
     old_height = $("bar_height_slider").value;
     bar_qty = parseInt($("bar_qty_slider").value);
-
 }
 
 function createSpan(id, parent, i)
@@ -98,6 +94,7 @@ function genRandomArray()
         $("span_bubble"      + i).style.height = random_scaled;
         $("span_insertion"   + i).style.height = random_scaled;
         $("span_merge"       + i).style.height = random_scaled;
+        $("span_quick"       + i).style.height = random_scaled;
     }
 }
 
@@ -126,6 +123,7 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_bubble"      + i).style.height = random_scaled;
         $("span_insertion"   + i).style.height = random_scaled;
         $("span_merge"       + i).style.height = random_scaled;
+        $("span_quick"       + i).style.height = random_scaled;
 
         let width = $("bar_width_slider").value + "px";
         $("span"             + i).style.width = width;
@@ -134,6 +132,7 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_bubble"      + i).style.width = width;
         $("span_insertion"   + i).style.width = width;
         $("span_merge"       + i).style.width = width;
+        $("span_quick"       + i).style.width = width;
     }
 }
 
@@ -148,6 +147,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_bubble"      + i).style.height = random_scaled;
         $("span_insertion"   + i).style.height = random_scaled;
         $("span_merge"       + i).style.height = random_scaled;
+        $("span_quick"       + i).style.height = random_scaled;
 
         let width = $("bar_width_slider").value + "px";
         $("span"             + i).style.width = width;
@@ -156,6 +156,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_bubble"      + i).style.width = width;
         $("span_insertion"   + i).style.width = width;
         $("span_merge"       + i).style.width = width;
+        $("span_quick"       + i).style.width = width;
     }
 
     for (let i = $("bar_qty_slider").max - 1; i >= next_bar_qty; i--)
@@ -167,6 +168,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_bubble"      + i).style.height = 0;
         $("span_insertion"   + i).style.height = 0;
         $("span_merge"       + i).style.height = 0;
+        $("span_quick"       + i).style.height = 0;
     }
 }
 
@@ -182,6 +184,7 @@ function setBarHeight()
         scale("span_bubble",      i);
         scale("span_insertion",   i);
         scale("span_merge",       i);
+        scale("span_quick",       i);
     }
     
     old_height = $("bar_height_slider").value;
@@ -207,6 +210,7 @@ function setBarWidth()
         $("span_bubble"      + i).style.width = width;
         $("span_insertion"   + i).style.width = width;
         $("span_merge"       + i).style.width = width;
+        $("span_quick"       + i).style.width = width;
     }
 }
 
@@ -235,6 +239,7 @@ function resetAlgorithms()
         resetA("span_bubble",      i, random_scaled);
         resetA("span_insertion",   i, random_scaled);
         resetA("span_merge",       i, random_scaled);
+        resetA("span_quick",       i, random_scaled);
     }
 }
 
@@ -249,83 +254,10 @@ function resetAll()
         resetA("span_bubble",      i, random_scaled);
         resetA("span_insertion",   i, random_scaled);
         resetA("span_merge",       i, random_scaled);
+        resetA("span_quick",       i, random_scaled);
     }
 }
 
-function mergeSort()
-{
-    let array = [...random_array];
-    let id = "span_merge";
-    reset(id);
-
-    if ($("selection_merge").checked == true)
-    {
-        let helperArray = [];
-        for (let i = 0; i < $("bar_qty_slider").value; i++)
-            helperArray[i] = [i, array[i]];
-
-        sort(helperArray, array, id);
-    }
-    else
-    {
-
-    }
-}
-
-// https://stackabuse.com/merge-sort-in-javascript/
-async function merge(left, right, array, id) 
-{
-    let arr = [];    
-
-    // Break out of loop if any one of the array gets empty
-    while (left.length && right.length) 
-    {
-        // Pick the smaller among the smallest element of left and right sub arrays 
-        if (left[0][1] < right[0][1]) 
-        {
-            arr.push(left.shift())
-        }
-        else 
-        {
-            let min = right[0][1];
-            let id_min = right[0][0];
-            let id_swap = left[0][0];
-            for (let i = id_min; i > id_swap; i--)
-            {
-                array[i] = array[i-1];
-                $(id + i).style.height = Math.round(array[i-1] * $("bar_height_slider").value / 100) + "px";
-
-                array[i-1] = min;
-                $(id + (i - 1)).style.height = Math.round(min * $("bar_height_slider").value / 100) + "px";
-            }
-
-            right[0][0] = id_swap;
-
-            for (let i = 0; i < left.length; i++)
-                left[i][0]++;
-            
-            arr.push(right.shift());
-        }
-        await sleep(delay_fast_ms);
-    }
-   
-    // Concatenating the leftover elements
-    // (in case we didn't go through the entire left or right array)
-    return [ ...arr, ...left, ...right ];
-}
-
-async function sort(helperArray, array, id) 
-{
-    const half = Math.ceil(helperArray.length / 2);
-
-    // Base case or terminating case
-    if (helperArray.length < 2)
-        return helperArray;
-
-    const left = helperArray.splice(0, half);
-
-    return await merge(await sort(left, array, id), await sort(helperArray, array, id), array, id);
-}
 
 function playAll()
 {
@@ -334,15 +266,16 @@ function playAll()
     bubbleSort();
     insertionSort();
     mergeSort();
+    quickSort();
 }
+
+
 
 async function selectionSortUnstable()
 {
     let array = [...random_array];
     let id = "span_selection_u";
     reset(id);
-
-    console.log($("selection_u_fast").checked);
 
     if ($("selection_u_fast").checked == true)
     {
@@ -509,6 +442,137 @@ async function insertionSort()
             }            
         }
     }
+}
+
+function mergeSort()
+{
+    let array = [...random_array];
+    let id = "span_merge";
+    reset(id);
+
+    if ($("selection_merge").checked == true)
+    {
+        let helperArray = [];
+        for (let i = 0; i < $("bar_qty_slider").value; i++)
+            helperArray[i] = [i, array[i]];
+
+        sort(helperArray, array, id);
+    }
+    else
+    {
+
+    }
+}
+// https://stackabuse.com/merge-sort-in-javascript/
+async function merge(left, right, array, id) 
+{
+    let arr = [];    
+
+    // Break out of loop if any one of the array gets empty
+    while (left.length && right.length) 
+    {
+        // Pick the smaller among the smallest element of left and right sub arrays 
+        if (left[0][1] < right[0][1]) 
+        {
+            arr.push(left.shift())
+        }
+        else 
+        {
+            let min = right[0][1];
+            let id_min = right[0][0];
+            let id_swap = left[0][0];
+            for (let i = id_min; i > id_swap; i--)
+            {
+                array[i] = array[i-1];
+                $(id + i).style.height = Math.round(array[i-1] * $("bar_height_slider").value / 100) + "px";
+
+                array[i-1] = min;
+                $(id + (i - 1)).style.height = Math.round(min * $("bar_height_slider").value / 100) + "px";
+            }
+
+            right[0][0] = id_swap;
+
+            for (let i = 0; i < left.length; i++)
+                left[i][0]++;
+            
+            arr.push(right.shift());
+        }
+        
+        await sleep(delay_fast_ms);
+    }
+   
+    return [ ...arr, ...left, ...right ];
+}
+async function sort(helperArray, array, id) 
+{
+    const half = Math.ceil(helperArray.length / 2);
+
+    // Base case or terminating case
+    if (helperArray.length < 2)
+        return helperArray;
+
+    const left = helperArray.splice(0, half);
+
+    return await merge(await sort(left, array, id), await sort(helperArray, array, id), array, id);
+}
+
+function quickSort()
+{
+    let array = [...random_array];
+
+    let id = "span_quick";
+    reset(id);
+
+    if ($("selection_quick").checked == true)
+    {
+        quick(array, 0, $("bar_qty_slider").value - 1, id);
+    }
+    else
+    {
+
+    }
+}
+async function quick(array, low, high, id)
+{
+    if (low < high)
+    {
+        let pi = await partition(array, low, high, id);
+
+        await quick(array, low, pi - 1, id);
+        await quick(array, pi + 1, high, id);
+    }
+}
+async function partition(array, low, high, id)
+{
+    let pivot = array[high];  
+    let i = low - 1;
+
+    for (let j = low; j <= high - 1; j++)
+    {
+        if (array[j] < pivot)
+        {
+            await sleep(delay_fast_ms);
+            
+            i++;   
+            let temp = array[i];
+
+            array[i] = array[j];
+            $(id + i).style.height = Math.round(array[j] * $("bar_height_slider").value / 100) + "px";
+
+            array[j] = temp;
+            $(id + j).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+        }
+    }
+
+    let temp = array[i + 1];
+
+    array[i + 1] = array[high];
+    $(id + (i + 1)).style.height = Math.round(array[high] * $("bar_height_slider").value / 100) + "px";
+
+    array[high] = temp;
+    $(id + high).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+
+    return (i + 1)
 }
 
 function sleep(ms) {
