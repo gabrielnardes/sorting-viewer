@@ -353,7 +353,7 @@ function log(name, value)
     console.log(name + ": " + value);
 }
 
-
+// https://www.growingwiththeweb.com/sorting/radix-sort-lsd/
 async function radixSort() 
 {
     let array = [...random_array];
@@ -384,7 +384,6 @@ async function radixSort()
         exponent *= radix;
     }
 }
-
 async function countingSortByDigit(array, radix, exponent, minValue, id) {
   let i;
   let bucketIndex;
@@ -422,9 +421,6 @@ async function countingSortByDigit(array, radix, exponent, minValue, id) {
 
   return array;
 }
-
-
-
 
 // https://medium.com/weekly-webtips/cocktail-sort-in-javascript-6b645c59ecea
 async function cocktailSort()

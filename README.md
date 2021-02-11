@@ -54,4 +54,4 @@ I wanted to learn front-end development, so it seemed like a good project to sta
 
 :white_check_mark: Cocktail Sort
 
-:white_large_square: Radix LSD Sort
+:white_check_mark: Radix LSD Sort
