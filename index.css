@@ -11,6 +11,11 @@
     width: 4px;
 }
 
+.algorithms {
+    font-weight: bolder;
+    font-size: 17px;
+}
+
 .graph {
     height: 100px;
     padding: 5px;

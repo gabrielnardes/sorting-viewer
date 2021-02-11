@@ -15,7 +15,7 @@
         </span>
         <span>
             <span>Number of elements: <span id="bar_qty_value"></span></span>
-            <input type="range" class="slider" min="5" max="300" id="bar_qty_slider" oninput="setBarQty()">
+            <input type="range" class="slider" min="5" max="100" id="bar_qty_slider" oninput="setBarQty()">
         </span>
         <span>
             <span>Max bar height: <span id="bar_height_value"></span>%</span>
@@ -36,15 +36,15 @@
             <td><button onclick="selectionSortUnstable()">Play fast</button>
                 <button onclick="selectionSortUnstableSlow()">Play slow</button>
                 <button onclick="reset('span_selection_u')">Reset</button>
-                <span>Selection unstable sort</span></td>
+                <span class="algorithms">Selection unstable sort</span></td>
             <td><button onclick="selectionSortStable()">Play fast</button>
                 <button onclick="selectionSortStableSlow()">Play slow</button>
                 <button onclick="reset('span_selection_s')">Reset</button>
-                <span>Selection stable sort</span></td>
+                <span class="algorithms">Selection stable sort</span></td>
             <td><button onclick="bubbleSort()">Play fast</button>
                 <button onclick="bubbleSortSlow()">Play slow</button>
                 <button onclick="reset('span_bubble')">Reset</button>
-                <span>Bubble sort</span></td>  
+                <span class="algorithms">Bubble sort</span></td>  
         </tr>
         <tr>
             <td id="insertion" class="graph"></td>
@@ -55,15 +55,15 @@
             <td><button onclick="insertionSort()">Play fast</button>
                 <button onclick="insertionSortSlow()">Play slow</button>
                 <button onclick="reset('span_insertion')">Reset</button>
-                <span>Insertion sort</span> </td>  
+                <span class="algorithms">Insertion sort</span> </td>  
             <td><button onclick="mergeSort()">Play fast</button>
                 <button onclick="mergeSortSlow()">Play slow</button>
                 <button onclick="reset('span_merge')">Reset</button>
-                <span>Merge sort</span> </td>
+                <span class="algorithms">Merge sort</span> </td>
             <td><button onclick="quickSort()">Play fast</button>
                 <button onclick="quickSortSlow()">Play slow</button>
                 <button onclick="reset('span_quick')">Reset</button>
-                <span>Quick sort</span></td>  
+                <span class="algorithms">Quick sort</span></td>  
         </tr>
         <tr>
             <td id="heap" class="graph"></td>
@@ -74,15 +74,15 @@
             <td><button onclick="heapSort()">Play fast</button>
                 <button onclick="heapSortSlow()">Play slow</button>
                 <button onclick="reset('span_heap')">Reset</button>
-                <span>Heap sort</span> </td>
+                <span class="algorithms">Heap sort</span> </td>
             <td><button onclick="countingSort()">Play fast</button>
                 <button onclick="countingSortSlow()">Play slow</button>
                 <button onclick="reset('span_counting')">Reset</button>
-                <span>Counting sort</span>  </td>  
+                <span class="algorithms">Counting sort</span>  </td>  
             <td><button onclick="bucketSort()">Play fast</button>
                 <button onclick="bucketSortSlow()">Play slow</button>
                 <button onclick="reset('span_bucket')">Reset</button>
-                <span>Bucket sort</span></td>  
+                <span class="algorithms">Bucket sort</span></td>  
         </tr>
     </table>
     <!-- <p id="bot"></p> -->
