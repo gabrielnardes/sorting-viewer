@@ -2,17 +2,17 @@ var g_arr = [];
 var delay_slow_ms = 100;
 var delay_fast_ms = 1;
 var old_height;
-var bar_qty;
-var max_height = 120;
-var min_height = 5;
-var multiple = 2;
+var old_bar_qty;
+var max_height = 120;   // pixels
+var min_height = 5;     // pixels
+var multiple = 2;       // random array will be a multiple of this number
 
 function createRandomArray() {
     for (let i = 0; i < $("bar_qty_slider").max; i++) {
-        g_arr[i] = genRandomNumber(5, max_height);// height: min and max
+        g_arr[i] = genRandomNumber(min_height, max_height);
 
         while (g_arr[i] % multiple !== 0) {
-            g_arr[i] = genRandomNumber(5, max_height);
+            g_arr[i] = genRandomNumber(min_height, max_height);
         }
     }
 }
@@ -31,14 +31,14 @@ function createOrdinalArray() {
 }
 
 function createBars() {
-    $("bar_height_slider").value = $("bar_height_slider").max;
+    $("bar_height_slider").value    = $("bar_height_slider").max;
     $("bar_height_value").innerHTML = $("bar_height_slider").value;
 
-    $("bar_qty_slider").value = $("bar_qty_slider").max;
-    $("bar_qty_value").innerHTML = $("bar_qty_slider").value;
+    $("bar_qty_slider").value       = $("bar_qty_slider").max;
+    $("bar_qty_value").innerHTML    = $("bar_qty_slider").value;
 
-    $("bar_width_slider").value = $("bar_width_slider").min;
-    $("bar_width_value").innerHTML = $("bar_width_slider").value;
+    $("bar_width_slider").value     = $("bar_width_slider").min;
+    $("bar_width_value").innerHTML  = $("bar_width_slider").value;
 
     for (let i = 0; i < $("bar_qty_slider").max; i++) {
         createSpan("span_selection_u", "selection_u", i);
@@ -66,7 +66,7 @@ function createBars() {
     }
 
     old_height = $("bar_height_slider").value;
-    bar_qty = parseInt($("bar_qty_slider").value);
+    old_bar_qty = parseInt($("bar_qty_slider").value);
 }
 
 function createSpan(id, parent, i) {
@@ -81,10 +81,10 @@ function genRandomArray() {
     resetAll();   
 
     for (let i = 0; i < $("bar_qty_slider").value; i++) {
-        g_arr[i] = genRandomNumber(5, max_height);
+        g_arr[i] = genRandomNumber(min_height, max_height);
 
         while (g_arr[i] % multiple !== 0) {
-            g_arr[i] = genRandomNumber(5, max_height);
+            g_arr[i] = genRandomNumber(min_height, max_height);
         }
 
         let scaled =  g_arr[i] * $("bar_height_slider").value / 100 + "px";
@@ -105,10 +105,10 @@ function genRandomArray() {
 function genOrdinalArray() {
     resetAll();
 
-    let my_height = max_height / $("bar_qty_slider").value;
+    let height = max_height / $("bar_qty_slider").value;
 
     for (let i = 0; i < $("bar_qty_slider").value; i++) {
-        g_arr[i] = (i + 1) * my_height;
+        g_arr[i] = (i + 1) * height;
     }
 
     for (let i = $("bar_qty_slider").value - 1; i > 0; i--) {
@@ -134,16 +134,16 @@ function setBarQty() {
 
     let next_bar_qty = parseInt($("bar_qty_slider").value);
 
-    if (bar_qty > next_bar_qty) {
-        subBarQty(bar_qty, next_bar_qty);
-    } else if (bar_qty < next_bar_qty) {
-        addBarQty(bar_qty, next_bar_qty);
+    if (old_bar_qty > next_bar_qty) {
+        subBarQty(next_bar_qty);
+    } else if (old_bar_qty < next_bar_qty) {
+        addBarQty(next_bar_qty);
     }
 
-    bar_qty = next_bar_qty;
+    old_bar_qty = next_bar_qty;
 }
 
-function addBarQty(bar_qty, next_bar_qty) {
+function addBarQty(next_bar_qty) {
     for (let i = 0; i < next_bar_qty; i++) { 
         let scaled =  g_arr[i] * $("bar_height_slider").value / 100 + "px";
         $("span_selection_u" + i).style.height = scaled;
@@ -169,7 +169,7 @@ function addBarQty(bar_qty, next_bar_qty) {
     }
 }
 
-function subBarQty(bar_qty, next_bar_qty) {
+function subBarQty(next_bar_qty) {
     for (let i = 0; i < next_bar_qty; i++) { 
         let scaled =  g_arr[i] * $("bar_height_slider").value / 100 + "px";
         $("span_selection_u" + i).style.height = scaled;
@@ -291,176 +291,6 @@ function playAll() {
 function log(name, value) {
     console.log(name + ": " + value);
 }
-
-// https://www.growingwiththeweb.com/sorting/radix-sort-lsd/
-async function radixSort() {
-    let array = [...g_arr];
-    let id = "span_radix";
-    reset(id);
-
-    let radix = 10;
-
-    radix = radix || 10;
-
-    // Determine minimum and maximum values
-    let minValue = array[0];
-    let maxValue = array[0];
-    for (let i = 1; i < $("bar_qty_slider").value; i++) {
-        if (array[i] < minValue) {
-            minValue = array[i];
-        } else if (array[i] > maxValue) {
-            maxValue = array[i];
-        }
-    }
-
-    // Perform counting sort on each exponent/digit, starting at the least
-    // significant digit
-    let exponent = 1;
-    while ((maxValue - minValue) / exponent >= 1) {
-        array = await countingSortByDigit(array, radix, exponent, minValue, id);
-
-        exponent *= radix;
-    }
-}
-async function countingSortByDigit(array, radix, exponent, minValue, id) {
-    let i;
-    let bucketIndex;
-    let buckets = new Array(radix);
-    let output = new Array($("bar_qty_slider").value);
-
-    // Initialize bucket
-    for (i = 0; i < radix; i++) {
-        buckets[i] = 0;
-    }
-
-    // Count frequencies
-    for (i = 0; i < $("bar_qty_slider").value; i++) {
-        bucketIndex = Math.floor(((array[i] - minValue) / exponent) % radix);
-        buckets[bucketIndex]++;
-    }
-
-    // Compute cumulates
-    for (i = 1; i < radix; i++) {
-        buckets[i] += buckets[i - 1];
-    }
-
-    // Move records
-    for (i = $("bar_qty_slider").value - 1; i >= 0; i--) {
-        bucketIndex = Math.floor(((array[i] - minValue) / exponent) % radix);
-        output[--buckets[bucketIndex]] = array[i];
-    }
-
-    // Copy back
-    for (i = 0; i < $("bar_qty_slider").value; i++) {
-        await sleep(delay_fast_ms);
-        array[i] = output[i];
-        $(id + i).style.height = Math.round(output[i] * $("bar_height_slider").value / 100) + "px";
-    }
-
-    return array;
-}
-
-// https://medium.com/weekly-webtips/cocktail-sort-in-javascript-6b645c59ecea
-async function cocktailSort() {
-    let array = [...g_arr];
-    let id = "span_cocktail";
-    reset(id);
-
-
-    let start = 0, end = $("bar_qty_slider").value, swapped = true;
-
-    while (swapped) {
-        swapped = false;
-        for (let i = start; i < end - 1; i++) {
-            if (array[i] > array[i + 1]) {
-                await sleep(delay_fast_ms);
-                let temp = array[i];
-
-                array[i] = array[i + 1];
-                $(id + i).style.height = Math.round(array[i + 1] * $("bar_height_slider").value / 100) + "px";
-
-                array[i + 1] = temp;
-                $(id + (i + 1)).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
-
-                swapped = true;
-            }
-        }
-
-        end--;
-
-        if (!swapped) {
-            break;
-        }
-    
-        swapped = false;
-        for (let i = end - 1; i > start; i--) {
-            if (array[i - 1] > array[i]) {
-                await sleep(delay_fast_ms);
-
-                let temp = array[i];
-
-                array[i] = array[i - 1];
-                $(id + i).style.height = Math.round(array[i - 1] * $("bar_height_slider").value / 100) + "px";
-
-                array[i - 1] = temp;
-                $(id + (i - 1)).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
-
-                swapped = true;
-            }
-        }
-
-        start++;
-    }
-}
-
-async function heapSort() {
-    let array = [...g_arr];
-    let id = "span_heap";
-    reset(id);
-
-    let array_length = $("bar_qty_slider").value;
-
-    for (let i = Math.floor(array_length / 2); i >= 0; i -= 1) {
-        await heap_root(array, i, array_length, id);
-    }
-
-    for (let i = array_length - 1; i > 0; i--) {
-        await swap(array, 0, i, id);
-        array_length--;
-      
-        await heap_root(array, 0, array_length, id);
-    }
-}
-async function heap_root(input, i, array_length, id) {
-    let left = 2 * i + 1;
-    let right = 2 * i + 2;
-    let max = i;
-
-    if (left < array_length && input[left] > input[max]) {
-        max = left;
-    }
-
-    if (right < array_length && input[right] > input[max]) {
-        max = right;
-    }
-
-    if (max != i) {
-        await swap(input, i, max, id);
-        await heap_root(input, max, array_length, id);
-    }
-}
-async function swap(input, index_A, index_B, id) {
-    var temp = input[index_A];
-
-    await sleep(delay_fast_ms);
-
-    input[index_A] = input[index_B];
-    $(id + index_A).style.height = Math.round(input[index_B] * $("bar_height_slider").value / 100) + "px";
-
-    input[index_B] = temp;
-    $(id + index_B).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
-}
-
 
 async function selectionSortUnstable() {
     let array = [...g_arr];
@@ -730,7 +560,175 @@ async function partition(array, low, high, id) {
     array[high] = temp;
     $(id + high).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
 
-    return (i + 1)
+    return (i + 1);
+}
+
+async function heapSort() {
+    let array = [...g_arr];
+    let id = "span_heap";
+    reset(id);
+
+    let array_length = $("bar_qty_slider").value;
+
+    for (let i = Math.floor(array_length / 2); i >= 0; i -= 1) {
+        await heap_root(array, i, array_length, id);
+    }
+
+    for (let i = array_length - 1; i > 0; i--) {
+        await swap(array, 0, i, id);
+        array_length--;
+      
+        await heap_root(array, 0, array_length, id);
+    }
+}
+async function heap_root(input, i, array_length, id) {
+    let left = 2 * i + 1;
+    let right = 2 * i + 2;
+    let max = i;
+
+    if (left < array_length && input[left] > input[max]) {
+        max = left;
+    }
+
+    if (right < array_length && input[right] > input[max]) {
+        max = right;
+    }
+
+    if (max != i) {
+        await swap(input, i, max, id);
+        await heap_root(input, max, array_length, id);
+    }
+}
+async function swap(input, index_A, index_B, id) {
+    var temp = input[index_A];
+
+    await sleep(delay_fast_ms);
+
+    input[index_A] = input[index_B];
+    $(id + index_A).style.height = Math.round(input[index_B] * $("bar_height_slider").value / 100) + "px";
+
+    input[index_B] = temp;
+    $(id + index_B).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+}
+
+// https://medium.com/weekly-webtips/cocktail-sort-in-javascript-6b645c59ecea
+async function cocktailSort() {
+    let array = [...g_arr];
+    let id = "span_cocktail";
+    reset(id);
+
+
+    let start = 0, end = $("bar_qty_slider").value, swapped = true;
+
+    while (swapped) {
+        swapped = false;
+        for (let i = start; i < end - 1; i++) {
+            if (array[i] > array[i + 1]) {
+                await sleep(delay_fast_ms);
+                let temp = array[i];
+
+                array[i] = array[i + 1];
+                $(id + i).style.height = Math.round(array[i + 1] * $("bar_height_slider").value / 100) + "px";
+
+                array[i + 1] = temp;
+                $(id + (i + 1)).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+
+                swapped = true;
+            }
+        }
+
+        end--;
+
+        if (!swapped) {
+            break;
+        }
+    
+        swapped = false;
+        for (let i = end - 1; i > start; i--) {
+            if (array[i - 1] > array[i]) {
+                await sleep(delay_fast_ms);
+
+                let temp = array[i];
+
+                array[i] = array[i - 1];
+                $(id + i).style.height = Math.round(array[i - 1] * $("bar_height_slider").value / 100) + "px";
+
+                array[i - 1] = temp;
+                $(id + (i - 1)).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+
+                swapped = true;
+            }
+        }
+
+        start++;
+    }
+}
+
+// https://www.growingwiththeweb.com/sorting/radix-sort-lsd/
+async function radixSort() {
+    let array = [...g_arr];
+    let id = "span_radix";
+    reset(id);
+
+    let radix = 10;
+    radix = radix || 10;
+
+    // Determine minimum and maximum values
+    let minValue = array[0];
+    let maxValue = array[0];
+    for (let i = 1; i < $("bar_qty_slider").value; i++) {
+        if (array[i] < minValue) {
+            minValue = array[i];
+        } else if (array[i] > maxValue) {
+            maxValue = array[i];
+        }
+    }
+
+    // Perform counting sort on each exponent/digit, starting at the least
+    // significant digit
+    let exponent = 1;
+    while ((maxValue - minValue) / exponent >= 1) {
+        array = await countingSortByDigit(array, radix, exponent, minValue, id);
+
+        exponent *= radix;
+    }
+}
+async function countingSortByDigit(array, radix, exponent, minValue, id) {
+    let i;
+    let bucketIndex;
+    let buckets = new Array(radix);
+    let output = new Array($("bar_qty_slider").value);
+
+    // Initialize bucket
+    for (i = 0; i < radix; i++) {
+        buckets[i] = 0;
+    }
+
+    // Count frequencies
+    for (i = 0; i < $("bar_qty_slider").value; i++) {
+        bucketIndex = Math.floor(((array[i] - minValue) / exponent) % radix);
+        buckets[bucketIndex]++;
+    }
+
+    // Compute cumulates
+    for (i = 1; i < radix; i++) {
+        buckets[i] += buckets[i - 1];
+    }
+
+    // Move records
+    for (i = $("bar_qty_slider").value - 1; i >= 0; i--) {
+        bucketIndex = Math.floor(((array[i] - minValue) / exponent) % radix);
+        output[--buckets[bucketIndex]] = array[i];
+    }
+
+    // Copy back
+    for (i = 0; i < $("bar_qty_slider").value; i++) {
+        await sleep(delay_fast_ms);
+        array[i] = output[i];
+        $(id + i).style.height = Math.round(output[i] * $("bar_height_slider").value / 100) + "px";
+    }
+
+    return array;
 }
 
 function sleep(ms) {
