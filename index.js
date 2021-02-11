@@ -3,19 +3,15 @@ var delay_slow_ms = 100;
 var delay_fast_ms = 1;
 var old_height;
 var bar_qty;
-var max_random = 250;
+var max_random = 100;
 var min_height = 5;
 var mult_random = 2;
 var mydebug = false;
 
 
 
-function countingSort()
-{
-   
-}
 
-function bucketSort()
+function radixLSDSort()
 {
    
 }
@@ -38,7 +34,11 @@ function createOrdinalArray()
     let my_height = max_random / $("bar_qty_slider").max;
 
     for (let i = 0; i < $("bar_qty_slider").max; i++)
-        random_array[i] = (i + 1) * my_height;
+    {
+
+        random_array[i] = i + 1;
+//        random_array[i] = Math.round((i + 1) * my_height);
+    }
 
     for (let i = $("bar_qty_slider").max - 1; i > 0; i--) 
     {
@@ -68,6 +68,7 @@ function createBars()
         createSpan("span_merge",       "merge",       i);
         createSpan("span_quick",       "quick",       i);
         createSpan("span_heap",        "heap",        i);
+        createSpan("span_cocktail",    "cocktail",    i);
     }
 
     for (let i = 0; i < $("bar_qty_slider").value; i++)
@@ -81,6 +82,7 @@ function createBars()
         $("span_merge"       + i).style.height = scaled + "px";
         $("span_quick"       + i).style.height = scaled + "px";
         $("span_heap"        + i).style.height = scaled + "px";
+        $("span_cocktail"    + i).style.height = scaled + "px";
     }
 
     old_height = $("bar_height_slider").value;
@@ -116,6 +118,7 @@ function genRandomArray()
         $("span_merge"       + i).style.height = scaled;
         $("span_quick"       + i).style.height = scaled;
         $("span_heap"        + i).style.height = scaled;
+        $("span_cocktail"    + i).style.height = scaled;
     }
 }
 
@@ -146,6 +149,7 @@ function genOrdinalArray()
         $("span_merge"       + i).style.height = scaled;
         $("span_quick"       + i).style.height = scaled;
         $("span_heap"        + i).style.height = scaled;
+        $("span_cocktail"    + i).style.height = scaled;
     }
 }
 
@@ -176,6 +180,7 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_merge"       + i).style.height = scaled;
         $("span_quick"       + i).style.height = scaled;
         $("span_heap"        + i).style.height = scaled;
+        $("span_cocktail"    + i).style.height = scaled;
 
         let width = $("bar_width_slider").value + "px";
         //$("span"             + i).style.width = width;
@@ -186,6 +191,7 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_merge"       + i).style.width = width;
         $("span_quick"       + i).style.width = width;
         $("span_heap"        + i).style.width = width;
+        $("span_cocktail"    + i).style.width = width;
     }
 }
 
@@ -202,6 +208,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_merge"       + i).style.height = scaled;
         $("span_quick"       + i).style.height = scaled;
         $("span_heap"        + i).style.height = scaled;
+        $("span_cocktail"    + i).style.height = scaled;
 
         let width = $("bar_width_slider").value + "px";
         //$("span"             + i).style.width = width;
@@ -211,6 +218,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_insertion"   + i).style.width = width;
         $("span_merge"       + i).style.width = width;
         $("span_heap"        + i).style.width = width;
+        $("span_cocktail"    + i).style.width = width;
     }
 
     for (let i = $("bar_qty_slider").max - 1; i >= next_bar_qty; i--)
@@ -224,6 +232,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_merge"       + i).style.height = 0;
         $("span_quick"       + i).style.height = 0;
         $("span_heap"        + i).style.height = 0;
+        $("span_cocktail"    + i).style.height = 0;
     }
 }
 
@@ -241,6 +250,7 @@ function setBarHeight()
         scale("span_merge",       i);
         scale("span_quick",       i);
         scale("span_heap",        i);
+        scale("span_cocktail",    i);
     }
     
     old_height = $("bar_height_slider").value;
@@ -268,6 +278,7 @@ function setBarWidth()
         $("span_merge"       + i).style.width = width;
         $("span_quick"       + i).style.width = width;
         $("span_heap"        + i).style.width = width;
+        $("span_cocktail"    + i).style.width = width;
     }
 }
 
@@ -298,6 +309,7 @@ function resetAlgorithms()
         resetA("span_merge",       i, scaled);
         resetA("span_quick",       i, scaled);
         resetA("span_heap",        i, scaled);
+        resetA("span_cocktail",    i, scaled);
     }
 }
 
@@ -315,6 +327,7 @@ function resetAll()
         resetA("span_merge",       i, scaled);
         resetA("span_quick",       i, scaled);
         resetA("span_heap",        i, scaled);
+        resetA("span_cocktail",    i, scaled);
     }
 }
 
@@ -327,7 +340,99 @@ function playAll()
     mergeSort();
     quickSort();
     heapSort();
+    cocktailSort();
 }
+
+function log(name, value)
+{
+    console.log(name + ": " + value);
+}
+
+// https://medium.com/weekly-webtips/cocktail-sort-in-javascript-6b645c59ecea
+async function cocktailSort()
+{
+    let array = [...random_array];
+    let id = "span_cocktail";
+    reset(id);
+
+
+    let start = 0, end = $("bar_qty_slider").value, swapped = true;
+
+    while (swapped) 
+    {
+        swapped = false;
+        for (let i = start; i < end - 1; i++) 
+        {
+            if (array[i] > array[i + 1]) 
+            {
+                await sleep(delay_fast_ms);
+                let temp = array[i];
+
+                array[i] = array[i + 1];
+                $(id + i).style.height = Math.round(array[i + 1] * $("bar_height_slider").value / 100) + "px";
+
+                array[i + 1] = temp;
+                $(id + (i + 1)).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+
+                swapped = true;
+            }
+        }
+
+        end--;
+        if (!swapped)
+            break;
+    
+        swapped = false;
+        for (let i = end - 1; i > start; i--) 
+        {
+            if (array[i - 1] > array[i]) 
+            {
+                await sleep(delay_fast_ms);
+
+                let temp = array[i];
+
+                array[i] = array[i - 1];
+                $(id + i).style.height = Math.round(array[i - 1] * $("bar_height_slider").value / 100) + "px";
+
+                array[i - 1] = temp;
+                $(id + (i - 1)).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+
+                swapped = true;
+            }
+        }
+
+        start++;
+    }
+}
+
+function find_min(array)
+{
+    let min = array[0];
+
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
+    {
+        if (array[i] < min){
+            min = array[i];
+        }
+    }
+
+
+    return min;
+}
+function find_max(array)
+{
+    let max = array[0];
+
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
+    {
+        if (array[i] > max){
+            max = array[i];
+        }
+    }
+
+    return max;    
+}
+
 
 async function heapSort()
 {

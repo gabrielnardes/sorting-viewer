@@ -31,9 +31,9 @@ I wanted to learn front-end development, so it seemed like a good project to sta
 
 :white_large_square: Fast and slow version for HeapSort Sort
 
-:white_large_square: Fast and slow version for Counting Sort
+:white_large_square: Fast and slow version for Cocktail Sort
 
-:white_large_square: Fast and slow version for Bucket Sort
+:white_large_square: Fast and slow version for Radix LSD Sort
 
 ### Algorithms
 :white_check_mark: Selection Unstable Sort
@@ -48,8 +48,8 @@ I wanted to learn front-end development, so it seemed like a good project to sta
 
 :white_check_mark: QuickSort
 
-:white_large_square: HeapSort
+:white_check_mark: HeapSort
 
-:white_large_square: Counting Sort
+:white_check_mark: Cocktail Sort
 
-:white_large_square: Bucket Sort
+:white_large_square: Radix LSD Sort
