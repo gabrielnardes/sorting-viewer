@@ -1,9 +1,10 @@
 var random_array = [];
 var delay_slow_ms = 100;
-var delay_fast_ms = 10;
+var delay_fast_ms = 1;
 var old_height;
 var bar_qty;
-var max_random = 100;
+var max_random = 250;
+var min_height = 5;
 var mult_random = 2;
 var mydebug = false;
 
@@ -23,6 +24,7 @@ function bucketSort()
 }
 
 
+
 function createRandomArray()
 {
     for (let i = 0; i < $("bar_qty_slider").max; i++)
@@ -31,6 +33,23 @@ function createRandomArray()
 
         while (random_array[i] % mult_random !== 0)
             random_array[i] = genRandomNumber(5, max_random);
+    }
+}
+
+function createOrdinalArray()
+{
+    let my_height = max_random / $("bar_qty_slider").max;
+
+    for (let i = 0; i < $("bar_qty_slider").max; i++)
+    {
+        random_array[i] = (i + 1) * my_height;
+        //random_array[i] = i + 1;
+    }
+
+    for (let i = $("bar_qty_slider").max - 1; i > 0; i--) 
+    {
+        const j = Math.floor(Math.random() * (i + 1));
+        [random_array[i], random_array[j]] = [random_array[j], random_array[i]];
     }
 }
 
@@ -47,7 +66,7 @@ function createBars()
 
     for (let i = 0; i < $("bar_qty_slider").max; i++)
     {
-        createSpan("span",             "bot",         i);
+        //createSpan("span",             "bot",         i);
         createSpan("span_selection_u", "selection_u", i);
         createSpan("span_selection_s", "selection_s", i);
         createSpan("span_bubble",      "bubble",      i);
@@ -58,14 +77,14 @@ function createBars()
 
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
-        let random_scaled =  random_array[i] * $("bar_height_slider").value / 100;
-        $("span"             + i).style.height = random_scaled + "px";
-        $("span_selection_u" + i).style.height = random_scaled + "px";
-        $("span_selection_s" + i).style.height = random_scaled + "px";
-        $("span_bubble"      + i).style.height = random_scaled + "px";
-        $("span_insertion"   + i).style.height = random_scaled + "px";
-        $("span_merge"       + i).style.height = random_scaled + "px";
-        $("span_quick"       + i).style.height = random_scaled + "px";
+        let scaled =  random_array[i] * $("bar_height_slider").value / 100;
+        //$("span"             + i).style.height = scaled + "px";
+        $("span_selection_u" + i).style.height = scaled + "px";
+        $("span_selection_s" + i).style.height = scaled + "px";
+        $("span_bubble"      + i).style.height = scaled + "px";
+        $("span_insertion"   + i).style.height = scaled + "px";
+        $("span_merge"       + i).style.height = scaled + "px";
+        $("span_quick"       + i).style.height = scaled + "px";
     }
 
     old_height = $("bar_height_slider").value;
@@ -91,15 +110,44 @@ function genRandomArray()
         while (random_array[i] % mult_random !== 0)
             random_array[i] = genRandomNumber(5, max_random);
 
-        let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
+        let scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
 
-        $("span"             + i).style.height = random_scaled;
-        $("span_selection_u" + i).style.height = random_scaled;
-        $("span_selection_s" + i).style.height = random_scaled;
-        $("span_bubble"      + i).style.height = random_scaled;
-        $("span_insertion"   + i).style.height = random_scaled;
-        $("span_merge"       + i).style.height = random_scaled;
-        $("span_quick"       + i).style.height = random_scaled;
+        //$("span"             + i).style.height = scaled;
+        $("span_selection_u" + i).style.height = scaled;
+        $("span_selection_s" + i).style.height = scaled;
+        $("span_bubble"      + i).style.height = scaled;
+        $("span_insertion"   + i).style.height = scaled;
+        $("span_merge"       + i).style.height = scaled;
+        $("span_quick"       + i).style.height = scaled;
+    }
+}
+
+// Durstenfeld shuffle algorithm
+function genOrdinalArray() 
+{
+    resetAll();
+
+    let my_height = max_random / $("bar_qty_slider").value;
+
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
+    {
+        random_array[i] = (i + 1) * my_height;
+    }
+
+    for (let i = $("bar_qty_slider").value - 1; i > 0; i--) 
+    {
+        const j = Math.floor(Math.random() * (i + 1));
+        [random_array[i], random_array[j]] = [random_array[j], random_array[i]];
+
+        let scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
+
+        //$("span"             + i).style.height = scaled;
+        $("span_selection_u" + i).style.height = scaled;
+        $("span_selection_s" + i).style.height = scaled;
+        $("span_bubble"      + i).style.height = scaled;
+        $("span_insertion"   + i).style.height = scaled;
+        $("span_merge"       + i).style.height = scaled;
+        $("span_quick"       + i).style.height = scaled;
     }
 }
 
@@ -121,17 +169,17 @@ function addBarQty(bar_qty, next_bar_qty)
 {
     for (let i = 0; i < next_bar_qty; i++)
     { 
-        let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
-        $("span"             + i).style.height = random_scaled;
-        $("span_selection_u" + i).style.height = random_scaled;
-        $("span_selection_s" + i).style.height = random_scaled;
-        $("span_bubble"      + i).style.height = random_scaled;
-        $("span_insertion"   + i).style.height = random_scaled;
-        $("span_merge"       + i).style.height = random_scaled;
-        $("span_quick"       + i).style.height = random_scaled;
+        let scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
+        //$("span"             + i).style.height = scaled;
+        $("span_selection_u" + i).style.height = scaled;
+        $("span_selection_s" + i).style.height = scaled;
+        $("span_bubble"      + i).style.height = scaled;
+        $("span_insertion"   + i).style.height = scaled;
+        $("span_merge"       + i).style.height = scaled;
+        $("span_quick"       + i).style.height = scaled;
 
         let width = $("bar_width_slider").value + "px";
-        $("span"             + i).style.width = width;
+        //$("span"             + i).style.width = width;
         $("span_selection_u" + i).style.width = width;
         $("span_selection_s" + i).style.width = width;
         $("span_bubble"      + i).style.width = width;
@@ -145,17 +193,17 @@ function subBarQty(bar_qty, next_bar_qty)
 {
     for (let i = 0; i < next_bar_qty; i++)
     { 
-        let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
-        $("span"             + i).style.height = random_scaled;
-        $("span_selection_u" + i).style.height = random_scaled;
-        $("span_selection_s" + i).style.height = random_scaled;
-        $("span_bubble"      + i).style.height = random_scaled;
-        $("span_insertion"   + i).style.height = random_scaled;
-        $("span_merge"       + i).style.height = random_scaled;
-        $("span_quick"       + i).style.height = random_scaled;
+        let scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
+        //$("span"             + i).style.height = scaled;
+        $("span_selection_u" + i).style.height = scaled;
+        $("span_selection_s" + i).style.height = scaled;
+        $("span_bubble"      + i).style.height = scaled;
+        $("span_insertion"   + i).style.height = scaled;
+        $("span_merge"       + i).style.height = scaled;
+        $("span_quick"       + i).style.height = scaled;
 
         let width = $("bar_width_slider").value + "px";
-        $("span"             + i).style.width = width;
+        //$("span"             + i).style.width = width;
         $("span_selection_u" + i).style.width = width;
         $("span_selection_s" + i).style.width = width;
         $("span_bubble"      + i).style.width = width;
@@ -166,8 +214,8 @@ function subBarQty(bar_qty, next_bar_qty)
 
     for (let i = $("bar_qty_slider").max - 1; i >= next_bar_qty; i--)
     { 
-        let random_scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
-        $("span"             + i).style.height = 0;
+        let scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
+        //$("span"             + i).style.height = 0;
         $("span_selection_u" + i).style.height = 0;
         $("span_selection_s" + i).style.height = 0;
         $("span_bubble"      + i).style.height = 0;
@@ -183,7 +231,7 @@ function setBarHeight()
 
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {       
-        scale("span",             i);
+        //scale("span",             i);
         scale("span_selection_u", i);
         scale("span_selection_s", i);
         scale("span_bubble",      i);
@@ -209,7 +257,7 @@ function setBarWidth()
 
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
-        $("span"             + i).style.width = width;
+        //$("span"             + i).style.width = width;
         $("span_selection_u" + i).style.width = width;
         $("span_selection_s" + i).style.width = width;
         $("span_bubble"      + i).style.width = width;
@@ -238,13 +286,13 @@ function resetAlgorithms()
 {
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
-        let random_scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
-        resetA("span_selection_u", i, random_scaled);
-        resetA("span_selection_s", i, random_scaled);
-        resetA("span_bubble",      i, random_scaled);
-        resetA("span_insertion",   i, random_scaled);
-        resetA("span_merge",       i, random_scaled);
-        resetA("span_quick",       i, random_scaled);
+        let scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
+        resetA("span_selection_u", i, scaled);
+        resetA("span_selection_s", i, scaled);
+        resetA("span_bubble",      i, scaled);
+        resetA("span_insertion",   i, scaled);
+        resetA("span_merge",       i, scaled);
+        resetA("span_quick",       i, scaled);
     }
 }
 
@@ -252,17 +300,17 @@ function resetAll()
 {
     for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
-        let random_scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
-        resetA("span",             i, random_scaled);
-        resetA("span_selection_u", i, random_scaled);
-        resetA("span_selection_s", i, random_scaled);
-        resetA("span_bubble",      i, random_scaled);
-        resetA("span_insertion",   i, random_scaled);
-        resetA("span_merge",       i, random_scaled);
-        resetA("span_quick",       i, random_scaled);
+        let scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
+
+        //resetA("span",             i, scaled);
+        resetA("span_selection_u", i, scaled);
+        resetA("span_selection_s", i, scaled);
+        resetA("span_bubble",      i, scaled);
+        resetA("span_insertion",   i, scaled);
+        resetA("span_merge",       i, scaled);
+        resetA("span_quick",       i, scaled);
     }
 }
-
 
 function playAll()
 {
@@ -347,8 +395,6 @@ async function selectionSortUnstable()
                 $(id + k).style.backgroundColor = "red";
         }
     }
-
-
 }
 
 async function selectionSortStable()

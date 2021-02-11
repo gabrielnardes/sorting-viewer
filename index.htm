@@ -5,16 +5,17 @@
     <script src="index.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
-<body onload="createRandomArray(); createBars()">
-    <div id="top_bar">
+<body onload="createOrdinalArray(); createBars()">
+    <header id="top_bar">
         <span>
             <button onclick='genRandomArray()'>Generate random array</button>
+            <button onclick="genOrdinalArray()">Generate ordinal array</button>
             <button onclick="playAll()">Play all</button>
             <button onclick="resetAlgorithms()">Reset all</button>
         </span>
         <span>
             <span>Number of elements: <span id="bar_qty_value"></span></span>
-            <input type="range" class="slider" min="5" max="500" id="bar_qty_slider" oninput="setBarQty()">
+            <input type="range" class="slider" min="5" max="300" id="bar_qty_slider" oninput="setBarQty()">
         </span>
         <span>
             <span>Max bar height: <span id="bar_height_value"></span>%</span>
@@ -24,7 +25,7 @@
             <span>Bar width: <span id="bar_width_value"></span></span>
             <input class="slider" type="range" min="1" max="6" id="bar_width_slider" oninput="setBarWidth()">
         </span>
-    </div>
+    </header>
     <table>
         <tr>
             <td id="selection_u" class="graph"></td>
@@ -93,6 +94,6 @@
                 <span>Bucket sort</span></td>  
         </tr>
     </table>
-    <p id="bot"></p>
+    <!-- <p id="bot"></p> -->
 </body>
 </html>
