@@ -1,4 +1,4 @@
-var random_array = [];
+var g_arr = [];
 var delay_slow_ms = 100;
 var delay_fast_ms = 1;
 var old_height;
@@ -11,10 +11,10 @@ var mydebug = false;
 
 function createRandomArray() {
     for (let i = 0; i < $("bar_qty_slider").max; i++) {
-        random_array[i] = genRandomNumber(5, max_random);// height: min and max
+        g_arr[i] = genRandomNumber(5, max_random);// height: min and max
 
-        while (random_array[i] % mult_random !== 0) {
-            random_array[i] = genRandomNumber(5, max_random);
+        while (g_arr[i] % mult_random !== 0) {
+            g_arr[i] = genRandomNumber(5, max_random);
         }
     }
 }
@@ -23,12 +23,12 @@ function createOrdinalArray() {
     let my_height = max_random / $("bar_qty_slider").max;
 
     for (let i = 0; i < $("bar_qty_slider").max; i++) {
-        random_array[i] = (i + 1) * my_height;
+        g_arr[i] = (i + 1) * my_height;
     }
 
     for (let i = $("bar_qty_slider").max - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [random_array[i], random_array[j]] = [random_array[j], random_array[i]];
+        [g_arr[i], g_arr[j]] = [g_arr[j], g_arr[i]];
     }
 }
 
@@ -56,7 +56,7 @@ function createBars() {
     }
 
     for (let i = 0; i < $("bar_qty_slider").value; i++) {
-        let scaled =  random_array[i] * $("bar_height_slider").value / 100;
+        let scaled =  g_arr[i] * $("bar_height_slider").value / 100;
         //$("span"             + i).style.height = scaled + "px";
         $("span_selection_u" + i).style.height = scaled + "px";
         $("span_selection_s" + i).style.height = scaled + "px";
@@ -85,13 +85,13 @@ function genRandomArray() {
     resetAll();   
 
     for (let i = 0; i < $("bar_qty_slider").value; i++) {
-        random_array[i] = genRandomNumber(5, max_random);
+        g_arr[i] = genRandomNumber(5, max_random);
 
-        while (random_array[i] % mult_random !== 0) {
-            random_array[i] = genRandomNumber(5, max_random);
+        while (g_arr[i] % mult_random !== 0) {
+            g_arr[i] = genRandomNumber(5, max_random);
         }
 
-        let scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
+        let scaled =  g_arr[i] * $("bar_height_slider").value / 100 + "px";
 
         //$("span"             + i).style.height = scaled;
         $("span_selection_u" + i).style.height = scaled;
@@ -113,14 +113,14 @@ function genOrdinalArray() {
     let my_height = max_random / $("bar_qty_slider").value;
 
     for (let i = 0; i < $("bar_qty_slider").value; i++) {
-        random_array[i] = (i + 1) * my_height;
+        g_arr[i] = (i + 1) * my_height;
     }
 
     for (let i = $("bar_qty_slider").value - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [random_array[i], random_array[j]] = [random_array[j], random_array[i]];
+        [g_arr[i], g_arr[j]] = [g_arr[j], g_arr[i]];
 
-        let scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
+        let scaled = g_arr[i] * $("bar_height_slider").value / 100 + "px";
 
         //$("span"             + i).style.height = scaled;
         $("span_selection_u" + i).style.height = scaled;
@@ -151,7 +151,7 @@ function setBarQty() {
 
 function addBarQty(bar_qty, next_bar_qty) {
     for (let i = 0; i < next_bar_qty; i++) { 
-        let scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
+        let scaled =  g_arr[i] * $("bar_height_slider").value / 100 + "px";
         //$("span"             + i).style.height = scaled;
         $("span_selection_u" + i).style.height = scaled;
         $("span_selection_s" + i).style.height = scaled;
@@ -179,7 +179,7 @@ function addBarQty(bar_qty, next_bar_qty) {
 
 function subBarQty(bar_qty, next_bar_qty) {
     for (let i = 0; i < next_bar_qty; i++) { 
-        let scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
+        let scaled =  g_arr[i] * $("bar_height_slider").value / 100 + "px";
         //$("span"             + i).style.height = scaled;
         $("span_selection_u" + i).style.height = scaled;
         $("span_selection_s" + i).style.height = scaled;
@@ -204,7 +204,7 @@ function subBarQty(bar_qty, next_bar_qty) {
     }
 
     for (let i = $("bar_qty_slider").max - 1; i >= next_bar_qty; i--) { 
-        let scaled =  random_array[i] * $("bar_height_slider").value / 100 + "px";
+        let scaled =  g_arr[i] * $("bar_height_slider").value / 100 + "px";
         //$("span"             + i).style.height = 0;
         $("span_selection_u" + i).style.height = 0;
         $("span_selection_s" + i).style.height = 0;
@@ -264,7 +264,7 @@ function setBarWidth() {
 function reset(id) {
     for (let i = 0; i < $("bar_qty_slider").value; i++) {
         $(id + i).style.backgroundColor = "red";
-        $(id + i).style.height = random_array[i] * $("bar_height_slider").value / 100 + "px";
+        $(id + i).style.height = g_arr[i] * $("bar_height_slider").value / 100 + "px";
     }
 }
 
@@ -275,7 +275,7 @@ function resetA(id, i,  height) {
 
 function resetAlgorithms() {
     for (let i = 0; i < $("bar_qty_slider").value; i++) {
-        let scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
+        let scaled = g_arr[i] * $("bar_height_slider").value / 100 + "px";
         resetA("span_selection_u", i, scaled);
         resetA("span_selection_s", i, scaled);
         resetA("span_bubble",      i, scaled);
@@ -290,7 +290,7 @@ function resetAlgorithms() {
 
 function resetAll() {
     for (let i = 0; i < $("bar_qty_slider").value; i++){
-        let scaled = random_array[i] * $("bar_height_slider").value / 100 + "px";
+        let scaled = g_arr[i] * $("bar_height_slider").value / 100 + "px";
 
         //resetA("span",             i, scaled);
         resetA("span_selection_u", i, scaled);
@@ -323,7 +323,7 @@ function log(name, value) {
 
 // https://www.growingwiththeweb.com/sorting/radix-sort-lsd/
 async function radixSort() {
-    let array = [...random_array];
+    let array = [...g_arr];
     let id = "span_radix";
     reset(id);
 
@@ -391,7 +391,7 @@ async function countingSortByDigit(array, radix, exponent, minValue, id) {
 
 // https://medium.com/weekly-webtips/cocktail-sort-in-javascript-6b645c59ecea
 async function cocktailSort() {
-    let array = [...random_array];
+    let array = [...g_arr];
     let id = "span_cocktail";
     reset(id);
 
@@ -443,7 +443,7 @@ async function cocktailSort() {
 }
 
 async function heapSort() {
-    let array = [...random_array];
+    let array = [...g_arr];
     let id = "span_heap";
     reset(id);
 
@@ -492,7 +492,7 @@ async function swap(input, index_A, index_B, id) {
 
 
 async function selectionSortUnstable() {
-    let array = [...random_array];
+    let array = [...g_arr];
     let id = "span_selection_u";
     reset(id);
 
@@ -520,7 +520,7 @@ async function selectionSortUnstable() {
 }
 
 async function selectionSortUnstableSlow() {
-    let array = [...random_array];
+    let array = [...g_arr];
     let id = "span_selection_u";
 
     reset(id);
@@ -565,7 +565,7 @@ async function selectionSortUnstableSlow() {
 }
 
 async function selectionSortStable() {
-    let array = [...random_array];
+    let array = [...g_arr];
     let id = "span_selection_s";
 
     reset(id);
@@ -597,7 +597,7 @@ async function selectionSortStable() {
 }
 
 async function bubbleSort() {
-    let array = [...random_array];
+    let array = [...g_arr];
     let id = "span_bubble";
 
     reset(id);
@@ -624,7 +624,7 @@ async function bubbleSort() {
 }
 
 async function insertionSort() {
-    let array = [...random_array];
+    let array = [...g_arr];
     let id = "span_insertion";
 
     reset(id);
@@ -656,7 +656,7 @@ async function insertionSort() {
 }
 
 function mergeSort() {
-    let array = [...random_array];
+    let array = [...g_arr];
     let id = "span_merge";
     reset(id);
 
@@ -717,7 +717,7 @@ async function sort(helperArray, array, id) {
 }
 
 function quickSort() {
-    let array = [...random_array];
+    let array = [...g_arr];
 
     let id = "span_quick";
     reset(id);
