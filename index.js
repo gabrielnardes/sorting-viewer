@@ -3,7 +3,7 @@ var delay_slow_ms = 100;
 var delay_fast_ms = 1;
 var old_height;
 var bar_qty;
-var max_random = 200;
+var max_random = 120;
 var min_height = 5;
 var mult_random = 2;
 var mydebug = false;
@@ -24,15 +24,11 @@ function createOrdinalArray()
 {
     let my_height = max_random / $("bar_qty_slider").max;
 
-    for (let i = 0; i < $("bar_qty_slider").max; i++)
-    {
-
-        random_array[i] = i + 1;
-//        random_array[i] = Math.round((i + 1) * my_height);
+    for (let i = 0; i < $("bar_qty_slider").max; i++){
+        random_array[i] = (i + 1) * my_height;
     }
 
-    for (let i = $("bar_qty_slider").max - 1; i > 0; i--) 
-    {
+    for (let i = $("bar_qty_slider").max - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [random_array[i], random_array[j]] = [random_array[j], random_array[i]];
     }
