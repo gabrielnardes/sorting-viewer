@@ -5,13 +5,13 @@ var old_height;
 var bar_qty;
 var max_height = 120;
 var min_height = 5;
-var mult_random = 2;
+var multiple = 2;
 
 function createRandomArray() {
     for (let i = 0; i < $("bar_qty_slider").max; i++) {
         g_arr[i] = genRandomNumber(5, max_height);// height: min and max
 
-        while (g_arr[i] % mult_random !== 0) {
+        while (g_arr[i] % multiple !== 0) {
             g_arr[i] = genRandomNumber(5, max_height);
         }
     }
@@ -83,7 +83,7 @@ function genRandomArray() {
     for (let i = 0; i < $("bar_qty_slider").value; i++) {
         g_arr[i] = genRandomNumber(5, max_height);
 
-        while (g_arr[i] % mult_random !== 0) {
+        while (g_arr[i] % multiple !== 0) {
             g_arr[i] = genRandomNumber(5, max_height);
         }
 
