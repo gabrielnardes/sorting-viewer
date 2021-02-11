@@ -33,20 +33,17 @@
             <td id="bubble" class="graph"></td>
         </tr>
         <tr>
-            <td><button onclick="selectionSortUnstable()">Play</button>
+            <td><button onclick="selectionSortUnstable()">Play fast</button>
+                <button onclick="selectionSortUnstableSlow()">Play slow</button>
                 <button onclick="reset('span_selection_u')">Reset</button>
-                <input type="checkbox" id="selection_u_fast" name="fast" checked>
-                <label for="fast">Fast</label>
                 <span>Selection unstable sort</span></td>
-            <td><button onclick="selectionSortStable()">Play</button>
+            <td><button onclick="selectionSortStable()">Play fast</button>
+                <button onclick="selectionSortStableSlow()">Play slow</button>
                 <button onclick="reset('span_selection_s')">Reset</button>
-                <input type="checkbox" id="selection_s_fast" name="fast" checked>
-                <label for="fast">Fast</label>
-                <span>Selection stable sort</span> </td>
-            <td><button onclick="bubbleSort()">Play</button>
+                <span>Selection stable sort</span></td>
+            <td><button onclick="bubbleSort()">Play fast</button>
+                <button onclick="bubbleSortSlow()">Play slow</button>
                 <button onclick="reset('span_bubble')">Reset</button>
-                <input type="checkbox" id="selection_bubble" name="fast" checked>
-                <label for="fast">Fast</label>
                 <span>Bubble sort</span></td>  
         </tr>
         <tr>
@@ -55,20 +52,17 @@
             <td id="quick" class="graph"></td>
         </tr>
         <tr>
-            <td><button onclick="insertionSort()">Play</button>
+            <td><button onclick="insertionSort()">Play fast</button>
+                <button onclick="insertionSortSlow()">Play slow</button>
                 <button onclick="reset('span_insertion')">Reset</button>
-                <input type="checkbox" id="selection_insertion" name="fast" checked>
-                <label for="fast">Fast</label>
-                <span>Insertion sort</span>  </td>  
-            <td><button onclick="mergeSort()">Play</button>
+                <span>Insertion sort</span> </td>  
+            <td><button onclick="mergeSort()">Play fast</button>
+                <button onclick="mergeSortSlow()">Play slow</button>
                 <button onclick="reset('span_merge')">Reset</button>
-                <input type="checkbox" id="selection_merge" checked>
-                <label for="fast">Fast</label>
                 <span>Merge sort</span> </td>
-            <td><button onclick="quickSort()">Play</button>
+            <td><button onclick="quickSort()">Play fast</button>
+                <button onclick="quickSortSlow()">Play slow</button>
                 <button onclick="reset('span_quick')">Reset</button>
-                <input type="checkbox" id="selection_quick" name="fast" checked>
-                <label for="fast">Fast</label>
                 <span>Quick sort</span></td>  
         </tr>
         <tr>
@@ -77,20 +71,17 @@
             <td id="bucket" class="graph"></td>
         </tr>
         <tr>
-            <td><button onclick="heapSort()">Play</button>
+            <td><button onclick="heapSort()">Play fast</button>
+                <button onclick="heapSortSlow()">Play slow</button>
                 <button onclick="reset('span_heap')">Reset</button>
-                <input type="checkbox" id="selection_heap" name="fast" checked>
-                <label for="fast">Fast</label>
                 <span>Heap sort</span> </td>
-            <td><button onclick="countingSort()">Play</button>
+            <td><button onclick="countingSort()">Play fast</button>
+                <button onclick="countingSortSlow()">Play slow</button>
                 <button onclick="reset('span_counting')">Reset</button>
-                <input type="checkbox" id="selection_counting" name="fast" checked>
-                <label for="fast">Fast</label>
                 <span>Counting sort</span>  </td>  
-            <td><button onclick="bucketSort()">Play</button>
+            <td><button onclick="bucketSort()">Play fast</button>
+                <button onclick="bucketSortSlow()">Play slow</button>
                 <button onclick="reset('span_bucket')">Reset</button>
-                <input type="checkbox" id="selection_bucket" name="fast" checked>
-                <label for="fast">Fast</label>
                 <span>Bucket sort</span></td>  
         </tr>
     </table>

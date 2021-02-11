@@ -330,70 +330,72 @@ async function selectionSortUnstable()
     let id = "span_selection_u";
     reset(id);
 
-    if ($("selection_u_fast").checked == true)
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
-        for (let i = 0; i < $("bar_qty_slider").value; i++)
+        await sleep(delay_fast_ms);
+        let min_i = i;
+        let j;
+        for (j = i + 1; j < $("bar_qty_slider").value; j++)
         {
-            await sleep(delay_fast_ms);
-            let min_i = i;
-            let j;
-            for (j = i + 1; j < $("bar_qty_slider").value; j++)
-            {
-                if (array[j] < array[min_i])
-                    min_i = j;
-            }
-
-            // swap elements
-            let temp = array[min_i];
-
-            array[min_i] = array[i];
-            $(id + min_i).style.height = Math.round(array[i] * $("bar_height_slider").value / 100) + "px";
-
-            array[i] = temp;
-            $(id + i).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+            if (array[j] < array[min_i])
+                min_i = j;
         }
+
+        // swap elements
+        let temp = array[min_i];
+
+        array[min_i] = array[i];
+        $(id + min_i).style.height = Math.round(array[i] * $("bar_height_slider").value / 100) + "px";
+
+        array[i] = temp;
+        $(id + i).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
     }
-    else
+}
+
+async function selectionSortUnstableSlow()
+{
+    let array = [...random_array];
+    let id = "span_selection_u";
+    reset(id);
+
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
     {
-        for (let i = 0; i < $("bar_qty_slider").value; i++)
+        let min_i = i;
+        let j;
+        for (j = i + 1; j < $("bar_qty_slider").value; j++)
         {
-            let min_i = i;
-            let j;
-            for (j = i + 1; j < $("bar_qty_slider").value; j++)
+            $(id + min_i).style.backgroundColor = "green";
+            $(id + j).style.backgroundColor = "blue";
+
+            if (array[j] < array[min_i])
             {
-                $(id + min_i).style.backgroundColor = "green";
-                $(id + j).style.backgroundColor = "blue";
-
-                if (array[j] < array[min_i])
-                {
-                    await sleep(delay_slow_ms);
-                    $(id + min_i).style.backgroundColor = "gray";
-                    $(id + j).style.backgroundColor = "green";
-                    min_i = j;
-                }
-                else
-                {
-                    await sleep(delay_slow_ms);
-                    $(id + j).style.backgroundColor = "gray";
-                }
+                await sleep(delay_slow_ms);
+                $(id + min_i).style.backgroundColor = "gray";
+                $(id + j).style.backgroundColor = "green";
+                min_i = j;
             }
-            await sleep(delay_slow_ms);
-            $(id + min_i).style.backgroundColor = "gray";
-            $(id + i).style.backgroundColor = "black"; // already sorted
-
-            // swap elements
-            let temp = array[min_i];
-
-            array[min_i] = array[i];
-            $(id + min_i).style.height = Math.round(array[i] * $("bar_height_slider").value / 100) + "px";
-
-            array[i] = temp;
-            $(id + i).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
-
-            // reset
-            for (let k = i + 1; k < $("bar_qty_slider").value; k++)
-                $(id + k).style.backgroundColor = "red";
+            else
+            {
+                await sleep(delay_slow_ms);
+                $(id + j).style.backgroundColor = "gray";
+            }
         }
+        await sleep(delay_slow_ms);
+        $(id + min_i).style.backgroundColor = "gray";
+        $(id + i).style.backgroundColor = "black"; // already sorted
+
+        // swap elements
+        let temp = array[min_i];
+
+        array[min_i] = array[i];
+        $(id + min_i).style.height = Math.round(array[i] * $("bar_height_slider").value / 100) + "px";
+
+        array[i] = temp;
+        $(id + i).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+
+        // reset
+        for (let k = i + 1; k < $("bar_qty_slider").value; k++)
+            $(id + k).style.backgroundColor = "red";
     }
 }
 
@@ -501,18 +503,11 @@ function mergeSort()
     let id = "span_merge";
     reset(id);
 
-    if ($("selection_merge").checked == true)
-    {
-        let helperArray = [];
-        for (let i = 0; i < $("bar_qty_slider").value; i++)
-            helperArray[i] = [i, array[i]];
+    let helperArray = [];
+    for (let i = 0; i < $("bar_qty_slider").value; i++)
+        helperArray[i] = [i, array[i]];
 
-        sort(helperArray, array, id);
-    }
-    else
-    {
-
-    }
+    sort(helperArray, array, id);
 }
 // https://stackabuse.com/merge-sort-in-javascript/
 async function merge(left, right, array, id) 
@@ -574,14 +569,7 @@ function quickSort()
     let id = "span_quick";
     reset(id);
 
-    if ($("selection_quick").checked == true)
-    {
-        quick(array, 0, $("bar_qty_slider").value - 1, id);
-    }
-    else
-    {
-
-    }
+    quick(array, 0, $("bar_qty_slider").value - 1, id);
 }
 async function quick(array, low, high, id)
 {
