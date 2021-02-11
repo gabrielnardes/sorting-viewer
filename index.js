@@ -8,10 +8,7 @@ var min_height = 5;
 var mult_random = 2;
 var mydebug = false;
 
-function heapSort()
-{
-   
-}
+
 
 function countingSort()
 {
@@ -41,10 +38,7 @@ function createOrdinalArray()
     let my_height = max_random / $("bar_qty_slider").max;
 
     for (let i = 0; i < $("bar_qty_slider").max; i++)
-    {
         random_array[i] = (i + 1) * my_height;
-        //random_array[i] = i + 1;
-    }
 
     for (let i = $("bar_qty_slider").max - 1; i > 0; i--) 
     {
@@ -73,6 +67,7 @@ function createBars()
         createSpan("span_insertion",   "insertion",   i);
         createSpan("span_merge",       "merge",       i);
         createSpan("span_quick",       "quick",       i);
+        createSpan("span_heap",        "heap",        i);
     }
 
     for (let i = 0; i < $("bar_qty_slider").value; i++)
@@ -85,6 +80,7 @@ function createBars()
         $("span_insertion"   + i).style.height = scaled + "px";
         $("span_merge"       + i).style.height = scaled + "px";
         $("span_quick"       + i).style.height = scaled + "px";
+        $("span_heap"        + i).style.height = scaled + "px";
     }
 
     old_height = $("bar_height_slider").value;
@@ -119,6 +115,7 @@ function genRandomArray()
         $("span_insertion"   + i).style.height = scaled;
         $("span_merge"       + i).style.height = scaled;
         $("span_quick"       + i).style.height = scaled;
+        $("span_heap"        + i).style.height = scaled;
     }
 }
 
@@ -148,6 +145,7 @@ function genOrdinalArray()
         $("span_insertion"   + i).style.height = scaled;
         $("span_merge"       + i).style.height = scaled;
         $("span_quick"       + i).style.height = scaled;
+        $("span_heap"        + i).style.height = scaled;
     }
 }
 
@@ -177,6 +175,7 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_insertion"   + i).style.height = scaled;
         $("span_merge"       + i).style.height = scaled;
         $("span_quick"       + i).style.height = scaled;
+        $("span_heap"        + i).style.height = scaled;
 
         let width = $("bar_width_slider").value + "px";
         //$("span"             + i).style.width = width;
@@ -186,6 +185,7 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_insertion"   + i).style.width = width;
         $("span_merge"       + i).style.width = width;
         $("span_quick"       + i).style.width = width;
+        $("span_heap"        + i).style.width = width;
     }
 }
 
@@ -201,6 +201,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_insertion"   + i).style.height = scaled;
         $("span_merge"       + i).style.height = scaled;
         $("span_quick"       + i).style.height = scaled;
+        $("span_heap"        + i).style.height = scaled;
 
         let width = $("bar_width_slider").value + "px";
         //$("span"             + i).style.width = width;
@@ -209,7 +210,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_bubble"      + i).style.width = width;
         $("span_insertion"   + i).style.width = width;
         $("span_merge"       + i).style.width = width;
-        $("span_quick"       + i).style.width = width;
+        $("span_heap"        + i).style.width = width;
     }
 
     for (let i = $("bar_qty_slider").max - 1; i >= next_bar_qty; i--)
@@ -222,6 +223,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_insertion"   + i).style.height = 0;
         $("span_merge"       + i).style.height = 0;
         $("span_quick"       + i).style.height = 0;
+        $("span_heap"        + i).style.height = 0;
     }
 }
 
@@ -238,6 +240,7 @@ function setBarHeight()
         scale("span_insertion",   i);
         scale("span_merge",       i);
         scale("span_quick",       i);
+        scale("span_heap",        i);
     }
     
     old_height = $("bar_height_slider").value;
@@ -264,6 +267,7 @@ function setBarWidth()
         $("span_insertion"   + i).style.width = width;
         $("span_merge"       + i).style.width = width;
         $("span_quick"       + i).style.width = width;
+        $("span_heap"        + i).style.width = width;
     }
 }
 
@@ -293,6 +297,7 @@ function resetAlgorithms()
         resetA("span_insertion",   i, scaled);
         resetA("span_merge",       i, scaled);
         resetA("span_quick",       i, scaled);
+        resetA("span_heap",        i, scaled);
     }
 }
 
@@ -309,6 +314,7 @@ function resetAll()
         resetA("span_insertion",   i, scaled);
         resetA("span_merge",       i, scaled);
         resetA("span_quick",       i, scaled);
+        resetA("span_heap",        i, scaled);
     }
 }
 
@@ -320,8 +326,57 @@ function playAll()
     insertionSort();
     mergeSort();
     quickSort();
+    heapSort();
 }
 
+async function heapSort()
+{
+    let array = [...random_array];
+    let id = "span_heap";
+    reset(id);
+
+    let array_length = $("bar_qty_slider").value;
+
+    for (let i = Math.floor(array_length / 2); i >= 0; i -= 1)
+        await heap_root(array, i, array_length, id);
+
+    for (let i = array_length - 1; i > 0; i--)
+    {
+        await swap(array, 0, i, id);
+        array_length--;
+      
+        await heap_root(array, 0, array_length, id);
+    }
+}
+async function heap_root(input, i, array_length, id)
+{
+    let left = 2 * i + 1;
+    let right = 2 * i + 2;
+    let max = i;
+
+    if (left < array_length && input[left] > input[max])
+        max = left;
+
+    if (right < array_length && input[right] > input[max])
+        max = right;
+
+    if (max != i) {
+        await swap(input, i, max, id);
+        await heap_root(input, max, array_length, id);
+    }
+}
+async function swap(input, index_A, index_B, id) 
+{
+    var temp = input[index_A];
+
+    await sleep(delay_fast_ms);
+
+    input[index_A] = input[index_B];
+    $(id + index_A).style.height = Math.round(input[index_B] * $("bar_height_slider").value / 100) + "px";
+
+    input[index_B] = temp;
+    $(id + index_B).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+}
 
 
 async function selectionSortUnstable()
