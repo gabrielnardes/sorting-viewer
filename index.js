@@ -3,22 +3,22 @@ var delay_slow_ms = 100;
 var delay_fast_ms = 1;
 var old_height;
 var bar_qty;
-var max_random = 120;
+var max_height = 120;
 var min_height = 5;
 var mult_random = 2;
 
 function createRandomArray() {
     for (let i = 0; i < $("bar_qty_slider").max; i++) {
-        g_arr[i] = genRandomNumber(5, max_random);// height: min and max
+        g_arr[i] = genRandomNumber(5, max_height);// height: min and max
 
         while (g_arr[i] % mult_random !== 0) {
-            g_arr[i] = genRandomNumber(5, max_random);
+            g_arr[i] = genRandomNumber(5, max_height);
         }
     }
 }
 
 function createOrdinalArray() {
-    let my_height = max_random / $("bar_qty_slider").max;
+    let my_height = max_height / $("bar_qty_slider").max;
 
     for (let i = 0; i < $("bar_qty_slider").max; i++) {
         g_arr[i] = (i + 1) * my_height;
@@ -81,10 +81,10 @@ function genRandomArray() {
     resetAll();   
 
     for (let i = 0; i < $("bar_qty_slider").value; i++) {
-        g_arr[i] = genRandomNumber(5, max_random);
+        g_arr[i] = genRandomNumber(5, max_height);
 
         while (g_arr[i] % mult_random !== 0) {
-            g_arr[i] = genRandomNumber(5, max_random);
+            g_arr[i] = genRandomNumber(5, max_height);
         }
 
         let scaled =  g_arr[i] * $("bar_height_slider").value / 100 + "px";
@@ -105,7 +105,7 @@ function genRandomArray() {
 function genOrdinalArray() {
     resetAll();
 
-    let my_height = max_random / $("bar_qty_slider").value;
+    let my_height = max_height / $("bar_qty_slider").value;
 
     for (let i = 0; i < $("bar_qty_slider").value; i++) {
         g_arr[i] = (i + 1) * my_height;
