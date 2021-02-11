@@ -15,7 +15,7 @@
         </span>
         <span>
             <span>Number of elements: <span id="bar_qty_value"></span></span>
-            <input type="range" class="slider" min="15" max="200" id="bar_qty_slider" oninput="setBarQty()">
+            <input type="range" class="slider" min="15" max="500" id="bar_qty_slider" oninput="setBarQty()">
         </span>
         <span>
             <span>Max bar height: <span id="bar_height_value"></span>%</span>
@@ -68,7 +68,7 @@
         <tr>
             <td id="heap" class="graph"></td>
             <td id="cocktail" class="graph"></td>
-            <td id="bucket" class="graph"></td>
+            <td id="radix" class="graph"></td>
         </tr>
         <tr>
             <td><button onclick="heapSort()">Play fast</button>
@@ -78,11 +78,11 @@
             <td><button onclick="cocktailSort()">Play fast</button>
                 <button onclick="cocktailSortSlow()">Play slow</button>
                 <button onclick="reset('span_cocktail')">Reset</button>
-                <span class="algorithms">Counting sort</span>  </td>  
-            <td><button onclick="bucketSort()">Play fast</button>
-                <button onclick="bucketSortSlow()">Play slow</button>
-                <button onclick="reset('span_bucket')">Reset</button>
-                <span class="algorithms">Bucket sort</span></td>  
+                <span class="algorithms">Cocktail sort</span>  </td>  
+            <td><button onclick="radixSort()">Play fast</button>
+                <button onclick="radixSortSlow()">Play slow</button>
+                <button onclick="reset('span_radix')">Reset</button>
+                <span class="algorithms">Radix sort</span></td>  
         </tr>
     </table>
     <!-- <p id="bot"></p> -->

@@ -3,19 +3,10 @@ var delay_slow_ms = 100;
 var delay_fast_ms = 1;
 var old_height;
 var bar_qty;
-var max_random = 100;
+var max_random = 200;
 var min_height = 5;
 var mult_random = 2;
 var mydebug = false;
-
-
-
-
-function radixLSDSort()
-{
-   
-}
-
 
 
 function createRandomArray()
@@ -69,6 +60,7 @@ function createBars()
         createSpan("span_quick",       "quick",       i);
         createSpan("span_heap",        "heap",        i);
         createSpan("span_cocktail",    "cocktail",    i);
+        createSpan("span_radix",       "radix",       i);
     }
 
     for (let i = 0; i < $("bar_qty_slider").value; i++)
@@ -83,6 +75,7 @@ function createBars()
         $("span_quick"       + i).style.height = scaled + "px";
         $("span_heap"        + i).style.height = scaled + "px";
         $("span_cocktail"    + i).style.height = scaled + "px";
+        $("span_radix"       + i).style.height = scaled + "px";
     }
 
     old_height = $("bar_height_slider").value;
@@ -119,6 +112,7 @@ function genRandomArray()
         $("span_quick"       + i).style.height = scaled;
         $("span_heap"        + i).style.height = scaled;
         $("span_cocktail"    + i).style.height = scaled;
+        $("span_radix"       + i).style.height = scaled;
     }
 }
 
@@ -150,6 +144,7 @@ function genOrdinalArray()
         $("span_quick"       + i).style.height = scaled;
         $("span_heap"        + i).style.height = scaled;
         $("span_cocktail"    + i).style.height = scaled;
+        $("span_radix"       + i).style.height = scaled;
     }
 }
 
@@ -181,6 +176,7 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_quick"       + i).style.height = scaled;
         $("span_heap"        + i).style.height = scaled;
         $("span_cocktail"    + i).style.height = scaled;
+        $("span_radix"       + i).style.height = scaled;
 
         let width = $("bar_width_slider").value + "px";
         //$("span"             + i).style.width = width;
@@ -192,6 +188,7 @@ function addBarQty(bar_qty, next_bar_qty)
         $("span_quick"       + i).style.width = width;
         $("span_heap"        + i).style.width = width;
         $("span_cocktail"    + i).style.width = width;
+        $("span_radix"       + i).style.width = width;
     }
 }
 
@@ -209,6 +206,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_quick"       + i).style.height = scaled;
         $("span_heap"        + i).style.height = scaled;
         $("span_cocktail"    + i).style.height = scaled;
+        $("span_radix"       + i).style.height = scaled;
 
         let width = $("bar_width_slider").value + "px";
         //$("span"             + i).style.width = width;
@@ -219,6 +217,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_merge"       + i).style.width = width;
         $("span_heap"        + i).style.width = width;
         $("span_cocktail"    + i).style.width = width;
+        $("span_radix"       + i).style.width = width;
     }
 
     for (let i = $("bar_qty_slider").max - 1; i >= next_bar_qty; i--)
@@ -233,6 +232,7 @@ function subBarQty(bar_qty, next_bar_qty)
         $("span_quick"       + i).style.height = 0;
         $("span_heap"        + i).style.height = 0;
         $("span_cocktail"    + i).style.height = 0;
+        $("span_radix"       + i).style.height = 0;
     }
 }
 
@@ -251,6 +251,7 @@ function setBarHeight()
         scale("span_quick",       i);
         scale("span_heap",        i);
         scale("span_cocktail",    i);
+        scale("span_radix",       i);
     }
     
     old_height = $("bar_height_slider").value;
@@ -279,6 +280,7 @@ function setBarWidth()
         $("span_quick"       + i).style.width = width;
         $("span_heap"        + i).style.width = width;
         $("span_cocktail"    + i).style.width = width;
+        $("span_radix"       + i).style.width = width;
     }
 }
 
@@ -310,6 +312,7 @@ function resetAlgorithms()
         resetA("span_quick",       i, scaled);
         resetA("span_heap",        i, scaled);
         resetA("span_cocktail",    i, scaled);
+        resetA("span_radix",       i, scaled);
     }
 }
 
@@ -328,6 +331,7 @@ function resetAll()
         resetA("span_quick",       i, scaled);
         resetA("span_heap",        i, scaled);
         resetA("span_cocktail",    i, scaled);
+        resetA("span_radix",       i, scaled);
     }
 }
 
@@ -341,12 +345,86 @@ function playAll()
     quickSort();
     heapSort();
     cocktailSort();
+    radixSort();
 }
 
 function log(name, value)
 {
     console.log(name + ": " + value);
 }
+
+
+async function radixSort() 
+{
+    let array = [...random_array];
+    let id = "span_radix";
+    reset(id);
+
+    let radix = 10;
+
+    radix = radix || 10;
+
+    // Determine minimum and maximum values
+    let minValue = array[0];
+    let maxValue = array[0];
+    for (let i = 1; i < $("bar_qty_slider").value; i++) {
+        if (array[i] < minValue) {
+            minValue = array[i];
+        } else if (array[i] > maxValue) {
+            maxValue = array[i];
+        }
+    }
+
+    // Perform counting sort on each exponent/digit, starting at the least
+    // significant digit
+    let exponent = 1;
+    while ((maxValue - minValue) / exponent >= 1) {
+        array = await countingSortByDigit(array, radix, exponent, minValue, id);
+
+        exponent *= radix;
+    }
+}
+
+async function countingSortByDigit(array, radix, exponent, minValue, id) {
+  let i;
+  let bucketIndex;
+  let buckets = new Array(radix);
+  let output = new Array($("bar_qty_slider").value);
+
+  // Initialize bucket
+  for (i = 0; i < radix; i++) {
+    buckets[i] = 0;
+  }
+
+  // Count frequencies
+  for (i = 0; i < $("bar_qty_slider").value; i++) {
+    bucketIndex = Math.floor(((array[i] - minValue) / exponent) % radix);
+    buckets[bucketIndex]++;
+  }
+
+  // Compute cumulates
+  for (i = 1; i < radix; i++) {
+    buckets[i] += buckets[i - 1];
+  }
+
+  // Move records
+  for (i = $("bar_qty_slider").value - 1; i >= 0; i--) {
+    bucketIndex = Math.floor(((array[i] - minValue) / exponent) % radix);
+    output[--buckets[bucketIndex]] = array[i];
+  }
+
+  // Copy back
+  for (i = 0; i < $("bar_qty_slider").value; i++) {
+    await sleep(delay_fast_ms);
+    array[i] = output[i];
+    $(id + i).style.height = Math.round(output[i] * $("bar_height_slider").value / 100) + "px";
+  }
+
+  return array;
+}
+
+
+
 
 // https://medium.com/weekly-webtips/cocktail-sort-in-javascript-6b645c59ecea
 async function cocktailSort()

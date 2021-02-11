@@ -17,6 +17,8 @@ I wanted to learn front-end development, so it seemed like a good project to sta
 
 :white_large_square: Download video of the algoritms
 
+:white_large_square: Full screen for one algorithm of choice
+
 :white_check_mark: Fast and slow version for Selection Unstable Sort
 
 :white_large_square: Fast and slow version for Selection Stable Sort
