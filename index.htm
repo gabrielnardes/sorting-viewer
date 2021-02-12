@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <title>Sorting Viewer</title>
+    <meta charset="utf-8">
     <script src="index.js"></script>
     <script src="algorithms.js"></script>
     <script src="array.js"></script>
     <script src="sliders.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
-<body onload="createOrdinalArray(); createBars()">
+<body onload="createOrdinalArray(); createBars()" onmousemove="myalert()">
     <header id="top_bar">
         <span>
             <button onclick='genRandomArray()'>Generate random array</button>
