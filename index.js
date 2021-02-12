@@ -42,6 +42,14 @@ function barWidth() {
     return $("bar_width_slider").value;   
 }
 
+function toPxHeight(value) {
+    return Math.round(value * barHeight() / 100) + "px";
+}
+
+function barHeight() {
+    return $("bar_height_slider").value;   
+}
+
 function createBars() {
     $("bar_height_slider").value    = $("bar_height_slider").max;
     $("bar_height_value").innerHTML = barHeight();
@@ -330,14 +338,6 @@ async function selectionSortUnstable() {
         array[i] = temp;
         $(id + i).style.height = toPxHeight(temp);
     }
-}
-
-function toPxHeight(value) {
-    return Math.round(value * barHeight() / 100) + "px";
-}
-
-function barHeight() {
-    return $("bar_height_slider").value;   
 }
 
 async function selectionSortUnstableSlow() {
