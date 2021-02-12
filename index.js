@@ -4,11 +4,11 @@ var delay_fast_ms = 1;
 var old_height;
 var old_bar_qty;
 var max_height = 120;   // pixels
-var min_height = 5;     // pixels
+var min_height = 5;     // pixels   
 var multiple = 2;       // random array will be a multiple of this number
 
 function createRandomArray() {
-    for (let i = 0; i < $("bar_qty_slider").max; i++) {
+    for (let i = 0; i < barMaxQty(); i++) {
         g_arr[i] = genRandomNumber(min_height, max_height);
 
         while (g_arr[i] % multiple !== 0) {
@@ -18,29 +18,41 @@ function createRandomArray() {
 }
 
 function createOrdinalArray() {
-    let height = max_height / $("bar_qty_slider").max;
+    let height = max_height / barMaxQty();
 
-    for (let i = 0; i < $("bar_qty_slider").max; i++) {
+    for (let i = 0; i < barMaxQty(); i++) {
         g_arr[i] = (i + 1) * height;
     }
 
-    for (let i = $("bar_qty_slider").max - 1; i > 0; i--) {
+    for (let i = barMaxQty() - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [g_arr[i], g_arr[j]] = [g_arr[j], g_arr[i]];
     }
 }
 
+function barQty() {
+    return $("bar_qty_slider").value;
+}
+
+function barMaxQty() {
+    return $("bar_qty_slider").max;
+}
+
+function barWidth() {
+    return $("bar_width_slider").value;   
+}
+
 function createBars() {
     $("bar_height_slider").value    = $("bar_height_slider").max;
-    $("bar_height_value").innerHTML = $("bar_height_slider").value;
+    $("bar_height_value").innerHTML = barHeight();
 
-    $("bar_qty_slider").value       = $("bar_qty_slider").max;
-    $("bar_qty_value").innerHTML    = $("bar_qty_slider").value;
+    $("bar_qty_slider").value       = barMaxQty();
+    $("bar_qty_value").innerHTML    = barQty();
 
     $("bar_width_slider").value     = $("bar_width_slider").min;
-    $("bar_width_value").innerHTML  = $("bar_width_slider").value;
+    $("bar_width_value").innerHTML  = barWidth();
 
-    for (let i = 0; i < $("bar_qty_slider").max; i++) {
+    for (let i = 0; i < barMaxQty(); i++) {
         createSpan("span_selection_u", "selection_u", i);
         createSpan("span_selection_s", "selection_s", i);
         createSpan("span_bubble",      "bubble",      i);
@@ -52,7 +64,7 @@ function createBars() {
         createSpan("span_radix",       "radix",       i);
     }
 
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {
+    for (let i = 0; i < barQty(); i++) {
         let scaled = toPxHeight(g_arr[i]);
         $("span_selection_u" + i).style.height = scaled;
         $("span_selection_s" + i).style.height = scaled;
@@ -65,22 +77,22 @@ function createBars() {
         $("span_radix"       + i).style.height = scaled;
     }
 
-    old_height = $("bar_height_slider").value;
-    old_bar_qty = parseInt($("bar_qty_slider").value);
+    old_height = barHeight();
+    old_bar_qty = parseInt(barQty());
 }
 
 function createSpan(id, parent, i) {
     let span = document.createElement("span");
     span.id = id + i;
     span.classList.add("bar");
-    span.style.width = $("bar_width_slider").value + "px";
+    span.style.width = barWidth() + "px";
     $(parent).appendChild(span);
 }
 
 function genRandomArray() {
     resetAll();   
 
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {
+    for (let i = 0; i < barQty(); i++) {
         g_arr[i] = genRandomNumber(min_height, max_height);
 
         while (g_arr[i] % multiple !== 0) {
@@ -105,13 +117,13 @@ function genRandomArray() {
 function genOrdinalArray() {
     resetAll();
 
-    let height = max_height / $("bar_qty_slider").value;
+    let height = max_height / barQty();
 
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {
+    for (let i = 0; i < barQty(); i++) {
         g_arr[i] = (i + 1) * height;
     }
 
-    for (let i = $("bar_qty_slider").value - 1; i > 0; i--) {
+    for (let i = barQty() - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [g_arr[i], g_arr[j]] = [g_arr[j], g_arr[i]];
 
@@ -130,9 +142,9 @@ function genOrdinalArray() {
 }
 
 function setBarQty() {
-    $("bar_qty_value").innerHTML = $("bar_qty_slider").value;
+    $("bar_qty_value").innerHTML = barQty();
 
-    let next_bar_qty = parseInt($("bar_qty_slider").value);
+    let next_bar_qty = parseInt( barQty() );
 
     if (old_bar_qty > next_bar_qty) {
         subBarQty(next_bar_qty);
@@ -156,7 +168,7 @@ function addBarQty(next_bar_qty) {
         $("span_cocktail"    + i).style.height = scaled;
         $("span_radix"       + i).style.height = scaled;
 
-        let width = $("bar_width_slider").value + "px";
+        let width = barWidth() + "px";
         $("span_selection_u" + i).style.width = width;
         $("span_selection_s" + i).style.width = width;
         $("span_bubble"      + i).style.width = width;
@@ -182,7 +194,7 @@ function subBarQty(next_bar_qty) {
         $("span_cocktail"    + i).style.height = scaled;
         $("span_radix"       + i).style.height = scaled;
 
-        let width = $("bar_width_slider").value + "px";
+        let width = barWidth() + "px";
         $("span_selection_u" + i).style.width = width;
         $("span_selection_s" + i).style.width = width;
         $("span_bubble"      + i).style.width = width;
@@ -193,7 +205,7 @@ function subBarQty(next_bar_qty) {
         $("span_radix"       + i).style.width = width;
     }
 
-    for (let i = $("bar_qty_slider").max - 1; i >= next_bar_qty; i--) { 
+    for (let i = barMaxQty() - 1; i >= next_bar_qty; i--) { 
         let scaled =  toPxHeight(g_arr[i]);
         $("span_selection_u" + i).style.height = 0;
         $("span_selection_s" + i).style.height = 0;
@@ -208,9 +220,9 @@ function subBarQty(next_bar_qty) {
 }
 
 function setBarHeight() {
-    $("bar_height_value").innerHTML = $("bar_height_slider").value;
+    $("bar_height_value").innerHTML = barHeight();
 
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {       
+    for (let i = 0; i < barQty(); i++) {       
         scale("span_selection_u", i);
         scale("span_selection_s", i);
         scale("span_bubble",      i);
@@ -222,7 +234,7 @@ function setBarHeight() {
         scale("span_radix",       i);
     }
     
-    old_height = $("bar_height_slider").value;
+    old_height = barHeight();
 }
 
 function scale(span, i) {
@@ -231,11 +243,11 @@ function scale(span, i) {
 }
 
 function setBarWidth() {
-    $("bar_width_value").innerHTML = $("bar_width_slider").value;
+    $("bar_width_value").innerHTML = barWidth();
 
-    let width = $("bar_width_slider").value + "px";
+    let width = barWidth() + "px";
 
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {
+    for (let i = 0; i < barQty(); i++) {
         $("span_selection_u" + i).style.width = width;
         $("span_selection_s" + i).style.width = width;
         $("span_bubble"      + i).style.width = width;
@@ -249,7 +261,7 @@ function setBarWidth() {
 }
 
 function reset(id) {
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {
+    for (let i = 0; i < barQty(); i++) {
         $(id + i).style.backgroundColor = "red";
         $(id + i).style.height = toPxHeight(g_arr[i]);
     }
@@ -261,7 +273,7 @@ function resetA(id, i,  height) {
 }
 
 function resetAll() {
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {
+    for (let i = 0; i < barQty(); i++) {
         let scaled = toPxHeight(g_arr[i]);
 
         resetA("span_selection_u", i, scaled);
@@ -297,13 +309,13 @@ async function selectionSortUnstable() {
     let id = "span_selection_u";
     reset(id);
 
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {
+    for (let i = 0; i < barQty(); i++) {
         await sleep(delay_fast_ms);
 
         let min_i = i;
         let j;
 
-        for (j = i + 1; j < $("bar_qty_slider").value; j++) {
+        for (j = i + 1; j < barQty(); j++) {
             if (array[j] < array[min_i]) {
                 min_i = j;
             }
@@ -321,7 +333,11 @@ async function selectionSortUnstable() {
 }
 
 function toPxHeight(value) {
-    return Math.round(value * $("bar_height_slider").value / 100) + "px";
+    return Math.round(value * barHeight() / 100) + "px";
+}
+
+function barHeight() {
+    return $("bar_height_slider").value;   
 }
 
 async function selectionSortUnstableSlow() {
@@ -330,10 +346,10 @@ async function selectionSortUnstableSlow() {
 
     reset(id);
 
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {
+    for (let i = 0; i < barQty(); i++) {
         let min_i = i;
         let j;
-        for (j = i + 1; j < $("bar_qty_slider").value; j++) {
+        for (j = i + 1; j < barQty(); j++) {
             $(id + min_i).style.backgroundColor = "green";
             $(id + j).style.backgroundColor = "blue";
 
@@ -363,7 +379,7 @@ async function selectionSortUnstableSlow() {
         $(id + i).style.height = toPxHeight(temp);
 
         // reset
-        for (let k = i + 1; k < $("bar_qty_slider").value; k++) {
+        for (let k = i + 1; k < barQty(); k++) {
             $(id + k).style.backgroundColor = "red";
         }
     }
@@ -375,11 +391,11 @@ async function selectionSortStable() {
 
     reset(id);
     
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {
+    for (let i = 0; i < barQty(); i++) {
         await sleep(delay_fast_ms);
 
         let min_i = i;
-        for (let j = i + 1; j < $("bar_qty_slider").value; j++) {
+        for (let j = i + 1; j < barQty(); j++) {
             if (array[j] < array[min_i]) {
                 min_i = j;
             }
@@ -412,7 +428,7 @@ async function bubbleSort() {
         await sleep(delay_fast_ms);
         
         sort_incomplete = false;
-        for (let i = 0; i < $("bar_qty_slider").value - 1; i++) {
+        for (let i = 0; i < barQty() - 1; i++) {
             if (array[i + 1] < array[i]) {
                 let temp = array[i];
 
@@ -434,7 +450,7 @@ async function insertionSort() {
 
     reset(id);
 
-    for (let i = 1; i < $("bar_qty_slider").value; i++) {
+    for (let i = 1; i < barQty(); i++) {
         await sleep(delay_fast_ms);
 
         let j = i-1;
@@ -467,7 +483,7 @@ function mergeSort() {
 
     let helperArray = [];
 
-    for (let i = 0; i < $("bar_qty_slider").value; i++) {
+    for (let i = 0; i < barQty(); i++) {
         helperArray[i] = [i, array[i]];
     }
 
@@ -527,7 +543,7 @@ function quickSort() {
     let id = "span_quick";
     reset(id);
 
-    quick(array, 0, $("bar_qty_slider").value - 1, id);
+    quick(array, 0, barQty() - 1, id);
 }
 async function quick(array, low, high, id) {
     if (low < high) {
@@ -572,7 +588,7 @@ async function heapSort() {
     let id = "span_heap";
     reset(id);
 
-    let array_length = $("bar_qty_slider").value;
+    let array_length = barQty();
 
     for (let i = Math.floor(array_length / 2); i >= 0; i -= 1) {
         await heap_root(array, i, array_length, id);
@@ -622,7 +638,7 @@ async function cocktailSort() {
     reset(id);
 
 
-    let start = 0, end = $("bar_qty_slider").value, swapped = true;
+    let start = 0, end = barQty(), swapped = true;
 
     while (swapped) {
         swapped = false;
@@ -680,7 +696,7 @@ async function radixSort() {
     // Determine minimum and maximum values
     let minValue = array[0];
     let maxValue = array[0];
-    for (let i = 1; i < $("bar_qty_slider").value; i++) {
+    for (let i = 1; i < barQty(); i++) {
         if (array[i] < minValue) {
             minValue = array[i];
         } else if (array[i] > maxValue) {
@@ -701,7 +717,7 @@ async function countingSortByDigit(array, radix, exponent, minValue, id) {
     let i;
     let bucketIndex;
     let buckets = new Array(radix);
-    let output = new Array($("bar_qty_slider").value);
+    let output = new Array(barQty());
 
     // Initialize bucket
     for (i = 0; i < radix; i++) {
@@ -709,7 +725,7 @@ async function countingSortByDigit(array, radix, exponent, minValue, id) {
     }
 
     // Count frequencies
-    for (i = 0; i < $("bar_qty_slider").value; i++) {
+    for (i = 0; i < barQty(); i++) {
         bucketIndex = Math.floor(((array[i] - minValue) / exponent) % radix);
         buckets[bucketIndex]++;
     }
@@ -720,13 +736,13 @@ async function countingSortByDigit(array, radix, exponent, minValue, id) {
     }
 
     // Move records
-    for (i = $("bar_qty_slider").value - 1; i >= 0; i--) {
+    for (i = barQty() - 1; i >= 0; i--) {
         bucketIndex = Math.floor(((array[i] - minValue) / exponent) % radix);
         output[--buckets[bucketIndex]] = array[i];
     }
 
     // Copy back
-    for (i = 0; i < $("bar_qty_slider").value; i++) {
+    for (i = 0; i < barQty(); i++) {
         await sleep(delay_fast_ms);
         array[i] = output[i];
         $(id + i).style.height = toPxHeight(output[i]);
