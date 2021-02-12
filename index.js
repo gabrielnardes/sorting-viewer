@@ -313,11 +313,15 @@ async function selectionSortUnstable() {
         let temp = array[min_i];
 
         array[min_i] = array[i];
-        $(id + min_i).style.height = Math.round(array[i] * $("bar_height_slider").value / 100) + "px";
+        $(id + min_i).style.height = toPxHeight(array[i]);
 
         array[i] = temp;
-        $(id + i).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+        $(id + i).style.height = toPxHeight(temp);
     }
+}
+
+function toPxHeight(value) {
+    return Math.round(value * $("bar_height_slider").value / 100) + "px";
 }
 
 async function selectionSortUnstableSlow() {
@@ -353,10 +357,10 @@ async function selectionSortUnstableSlow() {
         let temp = array[min_i];
 
         array[min_i] = array[i];
-        $(id + min_i).style.height = Math.round(array[i] * $("bar_height_slider").value / 100) + "px";
+        $(id + min_i).style.height = toPxHeight(array[i]);
 
         array[i] = temp;
-        $(id + i).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+        $(id + i).style.height = toPxHeight(temp);
 
         // reset
         for (let k = i + 1; k < $("bar_qty_slider").value; k++) {
@@ -385,15 +389,15 @@ async function selectionSortStable() {
         let min = array[min_i];
         let min_heigth = $(id + min_i).style.height;
         for (let m = min_i; m > i; m--) {
-            array[m] = array[m-1];
-            $(id + m).style.height = Math.round(array[m-1] * $("bar_height_slider").value / 100) + "px";
+            array[m] = array[m - 1];
+            $(id + m).style.height = toPxHeight(array[m - 1]);
 
             array[m-1] = min;
-            $(id + (m - 1)).style.height = Math.round(min * $("bar_height_slider").value / 100) + "px";
+            $(id + (m - 1)).style.height = toPxHeight(min);
         }
 
         array[i] = min;
-        $(id + i).style.height = Math.round(min * $("bar_height_slider").value / 100) + "px";
+        $(id + i).style.height = toPxHeight(min);
     }
 }
 
@@ -413,10 +417,10 @@ async function bubbleSort() {
                 let temp = array[i];
 
                 array[i] = array[i + 1];
-                $(id + i).style.height = Math.round(array[i + 1] * $("bar_height_slider").value / 100) + "px";
+                $(id + i).style.height = toPxHeight(array[i + 1]);
 
                 array[i + 1] = temp;
-                $(id + (i + 1)).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+                $(id + (i + 1)).style.height = toPxHeight(temp);
 
                 sort_incomplete = true;
             }
@@ -446,11 +450,11 @@ async function insertionSort() {
             // shift bars to the right
             let min = array[i];           
             for (let m = i; m > j; m--) {
-                array[m] = array[m-1];
-                $(id + m).style.height = Math.round(array[m-1] * $("bar_height_slider").value / 100) + "px";
+                array[m] = array[m - 1];
+                $(id + m).style.height = toPxHeight(array[m - 1]);
 
-                array[m-1] = min;
-                $(id + (m - 1)).style.height = Math.round(min * $("bar_height_slider").value / 100) + "px";
+                array[m - 1] = min;
+                $(id + (m - 1)).style.height = toPxHeight(min);
             }            
         }
     }
@@ -483,11 +487,11 @@ async function merge(left, right, array, id) {
             let id_min = right[0][0];
             let id_swap = left[0][0];
             for (let i = id_min; i > id_swap; i--) {
-                array[i] = array[i-1];
-                $(id + i).style.height = Math.round(array[i-1] * $("bar_height_slider").value / 100) + "px";
+                array[i] = array[i - 1];
+                $(id + i).style.height = toPxHeight(array[i - 1]);
 
                 array[i-1] = min;
-                $(id + (i - 1)).style.height = Math.round(min * $("bar_height_slider").value / 100) + "px";
+                $(id + (i - 1)).style.height = toPxHeight(min);
             }
 
             right[0][0] = id_swap;
@@ -545,20 +549,20 @@ async function partition(array, low, high, id) {
             let temp = array[i];
 
             array[i] = array[j];
-            $(id + i).style.height = Math.round(array[j] * $("bar_height_slider").value / 100) + "px";
+            $(id + i).style.height = toPxHeight(array[j]);
 
             array[j] = temp;
-            $(id + j).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+            $(id + j).style.height = toPxHeight(temp);
         }
     }
 
     let temp = array[i + 1];
 
     array[i + 1] = array[high];
-    $(id + (i + 1)).style.height = Math.round(array[high] * $("bar_height_slider").value / 100) + "px";
+    $(id + (i + 1)).style.height = toPxHeight(array[high]);
 
     array[high] = temp;
-    $(id + high).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+    $(id + high).style.height = toPxHeight(temp);
 
     return (i + 1);
 }
@@ -605,10 +609,10 @@ async function swap(input, index_A, index_B, id) {
     await sleep(delay_fast_ms);
 
     input[index_A] = input[index_B];
-    $(id + index_A).style.height = Math.round(input[index_B] * $("bar_height_slider").value / 100) + "px";
+    $(id + index_A).style.height = toPxHeight(input[index_B]);
 
     input[index_B] = temp;
-    $(id + index_B).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+    $(id + index_B).style.height = toPxHeight(temp);
 }
 
 // https://medium.com/weekly-webtips/cocktail-sort-in-javascript-6b645c59ecea
@@ -628,10 +632,10 @@ async function cocktailSort() {
                 let temp = array[i];
 
                 array[i] = array[i + 1];
-                $(id + i).style.height = Math.round(array[i + 1] * $("bar_height_slider").value / 100) + "px";
+                $(id + i).style.height = toPxHeight(array[i + 1]);
 
                 array[i + 1] = temp;
-                $(id + (i + 1)).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+                $(id + (i + 1)).style.height = toPxHeight(temp);
 
                 swapped = true;
             }
@@ -651,10 +655,10 @@ async function cocktailSort() {
                 let temp = array[i];
 
                 array[i] = array[i - 1];
-                $(id + i).style.height = Math.round(array[i - 1] * $("bar_height_slider").value / 100) + "px";
+                $(id + i).style.height = toPxHeight(array[i - 1]);
 
                 array[i - 1] = temp;
-                $(id + (i - 1)).style.height = Math.round(temp * $("bar_height_slider").value / 100) + "px";
+                $(id + (i - 1)).style.height = toPxHeight(temp);
 
                 swapped = true;
             }
@@ -725,7 +729,7 @@ async function countingSortByDigit(array, radix, exponent, minValue, id) {
     for (i = 0; i < $("bar_qty_slider").value; i++) {
         await sleep(delay_fast_ms);
         array[i] = output[i];
-        $(id + i).style.height = Math.round(output[i] * $("bar_height_slider").value / 100) + "px";
+        $(id + i).style.height = toPxHeight(output[i]);
     }
 
     return array;
