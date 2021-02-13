@@ -1,5 +1,3 @@
-Written in HTML, CSS and Javascript.
-
 <p align="center">
 	<h1 align="center">Sorting visualizer</h1>
   <h4 align="center">Written in HTML, CSS and Javascript.</h4>
