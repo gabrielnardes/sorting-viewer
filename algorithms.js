@@ -376,8 +376,7 @@ async function radixSort() {
     let id = "span_radix";
     reset(id);
 
-    let radix = 10;
-    radix = radix || 10;
+    let radix = 2;
 
     // Determine minimum and maximum values
     let minValue = array[0];
@@ -425,12 +424,14 @@ async function countingSortByDigit(array, radix, exponent, minValue, id) {
     for (i = barQty() - 1; i >= 0; i--) {
         bucketIndex = Math.floor(((array[i] - minValue) / exponent) % radix);
         output[--buckets[bucketIndex]] = array[i];
+        // await sleep(delay_fast_ms);
+        // $(id + buckets[bucketIndex]).style.height = toPxHeight(array[i]);
     }
 
     // Copy back
     for (i = 0; i < barQty(); i++) {
-        await sleep(delay_fast_ms);
         array[i] = output[i];
+        await sleep(delay_fast_ms);
         $(id + i).style.height = toPxHeight(output[i]);
     }
 
