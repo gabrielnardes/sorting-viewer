@@ -1,8 +1,11 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Sorting Viewer</title>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="index.js"></script>
     <script src="algorithms.js"></script>
@@ -12,84 +15,97 @@
 </head>
 <body onload="createOrdinalArray(); createBars()">
     <header id="top_bar">
-        <span>
-            <button onclick='genRandomArray()'>Generate random array</button>
-            <button onclick="genOrdinalArray()">Generate ordinal array</button>
-            <button onclick="playAll()">Play all</button>
-            <button onclick="resetAll()">Reset all</button>
-        </span>
-        <span>
-            <span>Number of elements: <span id="bar_qty_value"></span></span>
-            <input type="range" class="slider" min="15" max="450" id="bar_qty_slider" oninput="setBarQty()">
-        </span>
-        <span>
-            <span>Max bar height: <span id="bar_height_value"></span>%</span>
-            <input class="slider" type="range" min="10" max="100" id="bar_height_slider" oninput="setBarHeight()">
-        </span>
-        <span>
-            <span>Bar width: <span id="bar_width_value"></span>px</span>
-            <input class="slider" type="range" min="1" max="6" id="bar_width_slider" oninput="setBarWidth()">
-        </span>
+                <button onclick="genRandomArray()">Generate random array</button>
+                <button onclick="genOrdinalArray()">Generate ordinal array</button>
+                <button onclick="playAll()">Play all</button>
+                <button onclick="resetAll()">Reset all</button>
+                <div class="sliderContainer">
+                    <span>Number of elements: <span id="bar_qty_value"></span></span>
+                    <input type="range" class="slider" min="15" max="450" id="bar_qty_slider" oninput="setBarQty()">
+                </div>
+                <div class="sliderContainer">
+                    <span>Max bar height: <span id="bar_height_value"></span>%</span>
+                    <input class="slider" type="range" min="10" max="100" id="bar_height_slider" oninput="setBarHeight()">
+                </div>
+                <div class="sliderContainer">
+                    <span>Bar width: <span id="bar_width_value"></span>px</span>
+                    <input class="slider" type="range" min="1" max="6" id="bar_width_slider" oninput="setBarWidth()">
+                </div>
     </header>
-    <table>
-        <tr>
-            <td id="selection_u" class="graph"></td>
-            <td id="selection_s" class="graph"></td>
-            <td id="bubble"      class="graph"></td>
-        </tr>
-        <tr>
-            <td><button onclick="selectionSortUnstable()">Play fast</button>
+    <div class="box">
+        <div>
+            <div id="selection_u" class="graph"></div>
+            <div><button onclick="selectionSortUnstable()">Play fast</button>
                 <button onclick="selectionSortUnstableSlow()">Play slow</button>
                 <button onclick="reset('span_selection_u')">Reset</button>
-                <span class="algorithms">Selection unstable sort</span></td>
-            <td><button onclick="selectionSortStable()">Play fast</button>
+                <p class="algorithms">Selection unstable sort</p>
+            </div>
+        </div>
+        <div>
+            <div id="selection_s" class="graph"></div>
+            <div><button onclick="selectionSortStable()">Play fast</button>
                 <button onclick="selectionSortStableSlow()">Play slow</button>
                 <button onclick="reset('span_selection_s')">Reset</button>
-                <span class="algorithms">Selection stable sort</span></td>
-            <td><button onclick="bubbleSort()">Play fast</button>
+                <p class="algorithms">Selection stable sort</p>
+            </div>
+        </div>
+        <div>
+            <div id="bubble" class="graph"></div>
+            <div><button onclick="bubbleSort()">Play fast</button>
                 <button onclick="bubbleSortSlow()">Play slow</button>
                 <button onclick="reset('span_bubble')">Reset</button>
-                <span class="algorithms">Bubble sort</span></td>  
-        </tr>
-        <tr>
-            <td id="insertion" class="graph"></td>
-            <td id="merge"     class="graph"></td>
-            <td id="quick"     class="graph"></td>
-        </tr>
-        <tr>
-            <td><button onclick="insertionSort()">Play fast</button>
+                <p class="algorithms">Bubble sort</p>
+            </div>  
+        </div>
+        <div>
+            <div id="insertion" class="graph"></div>
+            <div><button onclick="insertionSort()">Play fast</button>
                 <button onclick="insertionSortSlow()">Play slow</button>
                 <button onclick="reset('span_insertion')">Reset</button>
-                <span class="algorithms">Insertion sort</span> </td>  
-            <td><button onclick="mergeSort()">Play fast</button>
+                <p class="algorithms">Insertion sort</p>
+            </div>  
+        </div>
+        <div>
+            <div id="merge" class="graph"></div>
+            <div><button onclick="mergeSort()">Play fast</button>
                 <button onclick="mergeSortSlow()">Play slow</button>
                 <button onclick="reset('span_merge')">Reset</button>
-                <span class="algorithms">Merge sort</span> </td>
-            <td><button onclick="quickSort()">Play fast</button>
+                <p class="algorithms">Merge sort</p>
+            </div> 
+        </div>
+        <div>
+            <div id="quick" class="graph"></div>
+            <div><button onclick="quickSort()">Play fast</button>
                 <button onclick="quickSortSlow()">Play slow</button>
                 <button onclick="reset('span_quick')">Reset</button>
-                <span class="algorithms">Quick sort</span></td>  
-        </tr>
-        <tr>
-            <td id="heap"     class="graph"></td>
-            <td id="cocktail" class="graph"></td>
-            <td id="radix"    class="graph"></td>
-        </tr>
-        <tr>
-            <td><button onclick="heapSort()">Play fast</button>
+                <p class="algorithms">Quick sort</p>
+            </div> 
+        </div>
+        <div>
+            <div id="heap" class="graph"></div>
+            <div><button onclick="heapSort()">Play fast</button>
                 <button onclick="heapSortSlow()">Play slow</button>
                 <button onclick="reset('span_heap')">Reset</button>
-                <span class="algorithms">Heap sort</span> </td>
-            <td><button onclick="cocktailSort()">Play fast</button>
+                <p class="algorithms">Heap sort</p>
+            </div> 
+        </div>
+        <div>
+            <div id="cocktail" class="graph"></div>
+            <div><button onclick="cocktailSort()">Play fast</button>
                 <button onclick="cocktailSortSlow()">Play slow</button>
                 <button onclick="reset('span_cocktail')">Reset</button>
-                <span class="algorithms">Cocktail sort</span>  </td>  
-            <td><button onclick="radixSort()">Play fast</button>
+                <p class="algorithms">Cocktail sort</p>
+            </div> 
+        </div>
+        <div>
+            <div id="radix" class="graph"></div>
+            <div><button onclick="radixSort()">Play fast</button>
                 <button onclick="radixSortSlow()">Play slow</button>
                 <button onclick="reset('span_radix')">Reset</button>
-                <span class="algorithms">Radix sort</span></td>  
-        </tr>
-    </table>
+                <p class="algorithms">Radix sort</p>
+            </div>
+        </div>
+    </div>
     <footer><p>Author: Gabriel Nardes Giampietro</p>
             <a href="https://github.com/gabrielnardes">GitHub</p>
     </footer>
